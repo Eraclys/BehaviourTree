@@ -2,6 +2,9 @@
 {
     public interface IBehaviour
     {
-        BehaviourStatus Tick();
+        BehaviourStatus CurrentStatus { get; }
+        void Start();
+        void Stop();
+        void SetParent(IParentBehaviour parent);
     }
 }

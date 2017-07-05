@@ -1,26 +1,20 @@
 ﻿namespace BehaviourTree
 {
-    public class RepeatUntilFail : IBehaviour
+    public class RepeatUntilFail : Decorator
     {
-        private readonly IBehaviour _behaviour;
-
-        public RepeatUntilFail(IBehaviour behaviour)
+        public RepeatUntilFail(IBehaviour child) : base(child)
         {
-            _behaviour = behaviour;
         }
 
-        public BehaviourStatus Tick()
+        public override void OnChildStopped(IBehaviour child, bool success)
         {
-            while (true)
+            if (success)
             {
-                var childStatus = _behaviour.Tick();
-
-                if (childStatus == BehaviourStatus.Success)
-                {
-                    continue;
-                }
-
-                return childStatus;
+                child.Start();
+            }
+            else
+            {
+                RaiseStopped(false);
             }
         }
     }

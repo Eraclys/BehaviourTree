@@ -1,28 +1,52 @@
 ﻿namespace BehaviourTree
 {
-    public sealed class Selection : IBehaviour
+    public sealed class Selection : Composite
     {
-        private readonly IBehaviour[] _children;
+        private int _currentIndex;
 
-        public Selection(params IBehaviour[] children)
+        public Selection(params IBehaviour[] children) : base(children)
         {
-            _children = children;
         }
 
-        public BehaviourStatus Tick()
+        protected override void DoStart()
         {
-            for (var index = 0; index < _children.Length; index++)
-            {
-                var child = _children[index];
-                var childStatus = child.Tick();
+            _currentIndex = -1;
 
-                if (childStatus != BehaviourStatus.Failure)
-                {
-                    return childStatus;
-                }
+            StartNextChild();
+        }
+
+        protected override void DoStop()
+        {
+            Children[_currentIndex].Stop();
+        }
+
+        private void StartNextChild()
+        {
+            if (++_currentIndex < Children.Length)
+            {
+                Children[_currentIndex].Start();
             }
 
-            return BehaviourStatus.Failure;
+            RaiseStopped(false);
+        }
+
+        public override void OnChildStopped(IBehaviour child, bool success)
+        {
+            if (!success)
+            {
+                if (CurrentStatus == BehaviourStatus.StopRequested)
+                {
+                    RaiseStopped(false);
+                }
+                else
+                {
+                    StartNextChild();
+                }
+            }
+            else
+            {
+                RaiseStopped(true);
+            }
         }
     }
 }

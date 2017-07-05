@@ -1,25 +1,14 @@
 ﻿namespace BehaviourTree
 {
-    public sealed class Success : IBehaviour
+    public sealed class Success : Decorator
     {
-        private readonly IBehaviour _child;
-
-        public Success(IBehaviour child)
+        public Success(IBehaviour child) : base(child)
         {
-            _child = child;
         }
 
-        public BehaviourStatus Tick()
+        public override void OnChildStopped(IBehaviour child, bool success)
         {
-            var childStatus = _child.Tick();
-
-            if (childStatus == BehaviourStatus.Success ||
-                childStatus == BehaviourStatus.Failure)
-            {
-                return BehaviourStatus.Success;
-            }
-
-            return childStatus;
+            RaiseStopped(true);
         }
     }
 }

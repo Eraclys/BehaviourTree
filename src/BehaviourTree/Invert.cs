@@ -1,29 +1,14 @@
 ﻿namespace BehaviourTree
 {
-    public sealed class Invert : IBehaviour
+    public sealed class Invert : Decorator
     {
-        private readonly IBehaviour _child;
-
-        public Invert(IBehaviour child)
+        public Invert(IBehaviour child) : base(child)
         {
-            _child = child;
         }
 
-        public BehaviourStatus Tick()
+        public override void OnChildStopped(IBehaviour child, bool success)
         {
-            var childStatus = _child.Tick();
-
-            if (childStatus == BehaviourStatus.Success)
-            {
-                return BehaviourStatus.Failure;
-            }
-
-            if (childStatus == BehaviourStatus.Failure)
-            {
-                return BehaviourStatus.Success;
-            }
-
-            return childStatus;
+            RaiseStopped(!success);
         }
     }
 }
