@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree
 {
-    public interface IParentBehaviour : IBehaviour
+    public interface IBehaviourNode : IBehaviour
     {
         void OnChildStopped(IBehaviour child, bool success);
     }

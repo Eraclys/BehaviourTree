@@ -8,10 +8,10 @@
         private int _successCount;
         private int _failureCount;
 
-        public Parallel(int nbRequiredToSuccess, int nbRequiredToFail, params IBehaviour[] children) : base(children)
+        public Parallel(int nbRequiredToSuccess, params IBehaviour[] children) : base(children)
         {
             _nbRequiredToSuccess = nbRequiredToSuccess;
-            _nbRequiredToFail = nbRequiredToFail;
+            _nbRequiredToFail = children.Length - nbRequiredToSuccess;
         }
 
         protected override void DoStart()
@@ -57,8 +57,7 @@
                 {
                     RaiseStopped(true);
                 }
-
-                if (_failureCount >= _nbRequiredToFail)
+                else if (_failureCount > _nbRequiredToFail)
                 {
                     RaiseStopped(false);
                 }

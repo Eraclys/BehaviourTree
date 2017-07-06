@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree
 {
-    public abstract class Composite : BaseBehaviour, IParentBehaviour
+    public abstract class Composite : BaseBehaviour, IBehaviourNode
     {
         protected IBehaviour[] Children { get; }
 

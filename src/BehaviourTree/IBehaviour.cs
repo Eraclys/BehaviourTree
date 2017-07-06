@@ -5,6 +5,6 @@
         BehaviourStatus CurrentStatus { get; }
         void Start();
         void Stop();
-        void SetParent(IParentBehaviour parent);
+        void SetParent(IBehaviourNode parent);
     }
 }

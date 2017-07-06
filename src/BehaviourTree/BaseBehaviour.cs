@@ -2,13 +2,13 @@
 {
     public abstract class BaseBehaviour : IBehaviour
     {
-        private IParentBehaviour _parent;
+        private IBehaviourNode _parent;
 
-        public BehaviourStatus CurrentStatus { get; private set; } = BehaviourStatus.Inactive;
+        public virtual BehaviourStatus CurrentStatus { get; protected set; } = BehaviourStatus.Inactive;
 
         public void Start()
         {
-            if (CurrentStatus == BehaviourStatus.Active)
+            if (CurrentStatus != BehaviourStatus.Inactive)
             {
                 return;
             }
@@ -33,7 +33,7 @@
         protected abstract void DoStart();
         protected abstract void DoStop();
 
-        public void SetParent(IParentBehaviour parent)
+        public void SetParent(IBehaviourNode parent)
         {
             _parent = parent;
         }

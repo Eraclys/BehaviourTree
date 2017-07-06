@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree
 {
-    public abstract class Decorator : BaseBehaviour, IParentBehaviour
+    public abstract class Decorator : BaseBehaviour, IBehaviourNode
     {
         private readonly IBehaviour _child;
 

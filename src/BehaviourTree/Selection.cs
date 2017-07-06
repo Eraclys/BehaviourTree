@@ -26,8 +26,10 @@
             {
                 Children[_currentIndex].Start();
             }
-
-            RaiseStopped(false);
+            else
+            {
+                RaiseStopped(false);
+            }
         }
 
         public override void OnChildStopped(IBehaviour child, bool success)
