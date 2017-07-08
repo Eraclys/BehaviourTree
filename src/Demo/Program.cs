@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using BehaviourTree.Behaviours;
-using BehaviourTree.Composites;
 using InputSimulator;
 
 namespace Demo
@@ -57,13 +56,6 @@ namespace Demo
         private static IBtBehaviour GetBehaviourTree()
         {
             return new BtWait(1000);
-
-            return new BtSequence(
-                new BtWait(3000),
-                new SendKeys("Hello world")
-                //new BtWait(3000),
-                //new DragAndDrop()
-            );
         }
     }
 }

@@ -25,8 +25,6 @@ namespace BehaviourTree.Behaviours
 
             _totalElapsedTicks += GetElapsedTicksSinceLastRun(context);
 
-            Debug.WriteLine(TimeSpan.FromTicks(_totalElapsedTicks).Milliseconds);
-
             if (_totalElapsedTicks >= _waitTimeInTicks)
             {
                 return BehaviourStatus.Succeeded;
@@ -37,7 +35,7 @@ namespace BehaviourTree.Behaviours
 
         private long GetElapsedTicksSinceLastRun(BtContext context)
         {
-            var currentTimeStamp = context.GetTimeStamp();;
+            var currentTimeStamp = context.GetTimeStamp();
             var elapsedTicks = currentTimeStamp - _lastTimestamp;
             _lastTimestamp = currentTimeStamp;
 
