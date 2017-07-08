@@ -15,7 +15,7 @@ namespace BehaviourTree
         static Clock()
         {
             long frequency;
-            IsHighResolution = QueryPerformanceFrequency(out frequency);
+            IsHighResolution = SafeNativeMethods.QueryPerformanceFrequency(out frequency);
         }
 
         public long GetTimeStamp()
@@ -24,7 +24,7 @@ namespace BehaviourTree
             {
                 long timestamp;
 
-                QueryPerformanceCounter(out timestamp);
+                SafeNativeMethods.QueryPerformanceCounter(out timestamp);
 
                 return timestamp;
             }
@@ -35,11 +35,5 @@ namespace BehaviourTree
         public void Dispose()
         {
         }
-
-        [DllImport("kernel32.dll")]
-        private static extern bool QueryPerformanceCounter(out long value);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool QueryPerformanceFrequency(out long value);
     }
 }

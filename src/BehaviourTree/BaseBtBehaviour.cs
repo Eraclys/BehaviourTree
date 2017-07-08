@@ -2,11 +2,11 @@
 
 namespace BehaviourTree
 {
-    public abstract class BaseBtBehaviour : IBtBehaviour
+    public abstract class BaseBtBehaviour<TContext> : IBtBehaviour<TContext>
     {
         public virtual BehaviourStatus Status { get; protected set; }
 
-        public BehaviourStatus Tick(ElaspedTicks elaspedTicks)
+        public BehaviourStatus Tick(ElaspedTicks elaspedTicks, TContext context)
         {
             if (Status == BehaviourStatus.Ready || Status == BehaviourStatus.Running)
             {
@@ -15,7 +15,7 @@ namespace BehaviourTree
                     Status = BehaviourStatus.Running;
                 }
 
-                Status = DoTick(elaspedTicks);
+                Status = DoTick(elaspedTicks, context);
             }
 
             return Status;
@@ -33,7 +33,7 @@ namespace BehaviourTree
             DoReset();
         }
 
-        protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks);
+        protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context);
         protected abstract void DoReset();
 
         protected abstract void Dispose(bool disposing);

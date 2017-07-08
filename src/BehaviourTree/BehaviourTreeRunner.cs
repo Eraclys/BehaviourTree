@@ -2,19 +2,22 @@
 
 namespace BehaviourTree
 {
-    public sealed class BehaviourTreeRunner : IDisposable
+    public sealed class BehaviourTreeRunner<TContext> : IDisposable
+        where TContext : class
     {
-        private readonly IBtBehaviour _behaviourTree;
+        private readonly TContext _context;
+        private readonly IBtBehaviour<TContext> _behaviourTree;
         private readonly IClock _stopwatch;
         private long _lastTimeStamp;
 
-        public BehaviourTreeRunner(IBtBehaviour behaviourTree)
-            : this(behaviourTree, new Clock())
+        public BehaviourTreeRunner(IBtBehaviour<TContext> behaviourTree, TContext context)
+            : this(behaviourTree, context, new Clock())
         {
         }
 
-        public BehaviourTreeRunner(IBtBehaviour behaviourTree, IClock stopwatch)
+        public BehaviourTreeRunner(IBtBehaviour<TContext> behaviourTree, TContext context, IClock stopwatch)
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _behaviourTree = behaviourTree ?? throw new ArgumentNullException(nameof(behaviourTree));
             _stopwatch = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
             _lastTimeStamp = _stopwatch.GetTimeStamp();
@@ -22,7 +25,7 @@ namespace BehaviourTree
 
         public BehaviourStatus Tick()
         {
-            var behaviourStatus = _behaviourTree.Tick(GetElapsedTicks());
+            var behaviourStatus = _behaviourTree.Tick(GetElapsedTicks(), _context);
 
             if (behaviourStatus == BehaviourStatus.Succeeded || behaviourStatus == BehaviourStatus.Failed)
             {

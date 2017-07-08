@@ -3,7 +3,7 @@
 namespace BehaviourTree.Tests.Utils
 {
 
-    internal sealed class MockBtBehaviour : BaseBtBehaviour
+    internal sealed class MockBtBehaviour : BaseBtBehaviour<MockContext>
     {
         private readonly BehaviourStatus _returnStatus;
 
@@ -32,7 +32,7 @@ namespace BehaviourTree.Tests.Utils
             _returnStatus = returnStatus;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, MockContext context)
         {
             DoTickCount++;
             return _returnStatus;
