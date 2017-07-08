@@ -2,11 +2,11 @@
 {
     public sealed class BtSimpleParallel : BaseBtComposite
     {
-        private readonly bool _bothMustSucceed;
+        private readonly SimpleParallelOption _option;
 
-        public BtSimpleParallel(IBtBehaviour first, IBtBehaviour second, bool bothMustSucceed = true) : base(new[]{first, second})
+        public BtSimpleParallel(IBtBehaviour first, IBtBehaviour second, SimpleParallelOption option = SimpleParallelOption.BothMustSucceed) : base(new[]{first, second})
         {
-            _bothMustSucceed = bothMustSucceed;
+            _option = option;
         }
 
         protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
@@ -25,7 +25,7 @@
 
                 if (childStatus == BehaviourStatus.Succeeded)
                 {
-                    if (!_bothMustSucceed && index == 0)
+                    if (_option == SimpleParallelOption.BothMustSucceed && index == 0)
                     {
                         return BehaviourStatus.Succeeded;
                     }
