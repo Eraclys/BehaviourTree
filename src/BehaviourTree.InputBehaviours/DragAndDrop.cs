@@ -4,7 +4,7 @@ namespace BehaviourTree.InputBehaviours
 {
     public sealed class DragAndDrop : BaseBtBehaviour
     {
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             var grabTarget = context.GetValue<Point?>(IbKeys.DragAndDropGrabTarget);
             var releaseTarget = context.GetValue<Point?>(IbKeys.DragAndDropReleaseTarget);
@@ -19,14 +19,6 @@ namespace BehaviourTree.InputBehaviours
                 .LeftUp(releaseTarget.Value);
 
             return BehaviourStatus.Succeeded;
-        }
-
-        protected override void DoReset()
-        {
-        }
-
-        protected override void Dispose(bool disposing)
-        {
         }
     }
 }

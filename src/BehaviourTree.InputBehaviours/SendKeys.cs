@@ -11,19 +11,11 @@ namespace BehaviourTree.InputBehaviours
             _keysToSend = keysToSend;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             Input.Keyboard.SendKeys(_keysToSend);
 
             return BehaviourStatus.Succeeded;
-        }
-
-        protected override void DoReset()
-        {
-        }
-
-        protected override void Dispose(bool disposing)
-        {
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BehaviourTree.Decorators
             _repeatCount = repeatCount;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             if (Status == BehaviourStatus.Running &&
                 Child.Status == BehaviourStatus.Succeeded &&
@@ -26,7 +26,7 @@ namespace BehaviourTree.Decorators
                 Child.Reset();
             }
 
-            var childStatus = Child.Tick(elaspedTicks, context);
+            var childStatus = Child.Tick(context);
 
             if (childStatus == BehaviourStatus.Succeeded)
             {

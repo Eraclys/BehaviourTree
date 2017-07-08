@@ -4,9 +4,9 @@
     {
         public BtNot(IBtBehaviour child) : base(child) { }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
-            var childStatus = Child.Tick(elaspedTicks, context);
+            var childStatus = Child.Tick(context);
 
             if (childStatus == BehaviourStatus.Succeeded)
             {

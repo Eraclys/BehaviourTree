@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace BehaviourTree
+﻿namespace BehaviourTree
 {
-    public interface IClock : IDisposable
+    public interface IClock
     {
         long GetTimeStamp();
     }

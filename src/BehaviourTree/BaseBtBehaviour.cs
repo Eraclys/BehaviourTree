@@ -6,16 +6,16 @@ namespace BehaviourTree
     {
         public virtual BehaviourStatus Status { get; protected set; }
 
-        public BehaviourStatus Tick(ElaspedTicks elaspedTicks, BtContext context)
+        public virtual BehaviourStatus Tick(BtContext context)
         {
             if (Status == BehaviourStatus.Ready || Status == BehaviourStatus.Running)
             {
+                Status = DoTick(context);
+
                 if (Status == BehaviourStatus.Ready)
                 {
                     Status = BehaviourStatus.Running;
                 }
-
-                Status = DoTick(elaspedTicks, context);
             }
 
             return Status;
@@ -33,10 +33,15 @@ namespace BehaviourTree
             Status = BehaviourStatus.Ready;
         }
 
-        protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context);
-        protected abstract void DoReset();
+        protected abstract BehaviourStatus DoTick(BtContext context);
 
-        protected abstract void Dispose(bool disposing);
+        protected virtual void DoReset()
+        {
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 
         public void Dispose()
         {

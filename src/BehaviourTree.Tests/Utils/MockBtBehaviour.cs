@@ -32,7 +32,7 @@ namespace BehaviourTree.Tests.Utils
             _returnStatus = returnStatus;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             DoTickCount++;
             return _returnStatus;

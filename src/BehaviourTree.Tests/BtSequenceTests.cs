@@ -27,9 +27,9 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenRunningToEnd_ShouldReturnSuccess()
             {
-                _sut.Tick(ElaspedTicks.From(0), new BtContext());
-                _sut.Tick(ElaspedTicks.From(0), new BtContext());
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                _sut.Tick(new BtContext());
+                _sut.Tick(new BtContext());
+                var behaviourStatus = _sut.Tick(new BtContext());
 
                 Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Succeeded));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
@@ -58,9 +58,9 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenRunningToEnd_ShouldReturnFailure()
             {
-                _sut.Tick(ElaspedTicks.From(0), new BtContext());
-                _sut.Tick(ElaspedTicks.From(0), new BtContext());
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                _sut.Tick(new BtContext());
+                _sut.Tick(new BtContext());
+                var behaviourStatus = _sut.Tick(new BtContext());
 
                 Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));

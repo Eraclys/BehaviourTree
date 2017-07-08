@@ -4,7 +4,7 @@ namespace BehaviourTree.InputBehaviours
 {
     public sealed class MoveMouseCursorToTarget : BaseBtBehaviour
     {
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             var mouseTarget = context.GetValue<Point?>(IbKeys.MouseTarget);
 
@@ -16,14 +16,6 @@ namespace BehaviourTree.InputBehaviours
             Input.Mouse.SetCursorPosition(mouseTarget.Value);
 
             return BehaviourStatus.Succeeded;
-        }
-
-        protected override void DoReset()
-        {
-        }
-
-        protected override void Dispose(bool disposing)
-        {
         }
     }
 }

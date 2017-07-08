@@ -7,7 +7,7 @@
         {
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             return Child.Status;
         }

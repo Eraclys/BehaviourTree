@@ -4,12 +4,12 @@
     {
         public BtSelection(params IBtBehaviour[] children) : base(children){}
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
+        protected override BehaviourStatus DoTick(BtContext context)
         {
             for (var index = 0; index < Children.Length; index++)
             {
                 var child = Children[index];
-                var childStatus = child.Tick(elaspedTicks, context);
+                var childStatus = child.Tick(context);
 
                 if (childStatus != BehaviourStatus.Failed)
                 {

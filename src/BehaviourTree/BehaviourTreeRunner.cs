@@ -6,30 +6,21 @@ namespace BehaviourTree
     {
         private readonly BtContext _context;
         private readonly IBtBehaviour _behaviourTree;
-        private readonly IClock _stopwatch;
-        private long _lastTimeStamp;
 
         public BehaviourTreeRunner(IBtBehaviour behaviourTree)
-            : this(behaviourTree, new BtContext(), new Clock())
+            : this(behaviourTree, new BtContext())
         {
         }
 
         public BehaviourTreeRunner(IBtBehaviour behaviourTree, BtContext context)
-            : this(behaviourTree, context, new Clock())
-        {
-        }
-
-        public BehaviourTreeRunner(IBtBehaviour behaviourTree, BtContext context, IClock stopwatch)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _behaviourTree = behaviourTree ?? throw new ArgumentNullException(nameof(behaviourTree));
-            _stopwatch = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
-            _lastTimeStamp = _stopwatch.GetTimeStamp();
         }
 
         public BehaviourStatus Tick()
         {
-            var behaviourStatus = _behaviourTree.Tick(GetElapsedTicks(), _context);
+            var behaviourStatus = _behaviourTree.Tick(_context);
 
             if (behaviourStatus == BehaviourStatus.Succeeded || behaviourStatus == BehaviourStatus.Failed)
             {
@@ -39,19 +30,9 @@ namespace BehaviourTree
             return behaviourStatus;
         }
 
-        private ElaspedTicks GetElapsedTicks()
-        {
-            var currentTimeStamp = _stopwatch.GetTimeStamp();
-            var elapsedDiff = currentTimeStamp - _lastTimeStamp;
-            _lastTimeStamp = currentTimeStamp;
-
-            return ElaspedTicks.From(elapsedDiff);
-        }
-
         public void Dispose()
         {
             _behaviourTree.Dispose();
-            _stopwatch.Dispose();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BehaviourTree
     {
         BehaviourStatus Status { get; }
 
-        BehaviourStatus Tick(ElaspedTicks elaspedTicks, BtContext context);
+        BehaviourStatus Tick(BtContext context);
 
         void Reset();
     }
