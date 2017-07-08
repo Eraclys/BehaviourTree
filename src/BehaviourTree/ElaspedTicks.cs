@@ -4,9 +4,9 @@ namespace BehaviourTree
 {
     public struct ElaspedTicks : IEquatable<ElaspedTicks>
     {
-        private readonly int _value;
+        private readonly long _value;
 
-        private ElaspedTicks(int value)
+        private ElaspedTicks(long value)
         {
             if (value < 0)
             {
@@ -16,12 +16,12 @@ namespace BehaviourTree
             _value = value;
         }
 
-        public static ElaspedTicks From(int ticks)
+        public static ElaspedTicks From(long ticks)
         {
             return new ElaspedTicks(ticks);
         }
 
-        public static implicit operator int (ElaspedTicks value)
+        public static implicit operator long(ElaspedTicks value)
         {
             return value._value;
         }
@@ -42,7 +42,7 @@ namespace BehaviourTree
 
         public override int GetHashCode()
         {
-            return _value;
+            return _value.GetHashCode();
         }
 
         #endregion
