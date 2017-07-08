@@ -1,19 +1,39 @@
-﻿namespace BehaviourTree
+﻿using System;
+using System.Linq;
+
+namespace BehaviourTree
 {
-    public abstract class Composite : BaseBehaviour, IBehaviourNode
+    public abstract class Composite : BaseBehaviour
     {
-        protected IBehaviour[] Children { get; }
+        protected readonly IBehaviour[] Children;
 
         protected Composite(IBehaviour[] children)
         {
-            Children = children;
-
-            foreach (var child in children)
+            if (children == null)
             {
-                child.SetParent(this);
+                throw new ArgumentNullException(nameof(children));
             }
+
+            if (children.Length == 0)
+            {
+                throw new ArgumentException("Must have at least one child", nameof(children));
+            }
+
+            if (children.Any(x => x == null))
+            {
+                throw new ArgumentException("Children cannot contain null elements", nameof(children));
+            }
+
+
+            Children = children;
         }
 
-        public abstract void OnChildStopped(IBehaviour child, bool success);
+        protected override void DoReset()
+        {
+            foreach (var child in Children)
+            {
+                child.Reset();
+            }
+        }
     }
 }

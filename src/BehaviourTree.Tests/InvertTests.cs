@@ -1,4 +1,5 @@
-﻿using BehaviourTree.Tests.Utils;
+﻿using BehaviourTree.Decorators;
+using BehaviourTree.Tests.Utils;
 using NUnit.Framework;
 
 namespace BehaviourTree.Tests
@@ -9,40 +10,65 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsSuccess
         {
-            private WatchMock _sut;
+            private IBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new WatchMock(new Invert(new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true)));
+                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
             }
 
             [Test]
-            public void WhenRunningToEnd_ShouldReturnFailure()
+            public void WhenCallingTick_ShouldReturnFailure()
             {
-                _sut.Start();
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.IsSuccess, Is.EqualTo(false));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
             }
         }
 
         [TestFixture]
         public sealed class GivenChildrenReturnsFailure
         {
-            private WatchMock _sut;
+            private IBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new WatchMock(new Invert(new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, false)));
+                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed));
             }
 
             [Test]
-            public void WhenRunningToEnd_ShouldReturnFailure()
+            public void WhenCallingTick_ShouldReturnFailure()
             {
-                _sut.Start();
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.IsSuccess, Is.EqualTo(true));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Succeeded));
+            }
+        }
+
+
+
+        [TestFixture]
+        public sealed class GivenChildrenReturnsRunning
+        {
+            private IBehaviour _sut;
+
+            [SetUp]
+            public void Setup()
+            {
+                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Running));
+            }
+
+            [Test]
+            public void WhenCallingTick_ShouldReturnRunning()
+            {
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
+
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Running));
             }
         }
     }

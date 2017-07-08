@@ -1,25 +1,19 @@
-﻿namespace BehaviourTree
+﻿using System;
+
+namespace BehaviourTree
 {
-    public abstract class Decorator : BaseBehaviour, IBehaviourNode
+    public abstract class Decorator : BaseBehaviour
     {
-        private readonly IBehaviour _child;
+        protected readonly IBehaviour Child;
 
         protected Decorator(IBehaviour child)
         {
-            _child = child;
-            _child.SetParent(this);
+            Child = child ?? throw new ArgumentNullException(nameof(child));
         }
 
-        protected override void DoStart()
+        protected override void DoReset()
         {
-            _child.Start();
+            Child.Reset();
         }
-
-        protected override void DoStop()
-        {
-            _child.Stop();
-        }
-
-        public abstract void OnChildStopped(IBehaviour child, bool success);
     }
 }

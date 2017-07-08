@@ -2,8 +2,9 @@ namespace BehaviourTree
 {
     public enum BehaviourStatus
     {
-        Active,
-        Inactive,
-        StopRequested
+        Ready = 0,
+        Running = 1,
+        Succeeded = 2,
+        Failed = 3,
     }
 }

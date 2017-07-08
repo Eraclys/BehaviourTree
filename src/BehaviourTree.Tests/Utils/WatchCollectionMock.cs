@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace BehaviourTree.Tests.Utils
 {
     internal sealed class WatchCollectionMock
     {
-        private readonly IList<WatchMock> _children = new List<WatchMock>();
+        private readonly MockBehaviour[] _children;
 
-        public WatchCollectionMock(params IBehaviour[] children)
+        public WatchCollectionMock(params MockBehaviour[] children)
         {
-            foreach (var child in children)
-            {
-                _children.Add(new WatchMock(child));
-            }
+            _children = children;
         }
 
         public IBehaviour[] Behaviours => _children.Cast<IBehaviour>().ToArray();
 
-        public int NbOfChildrenCalled => _children.Sum(x => x.OnChildStoppedCount);
+        public int NbOfChildrenCalled => _children.Count(x => x.Status != BehaviourStatus.Ready);
 
-        public bool AllChildrenCalled => NbOfChildrenCalled == _children.Count;
+        public bool AllChildrenCalled => NbOfChildrenCalled == _children.Length;
     }
 }

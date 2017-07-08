@@ -2,9 +2,10 @@
 {
     public interface IBehaviour
     {
-        BehaviourStatus CurrentStatus { get; }
-        void Start();
-        void Stop();
-        void SetParent(IBehaviourNode parent);
+        BehaviourStatus Status { get; }
+
+        BehaviourStatus Tick(ElaspedTicks elaspedTicks);
+
+        void Reset();
     }
 }

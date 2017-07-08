@@ -2,47 +2,36 @@
 {
     public abstract class BaseBehaviour : IBehaviour
     {
-        private IBehaviourNode _parent;
+        public virtual BehaviourStatus Status { get; protected set; }
 
-        public virtual BehaviourStatus CurrentStatus { get; protected set; } = BehaviourStatus.Inactive;
-
-        public void Start()
+        public BehaviourStatus Tick(ElaspedTicks elaspedTicks)
         {
-            if (CurrentStatus != BehaviourStatus.Inactive)
+            if (Status == BehaviourStatus.Ready || Status == BehaviourStatus.Running)
+            {
+                if (Status == BehaviourStatus.Ready)
+                {
+                    Status = BehaviourStatus.Running;
+                }
+
+                Status = DoTick(elaspedTicks);
+            }
+
+            return Status;
+        }
+
+
+        public void Reset()
+        {
+            if (Status == BehaviourStatus.Ready)
             {
                 return;
             }
 
-            CurrentStatus = BehaviourStatus.Active;
-
-            DoStart();
+            Status = BehaviourStatus.Ready;
+            DoReset();
         }
 
-        public void Stop()
-        {
-            if (CurrentStatus != BehaviourStatus.Active)
-            {
-                return;
-            }
-
-            CurrentStatus = BehaviourStatus.StopRequested;
-
-            DoStop();
-        }
-
-        protected abstract void DoStart();
-        protected abstract void DoStop();
-
-        public void SetParent(IBehaviourNode parent)
-        {
-            _parent = parent;
-        }
-
-        protected void RaiseStopped(bool success)
-        {
-            CurrentStatus = BehaviourStatus.Inactive;
-
-            _parent?.OnChildStopped(this, success);
-        }
+        protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks);
+        protected abstract void DoReset();
     }
 }

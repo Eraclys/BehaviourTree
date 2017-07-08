@@ -2,13 +2,14 @@
 
 namespace BehaviourTree.Tests.Utils
 {
-    internal class MockBehaviour : BaseBehaviour
+
+    internal sealed class MockBehaviour : BaseBehaviour
     {
-        private readonly bool _returnSuccess;
+        private readonly BehaviourStatus _returnStatus;
 
         private BehaviourStatus _currentStatus;
 
-        public override BehaviourStatus CurrentStatus
+        public override BehaviourStatus Status
         {
             get => _currentStatus;
             protected set
@@ -18,27 +19,30 @@ namespace BehaviourTree.Tests.Utils
             }
         }
 
-        public IList<BehaviourStatus> StatusChanges { get; } = new List<BehaviourStatus>();
-        public int DoStartCount { get; private set; }
-        public int DoStopCount { get; private set; }
+        public int DoTickCount { get; private set; }
+        public int DoResetCount { get; private set; }
+
+        public IList<BehaviourStatus> StatusChanges { get; private set; } = new List<BehaviourStatus>();
 
         public MockBehaviour(
             BehaviourStatus currentStatus,
-            bool returnSuccess)
+            BehaviourStatus returnStatus)
         {
             _currentStatus = currentStatus;
-            _returnSuccess = returnSuccess;
+            _returnStatus = returnStatus;
         }
 
-        protected override void DoStart()
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
         {
-            DoStartCount++;
+            DoTickCount++;
+            return _returnStatus;
         }
 
-        protected override void DoStop()
+        protected override void DoReset()
         {
-            DoStopCount++;
-            RaiseStopped(_returnSuccess);
+            DoResetCount++;
+            StatusChanges = new List<BehaviourStatus>();
+            DoTickCount = 0;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BehaviourTree.Tests.Utils;
+﻿using BehaviourTree.Composites;
+using BehaviourTree.Tests.Utils;
 using NUnit.Framework;
 
 namespace BehaviourTree.Tests
@@ -9,26 +10,29 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsSuccess
         {
-            private WatchMock _sut;
+            private IBehaviour _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
             public void Setup()
             {
                 _childrenWatcher = new WatchCollectionMock(
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true),
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true),
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true));
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
 
-                _sut = new WatchMock(new Sequence(_childrenWatcher.Behaviours));
+                _sut = new Sequence(_childrenWatcher.Behaviours);
             }
 
             [Test]
             public void WhenRunningToEnd_ShouldReturnSuccess()
             {
-                _sut.Start();
+                _sut.Tick(ElaspedTicks.From(0));
+                _sut.Tick(ElaspedTicks.From(0));
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.IsSuccess, Is.EqualTo(true));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Succeeded));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
                 Assert.That(_childrenWatcher.AllChildrenCalled);
             }
         }
@@ -36,26 +40,30 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsFailure
         {
-            private WatchMock _sut;
+            private IBehaviour _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
             public void Setup()
             {
                 _childrenWatcher = new WatchCollectionMock(
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true),
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, false),
-                    new TerminateImediatlyMockBehaviour(BehaviourStatus.Inactive, true));
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
+                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
 
-                _sut = new WatchMock(new Sequence(_childrenWatcher.Behaviours));
+                _sut = new Sequence(_childrenWatcher.Behaviours);
             }
+
 
             [Test]
             public void WhenRunningToEnd_ShouldReturnFailure()
             {
-                _sut.Start();
+                _sut.Tick(ElaspedTicks.From(0));
+                _sut.Tick(ElaspedTicks.From(0));
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.IsSuccess, Is.EqualTo(false));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(_childrenWatcher.NbOfChildrenCalled, Is.EqualTo(2));
             }
         }

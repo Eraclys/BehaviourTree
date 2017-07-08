@@ -7,110 +7,142 @@ namespace BehaviourTree.Tests
     public sealed class BaseBehaviourTests
     {
         [TestFixture]
-        public sealed class GivenCurrentStatusIsActive
+        public sealed class GivenCurrentStatusIsSucceded
         {
             private MockBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Active, false);
+                _sut = new MockBehaviour(BehaviourStatus.Succeeded, BehaviourStatus.Succeeded);
             }
 
             [Test]
-            public void WhenCallingStart_DoStartShouldNotBeCalled()
+            public void WhenCallingTick_DoTickShouldNotBeCalled()
             {
-                _sut.Start();
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.DoStartCount, Is.EqualTo(0));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.Active));
+                Assert.That(_sut.DoTickCount, Is.EqualTo(0));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Succeeded));
                 Assert.That(_sut.StatusChanges, Is.EquivalentTo(new BehaviourStatus[0]));
             }
 
             [Test]
-            public void WhenCallingStop_DoStopShouldBeCalled()
+            public void WhenCallingReset_DoResetShouldBeCalled()
             {
-                _sut.Stop();
+                _sut.Reset();
 
-                Assert.That(_sut.DoStopCount, Is.EqualTo(1));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.Inactive));
-
-                Assert.That(_sut.StatusChanges, Is.EquivalentTo(new []
-                {
-                    BehaviourStatus.StopRequested,
-                    BehaviourStatus.Inactive
-                }));
+                Assert.That(_sut.DoResetCount, Is.EqualTo(1));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Ready));
             }
         }
 
 
         [TestFixture]
-        public sealed class GivenCurrentStatusIsStopRequested
+        public sealed class GivenCurrentStatusIsFailed
         {
             private MockBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.StopRequested, false);
+                _sut = new MockBehaviour(BehaviourStatus.Failed, BehaviourStatus.Failed);
             }
 
             [Test]
-            public void WhenCallingStart_DoStartShouldNotBeCalled()
+            public void WhenCallingTick_DoTickShouldNotBeCalled()
             {
-                _sut.Start();
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.DoStartCount, Is.EqualTo(0));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.StopRequested));
+                Assert.That(_sut.DoTickCount, Is.EqualTo(0));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(_sut.StatusChanges, Is.EquivalentTo(new BehaviourStatus[0]));
-
             }
 
             [Test]
-            public void WhenCallingStop_DoStopShouldNotBeCalled()
+            public void WhenCallingReset_DoResetShouldBeCalled()
             {
-                _sut.Stop();
+                _sut.Reset();
 
-                Assert.That(_sut.DoStopCount, Is.EqualTo(0));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.StopRequested));
-                Assert.That(_sut.StatusChanges, Is.EquivalentTo(new BehaviourStatus[0]));
+                Assert.That(_sut.DoResetCount, Is.EqualTo(1));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Ready));
             }
         }
 
 
         [TestFixture]
-        public sealed class GivenCurrentStatusIsInactive
+        public sealed class GivenCurrentStatusIsReady
         {
             private MockBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Inactive, false);
+                _sut = new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed);
             }
 
             [Test]
-            public void WhenCallingStart_DoStartShouldBeCalled()
+            public void WhenCallingTick_DoTickShouldBeCalled()
             {
-                _sut.Start();
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
 
-                Assert.That(_sut.DoStartCount, Is.EqualTo(1));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.Active));
-                Assert.That(_sut.StatusChanges, Is.EquivalentTo(new []
+                Assert.That(_sut.DoTickCount, Is.EqualTo(1));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.StatusChanges, Is.EquivalentTo(new[]
                 {
-                    BehaviourStatus.Active
+                    BehaviourStatus.Running,
+                    BehaviourStatus.Failed
                 }));
-
             }
 
             [Test]
-            public void WhenCallingStop_DoStopShouldNotBeCalled()
+            public void WhenCallingReset_DoResetShouldNotBeCalled()
             {
-                _sut.Stop();
+                _sut.Reset();
 
-                Assert.That(_sut.DoStopCount, Is.EqualTo(0));
-                Assert.That(_sut.CurrentStatus, Is.EqualTo(BehaviourStatus.Inactive));
+                Assert.That(_sut.DoResetCount, Is.EqualTo(0));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Ready));
                 Assert.That(_sut.StatusChanges, Is.EquivalentTo(new BehaviourStatus[0]));
+            }
+        }
+
+
+
+        [TestFixture]
+        public sealed class GivenCurrentStatusIsRunning
+        {
+            private MockBehaviour _sut;
+
+            [SetUp]
+            public void Setup()
+            {
+                _sut = new MockBehaviour(BehaviourStatus.Running, BehaviourStatus.Failed);
+            }
+
+            [Test]
+            public void WhenCallingTick_DoTickShouldBeCalled()
+            {
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0));
+
+                Assert.That(_sut.DoTickCount, Is.EqualTo(1));
+                Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
+                Assert.That(_sut.StatusChanges, Is.EquivalentTo(new[]
+                {
+                    BehaviourStatus.Failed
+                }));
+            }
+
+            [Test]
+            public void WhenCallingReset_DoResetShouldBeCalled()
+            {
+                _sut.Reset();
+
+                Assert.That(_sut.DoResetCount, Is.EqualTo(1));
+                Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Ready));
             }
         }
     }
