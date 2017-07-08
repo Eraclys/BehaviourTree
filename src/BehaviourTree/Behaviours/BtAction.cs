@@ -2,11 +2,11 @@
 
 namespace BehaviourTree.Behaviours
 {
-    public class ActionBehaviour : BaseBehaviour
+    public class BtAction : BaseBtBehaviour
     {
         private readonly Func<ElaspedTicks, BehaviourStatus> _action;
 
-        public ActionBehaviour(Func<ElaspedTicks, BehaviourStatus> action)
+        public BtAction(Func<ElaspedTicks, BehaviourStatus> action)
         {
             _action = action ?? throw new ArgumentNullException(nameof(action));
         }

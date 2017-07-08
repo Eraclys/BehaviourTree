@@ -4,14 +4,14 @@ namespace BehaviourTree.Tests.Utils
 {
     internal sealed class WatchCollectionMock
     {
-        private readonly MockBehaviour[] _children;
+        private readonly MockBtBehaviour[] _children;
 
-        public WatchCollectionMock(params MockBehaviour[] children)
+        public WatchCollectionMock(params MockBtBehaviour[] children)
         {
             _children = children;
         }
 
-        public IBehaviour[] Behaviours => _children.Cast<IBehaviour>().ToArray();
+        public IBtBehaviour[] Behaviours => _children.Cast<IBtBehaviour>().ToArray();
 
         public int NbOfChildrenCalled => _children.Count(x => x.Status != BehaviourStatus.Ready);
 

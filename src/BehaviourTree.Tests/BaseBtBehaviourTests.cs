@@ -4,17 +4,17 @@ using NUnit.Framework;
 namespace BehaviourTree.Tests
 {
     [TestFixture]
-    public sealed class BaseBehaviourTests
+    public sealed class BaseBtBehaviourTests
     {
         [TestFixture]
         public sealed class GivenCurrentStatusIsSucceded
         {
-            private MockBehaviour _sut;
+            private MockBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Succeeded, BehaviourStatus.Succeeded);
+                _sut = new MockBtBehaviour(BehaviourStatus.Succeeded, BehaviourStatus.Succeeded);
             }
 
             [Test]
@@ -42,12 +42,12 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenCurrentStatusIsFailed
         {
-            private MockBehaviour _sut;
+            private MockBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Failed, BehaviourStatus.Failed);
+                _sut = new MockBtBehaviour(BehaviourStatus.Failed, BehaviourStatus.Failed);
             }
 
             [Test]
@@ -75,12 +75,12 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenCurrentStatusIsReady
         {
-            private MockBehaviour _sut;
+            private MockBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed);
+                _sut = new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed);
             }
 
             [Test]
@@ -114,12 +114,12 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenCurrentStatusIsRunning
         {
-            private MockBehaviour _sut;
+            private MockBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new MockBehaviour(BehaviourStatus.Running, BehaviourStatus.Failed);
+                _sut = new MockBtBehaviour(BehaviourStatus.Running, BehaviourStatus.Failed);
             }
 
             [Test]

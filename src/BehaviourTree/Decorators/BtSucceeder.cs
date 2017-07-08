@@ -1,8 +1,8 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class Succeeder : Decorator
+    public sealed class BtSucceeder : BaseBtDecorator
     {
-        public Succeeder(IBehaviour child) : base(child){}
+        public BtSucceeder(IBtBehaviour child) : base(child){}
 
         protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
         {

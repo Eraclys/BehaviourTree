@@ -5,17 +5,17 @@ using NUnit.Framework;
 namespace BehaviourTree.Tests
 {
     [TestFixture]
-    public sealed class InvertTests
+    public sealed class BtNotTests
     {
         [TestFixture]
         public sealed class GivenChildrenReturnsSuccess
         {
-            private IBehaviour _sut;
+            private IBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
+                _sut = new BtNot(new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
             }
 
             [Test]
@@ -31,12 +31,12 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsFailure
         {
-            private IBehaviour _sut;
+            private IBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed));
+                _sut = new BtNot(new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed));
             }
 
             [Test]
@@ -54,12 +54,12 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsRunning
         {
-            private IBehaviour _sut;
+            private IBtBehaviour _sut;
 
             [SetUp]
             public void Setup()
             {
-                _sut = new Invert(new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Running));
+                _sut = new BtNot(new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Running));
             }
 
             [Test]

@@ -5,23 +5,23 @@ using NUnit.Framework;
 namespace BehaviourTree.Tests
 {
     [TestFixture]
-    public sealed class SelectionTests
+    public sealed class BtSelectionTests
     {
         [TestFixture]
         public sealed class GivenChildrenReturnsSuccess
         {
-            private IBehaviour _sut;
+            private IBtBehaviour _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
             public void Setup()
             {
                 _childrenWatcher = new WatchCollectionMock(
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
 
-                _sut = new Selection(_childrenWatcher.Behaviours);
+                _sut = new BtSelection(_childrenWatcher.Behaviours);
             }
 
             [Test]
@@ -40,18 +40,18 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsFailure
         {
-            private IBehaviour _sut;
+            private IBtBehaviour _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
             public void Setup()
             {
                 _childrenWatcher = new WatchCollectionMock(
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
-                    new MockBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed));
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
+                    new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed));
 
-                _sut = new Selection(_childrenWatcher.Behaviours);
+                _sut = new BtSelection(_childrenWatcher.Behaviours);
             }
 
             [Test]

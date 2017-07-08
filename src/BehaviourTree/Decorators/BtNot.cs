@@ -1,8 +1,8 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class Invert : Decorator
+    public sealed class BtNot : BaseBtDecorator
     {
-        public Invert(IBehaviour child) : base(child) { }
+        public BtNot(IBtBehaviour child) : base(child) { }
 
         protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
         {

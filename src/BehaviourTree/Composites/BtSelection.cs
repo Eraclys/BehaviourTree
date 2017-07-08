@@ -1,8 +1,8 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class Selection : Composite
+    public sealed class BtSelection : BaseBtComposite
     {
-        public Selection(params IBehaviour[] children) : base(children){}
+        public BtSelection(params IBtBehaviour[] children) : base(children){}
 
         protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks)
         {

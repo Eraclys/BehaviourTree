@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree
 {
-    public interface IBehaviour
+    public interface IBtBehaviour
     {
         BehaviourStatus Status { get; }
 

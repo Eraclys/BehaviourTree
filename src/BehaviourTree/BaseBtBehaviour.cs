@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree
 {
-    public abstract class BaseBehaviour : IBehaviour
+    public abstract class BaseBtBehaviour : IBtBehaviour
     {
         public virtual BehaviourStatus Status { get; protected set; }
 

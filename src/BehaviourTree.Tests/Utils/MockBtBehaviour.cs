@@ -3,7 +3,7 @@
 namespace BehaviourTree.Tests.Utils
 {
 
-    internal sealed class MockBehaviour : BaseBehaviour
+    internal sealed class MockBtBehaviour : BaseBtBehaviour
     {
         private readonly BehaviourStatus _returnStatus;
 
@@ -24,7 +24,7 @@ namespace BehaviourTree.Tests.Utils
 
         public IList<BehaviourStatus> StatusChanges { get; private set; } = new List<BehaviourStatus>();
 
-        public MockBehaviour(
+        public MockBtBehaviour(
             BehaviourStatus currentStatus,
             BehaviourStatus returnStatus)
         {

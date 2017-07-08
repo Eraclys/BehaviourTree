@@ -50,12 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseBehaviourTests.cs" />
-    <Compile Include="InvertTests.cs" />
-    <Compile Include="Utils\MockBehaviour.cs" />
+    <Compile Include="BaseBtBehaviourTests.cs" />
+    <Compile Include="BtNotTests.cs" />
+    <Compile Include="Utils\MockBtBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SequenceTests.cs" />
-    <Compile Include="SelectionTests.cs" />
+    <Compile Include="BtSequenceTests.cs" />
+    <Compile Include="BtSelectionTests.cs" />
     <Compile Include="Utils\WatchCollectionMock.cs" />
   </ItemGroup>
   <ItemGroup>

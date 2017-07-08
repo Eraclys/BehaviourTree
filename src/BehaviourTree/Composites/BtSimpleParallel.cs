@@ -1,10 +1,10 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class SimpleParallel : Composite
+    public sealed class BtSimpleParallel : BaseBtComposite
     {
         private readonly bool _bothMustSucceed;
 
-        public SimpleParallel(IBehaviour first, IBehaviour second, bool bothMustSucceed = true) : base(new[]{first, second})
+        public BtSimpleParallel(IBtBehaviour first, IBtBehaviour second, bool bothMustSucceed = true) : base(new[]{first, second})
         {
             _bothMustSucceed = bothMustSucceed;
         }
