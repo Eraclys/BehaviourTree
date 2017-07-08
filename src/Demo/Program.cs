@@ -1,7 +1,8 @@
 ﻿using BehaviourTree;
 using BehaviourTree.InputBehaviours;
 using System;
-using InputController;
+using BehaviourTree.Composites;
+using InputSimulator;
 
 namespace Demo
 {
@@ -10,10 +11,11 @@ namespace Demo
         private static void Main()
         {
             var context = new BtContext();
-            context.Set(IbKeys.MouseTarget, new Point(0, 0));
+            context.Set(IbKeys.DragAndDropGrabTarget, new Point(0, 0));
+            context.Set(IbKeys.DragAndDropReleaseTarget, new Point(100, 100));
 
             var runner = new BehaviourTreeRunner(GetBehaviourTree(), context);
-   
+
             try
             {
                 var behaviourStatus = runner.Tick();
@@ -27,12 +29,15 @@ namespace Demo
 
             Console.WriteLine("Finished");
 
+            Console.ReadLine();
             Console.Read();
         }
 
         private static IBtBehaviour GetBehaviourTree()
         {
-            return new MoveMouseCursorToTarget();
+            return new BtSequence(
+                new SendKeys("Hello world"),
+                new DragAndDrop());
         }
     }
 }

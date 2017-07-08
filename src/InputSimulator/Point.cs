@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace InputController
+namespace InputSimulator
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Point

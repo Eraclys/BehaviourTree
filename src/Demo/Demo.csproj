@@ -35,12 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -51,16 +45,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BehaviourTree.InputBehaviours\BehaviourTree.InputBehaviours.csproj">
-      <Project>{5b801dce-d456-453e-8e30-ac0a48c7a7b4}</Project>
+      <Project>{DB22A095-06CD-435E-A181-205932312685}</Project>
       <Name>BehaviourTree.InputBehaviours</Name>
     </ProjectReference>
     <ProjectReference Include="..\BehaviourTree\BehaviourTree.csproj">
       <Project>{7112076b-363d-4886-9186-617283349034}</Project>
       <Name>BehaviourTree</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InputController\InputController.csproj">
-      <Project>{06f4beec-6bf6-4a93-a21c-a091d193f1d2}</Project>
-      <Name>InputController</Name>
+    <ProjectReference Include="..\InputSimulator\InputSimulator.csproj">
+      <Project>{320e795f-030d-4ece-aa23-08b6c1657f96}</Project>
+      <Name>InputSimulator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

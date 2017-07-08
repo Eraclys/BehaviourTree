@@ -2,18 +2,21 @@
 
 namespace BehaviourTree.InputBehaviours
 {
-    public sealed class MoveMouseCursorToTarget : BaseBtBehaviour
+    public sealed class DragAndDrop : BaseBtBehaviour
     {
         protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
-            var mouseTarget = context.GetValue<Point?>(IbKeys.MouseTarget);
+            var grabTarget = context.GetValue<Point?>(IbKeys.DragAndDropGrabTarget);
+            var releaseTarget = context.GetValue<Point?>(IbKeys.DragAndDropReleaseTarget);
 
-            if (!mouseTarget.HasValue)
+            if (grabTarget == null || releaseTarget == null)
             {
                 return BehaviourStatus.Failed;
             }
 
-            Input.Mouse.SetCursorPosition(mouseTarget.Value);
+            Input.Mouse
+                .LeftDown(grabTarget.Value)
+                .LeftUp(releaseTarget.Value);
 
             return BehaviourStatus.Succeeded;
         }

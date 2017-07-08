@@ -29,8 +29,8 @@ namespace BehaviourTree
                 return;
             }
 
-            Status = BehaviourStatus.Ready;
             DoReset();
+            Status = BehaviourStatus.Ready;
         }
 
         protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context);
