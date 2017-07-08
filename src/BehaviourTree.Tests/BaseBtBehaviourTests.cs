@@ -20,7 +20,7 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenCallingTick_DoTickShouldNotBeCalled()
             {
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.DoTickCount, Is.EqualTo(0));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
@@ -53,7 +53,7 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenCallingTick_DoTickShouldNotBeCalled()
             {
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.DoTickCount, Is.EqualTo(0));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
@@ -86,7 +86,7 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenCallingTick_DoTickShouldBeCalled()
             {
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.DoTickCount, Is.EqualTo(1));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
@@ -125,7 +125,7 @@ namespace BehaviourTree.Tests
             [Test]
             public void WhenCallingTick_DoTickShouldBeCalled()
             {
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.DoTickCount, Is.EqualTo(1));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));

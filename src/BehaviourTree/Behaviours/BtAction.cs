@@ -2,16 +2,16 @@
 
 namespace BehaviourTree.Behaviours
 {
-    public class BtAction<TContext> : BaseBtBehaviour<TContext>
+    public class BtAction : BaseBtBehaviour
     {
-        private readonly Func<ElaspedTicks, TContext, BehaviourStatus> _action;
+        private readonly Func<ElaspedTicks, BtContext, BehaviourStatus> _action;
 
-        public BtAction(Func<ElaspedTicks, TContext, BehaviourStatus> action)
+        public BtAction(Func<ElaspedTicks, BtContext, BehaviourStatus> action)
         {
             _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             return _action(elaspedTicks, context);
         }

@@ -1,10 +1,10 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class BtNot<TContext> : BaseBtDecorator<TContext>
+    public sealed class BtNot : BaseBtDecorator
     {
-        public BtNot(IBtBehaviour<TContext> child) : base(child) { }
+        public BtNot(IBtBehaviour child) : base(child) { }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             var childStatus = Child.Tick(elaspedTicks, context);
 

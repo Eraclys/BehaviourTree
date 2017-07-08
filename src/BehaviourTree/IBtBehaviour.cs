@@ -2,11 +2,11 @@
 
 namespace BehaviourTree
 {
-    public interface IBtBehaviour<in TContext> : IDisposable
+    public interface IBtBehaviour : IDisposable
     {
         BehaviourStatus Status { get; }
 
-        BehaviourStatus Tick(ElaspedTicks elaspedTicks, TContext context);
+        BehaviourStatus Tick(ElaspedTicks elaspedTicks, BtContext context);
 
         void Reset();
     }

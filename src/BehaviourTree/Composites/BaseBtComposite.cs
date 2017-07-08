@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace BehaviourTree.Composites
 {
-    public abstract class BaseBtComposite<TContext> : BaseBtBehaviour<TContext>
+    public abstract class BaseBtComposite : BaseBtBehaviour
     {
-        protected readonly IBtBehaviour<TContext>[] Children;
+        protected readonly IBtBehaviour[] Children;
 
-        protected BaseBtComposite(IBtBehaviour<TContext>[] children)
+        protected BaseBtComposite(IBtBehaviour[] children)
         {
             if (children == null)
             {

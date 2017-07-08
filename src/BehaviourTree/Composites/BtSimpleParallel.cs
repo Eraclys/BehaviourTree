@@ -1,15 +1,15 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class BtSimpleParallel<TContext> : BaseBtComposite<TContext>
+    public sealed class BtSimpleParallel : BaseBtComposite
     {
         private readonly SimpleParallelOption _option;
 
-        public BtSimpleParallel(IBtBehaviour<TContext> first, IBtBehaviour<TContext> second, SimpleParallelOption option = SimpleParallelOption.BothMustSucceed) : base(new[]{first, second})
+        public BtSimpleParallel(IBtBehaviour first, IBtBehaviour second, SimpleParallelOption option = SimpleParallelOption.BothMustSucceed) : base(new[]{first, second})
         {
             _option = option;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             int successCount = 0;
 

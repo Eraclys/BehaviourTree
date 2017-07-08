@@ -2,20 +2,24 @@
 
 namespace BehaviourTree
 {
-    public sealed class BehaviourTreeRunner<TContext> : IDisposable
-        where TContext : class
+    public sealed class BehaviourTreeRunner : IDisposable
     {
-        private readonly TContext _context;
-        private readonly IBtBehaviour<TContext> _behaviourTree;
+        private readonly BtContext _context;
+        private readonly IBtBehaviour _behaviourTree;
         private readonly IClock _stopwatch;
         private long _lastTimeStamp;
 
-        public BehaviourTreeRunner(IBtBehaviour<TContext> behaviourTree, TContext context)
+        public BehaviourTreeRunner(IBtBehaviour behaviourTree)
+            : this(behaviourTree, new BtContext(), new Clock())
+        {
+        }
+
+        public BehaviourTreeRunner(IBtBehaviour behaviourTree, BtContext context)
             : this(behaviourTree, context, new Clock())
         {
         }
 
-        public BehaviourTreeRunner(IBtBehaviour<TContext> behaviourTree, TContext context, IClock stopwatch)
+        public BehaviourTreeRunner(IBtBehaviour behaviourTree, BtContext context, IClock stopwatch)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _behaviourTree = behaviourTree ?? throw new ArgumentNullException(nameof(behaviourTree));

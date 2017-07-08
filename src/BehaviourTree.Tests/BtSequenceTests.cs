@@ -10,7 +10,7 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsSuccess
         {
-            private BtSequence<MockContext> _sut;
+            private BtSequence _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
@@ -21,15 +21,15 @@ namespace BehaviourTree.Tests
                     new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded),
                     new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
 
-                _sut = new BtSequence<MockContext>(_childrenWatcher.Behaviours);
+                _sut = new BtSequence(_childrenWatcher.Behaviours);
             }
 
             [Test]
             public void WhenRunningToEnd_ShouldReturnSuccess()
             {
-                _sut.Tick(ElaspedTicks.From(0), new MockContext());
-                _sut.Tick(ElaspedTicks.From(0), new MockContext());
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Succeeded));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
@@ -40,7 +40,7 @@ namespace BehaviourTree.Tests
         [TestFixture]
         public sealed class GivenChildrenReturnsFailure
         {
-            private BtSequence<MockContext> _sut;
+            private BtSequence _sut;
             private WatchCollectionMock _childrenWatcher;
 
             [SetUp]
@@ -51,16 +51,16 @@ namespace BehaviourTree.Tests
                     new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Failed),
                     new MockBtBehaviour(BehaviourStatus.Ready, BehaviourStatus.Succeeded));
 
-                _sut = new BtSequence<MockContext>(_childrenWatcher.Behaviours);
+                _sut = new BtSequence(_childrenWatcher.Behaviours);
             }
 
 
             [Test]
             public void WhenRunningToEnd_ShouldReturnFailure()
             {
-                _sut.Tick(ElaspedTicks.From(0), new MockContext());
-                _sut.Tick(ElaspedTicks.From(0), new MockContext());
-                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new MockContext());
+                _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                _sut.Tick(ElaspedTicks.From(0), new BtContext());
+                var behaviourStatus = _sut.Tick(ElaspedTicks.From(0), new BtContext());
 
                 Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));

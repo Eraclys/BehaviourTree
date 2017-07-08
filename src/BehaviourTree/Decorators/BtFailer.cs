@@ -1,13 +1,13 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public class BtFailer<TContext> : BaseBtDecorator<TContext>
+    public class BtFailer : BaseBtDecorator
     {
-        public BtFailer(IBtBehaviour<TContext> child)
-            : base(new BtNot<TContext>(new BtSucceeder<TContext>(child)))
+        public BtFailer(IBtBehaviour child)
+            : base(new BtNot(new BtSucceeder(child)))
         {
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             return Child.Status;
         }

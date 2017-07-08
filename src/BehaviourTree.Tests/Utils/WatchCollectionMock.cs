@@ -11,7 +11,7 @@ namespace BehaviourTree.Tests.Utils
             _children = children;
         }
 
-        public IBtBehaviour<MockContext>[] Behaviours => _children.Cast<IBtBehaviour<MockContext>>().ToArray();
+        public IBtBehaviour[] Behaviours => _children.Cast<IBtBehaviour>().ToArray();
 
         public int NbOfChildrenCalled => _children.Count(x => x.Status != BehaviourStatus.Ready);
 

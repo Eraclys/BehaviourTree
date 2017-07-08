@@ -2,12 +2,12 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class BtRepeat<TContext> : BaseBtDecorator<TContext>
+    public sealed class BtRepeat : BaseBtDecorator
     {
         private readonly int _repeatCount;
         private int _currentCount;
 
-        public BtRepeat(IBtBehaviour<TContext> child, int repeatCount) : base(child)
+        public BtRepeat(IBtBehaviour child, int repeatCount) : base(child)
         {
             if (repeatCount < 1)
             {
@@ -17,7 +17,7 @@ namespace BehaviourTree.Decorators
             _repeatCount = repeatCount;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             if (Status == BehaviourStatus.Running &&
                 Child.Status == BehaviourStatus.Succeeded &&

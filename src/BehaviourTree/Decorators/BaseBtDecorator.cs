@@ -2,11 +2,11 @@
 
 namespace BehaviourTree.Decorators
 {
-    public abstract class BaseBtDecorator<TContext> : BaseBtBehaviour<TContext>
+    public abstract class BaseBtDecorator : BaseBtBehaviour
     {
-        protected readonly IBtBehaviour<TContext> Child;
+        protected readonly IBtBehaviour Child;
 
-        protected BaseBtDecorator(IBtBehaviour<TContext> child)
+        protected BaseBtDecorator(IBtBehaviour child)
         {
             Child = child ?? throw new ArgumentNullException(nameof(child));
         }

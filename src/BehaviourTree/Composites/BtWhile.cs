@@ -1,17 +1,17 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class BtWhile<TContext> : BaseBtComposite<TContext>
+    public sealed class BtWhile : BaseBtComposite
     {
-        private readonly IBtBehaviour<TContext> _condition;
-        private readonly IBtBehaviour<TContext> _action;
+        private readonly IBtBehaviour _condition;
+        private readonly IBtBehaviour _action;
 
-        public BtWhile(IBtBehaviour<TContext> condition, IBtBehaviour<TContext> action) : base(new[] { condition, action })
+        public BtWhile(IBtBehaviour condition, IBtBehaviour action) : base(new[] { condition, action })
         {
             _condition = condition;
             _action = action;
         }
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             if (_condition.Status == BehaviourStatus.Succeeded)
             {

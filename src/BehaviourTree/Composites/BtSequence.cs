@@ -1,10 +1,10 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class BtSequence<TContext> : BaseBtComposite<TContext>
+    public sealed class BtSequence : BaseBtComposite
     {
-        public BtSequence(params IBtBehaviour<TContext>[] children) : base(children){}
+        public BtSequence(params IBtBehaviour[] children) : base(children){}
 
-        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, TContext context)
+        protected override BehaviourStatus DoTick(ElaspedTicks elaspedTicks, BtContext context)
         {
             for (var index = 0; index < Children.Length; index++)
             {
