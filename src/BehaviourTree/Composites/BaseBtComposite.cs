@@ -35,5 +35,18 @@ namespace BehaviourTree.Composites
                 child.Reset();
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            foreach (var child in Children)
+            {
+                child.Dispose();
+            }
+        }
     }
 }

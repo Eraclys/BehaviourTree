@@ -15,5 +15,15 @@ namespace BehaviourTree.Decorators
         {
             Child.Reset();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            Child.Dispose();
+        }
     }
 }

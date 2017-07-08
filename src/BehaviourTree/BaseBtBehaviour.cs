@@ -1,4 +1,6 @@
-﻿namespace BehaviourTree
+﻿using System;
+
+namespace BehaviourTree
 {
     public abstract class BaseBtBehaviour : IBtBehaviour
     {
@@ -33,5 +35,18 @@
 
         protected abstract BehaviourStatus DoTick(ElaspedTicks elaspedTicks);
         protected abstract void DoReset();
+
+        protected abstract void Dispose(bool disposing);
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~BaseBtBehaviour()
+        {
+            Dispose(false);
+        }
     }
 }

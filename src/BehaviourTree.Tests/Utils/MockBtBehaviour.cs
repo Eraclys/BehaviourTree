@@ -44,5 +44,9 @@ namespace BehaviourTree.Tests.Utils
             StatusChanges = new List<BehaviourStatus>();
             DoTickCount = 0;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+        }
     }
 }

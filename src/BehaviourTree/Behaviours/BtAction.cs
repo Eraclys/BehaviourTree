@@ -19,5 +19,9 @@ namespace BehaviourTree.Behaviours
         protected override void DoReset()
         {
         }
+
+        protected override void Dispose(bool disposing)
+        {
+        }
     }
 }

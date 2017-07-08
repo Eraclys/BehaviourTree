@@ -1,6 +1,8 @@
-﻿namespace BehaviourTree
+﻿using System;
+
+namespace BehaviourTree
 {
-    public interface IBtBehaviour
+    public interface IBtBehaviour : IDisposable
     {
         BehaviourStatus Status { get; }
 

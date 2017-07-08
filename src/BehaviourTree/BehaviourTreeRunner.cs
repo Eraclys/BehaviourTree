@@ -2,7 +2,7 @@
 
 namespace BehaviourTree
 {
-    public sealed class BehaviourTreeRunner
+    public sealed class BehaviourTreeRunner : IDisposable
     {
         private readonly IBtBehaviour _behaviourTree;
         private readonly IClock _stopwatch;
@@ -39,6 +39,12 @@ namespace BehaviourTree
             _lastTimeStamp = currentTimeStamp;
 
             return ElaspedTicks.From(elapsedDiff);
+        }
+
+        public void Dispose()
+        {
+            _behaviourTree.Dispose();
+            _stopwatch.Dispose();
         }
     }
 }
