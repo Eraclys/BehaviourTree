@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BehaviourTree
+namespace BehaviourTree.Composites
 {
     public abstract class BaseBtComposite : BaseBtBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BehaviourTree
+namespace BehaviourTree.Decorators
 {
     public abstract class BaseBtDecorator : BaseBtBehaviour
     {
