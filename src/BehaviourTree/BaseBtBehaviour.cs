@@ -10,15 +10,20 @@ namespace BehaviourTree
         {
             if (Status == BehaviourStatus.Ready || Status == BehaviourStatus.Running)
             {
-                Status = DoTick(context);
-
                 if (Status == BehaviourStatus.Ready)
                 {
                     Status = BehaviourStatus.Running;
+                    OnFirstTick(context);
                 }
+
+                Status = DoTick(context);
             }
 
             return Status;
+        }
+
+        protected virtual void OnFirstTick(BtContext context)
+        {
         }
 
 
@@ -47,11 +52,6 @@ namespace BehaviourTree
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        ~BaseBtBehaviour()
-        {
-            Dispose(false);
         }
     }
 }

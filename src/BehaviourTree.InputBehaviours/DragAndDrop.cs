@@ -6,8 +6,8 @@ namespace BehaviourTree.InputBehaviours
     {
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            var grabTarget = context.GetValue<Point?>(IbKeys.DragAndDropGrabTarget);
-            var releaseTarget = context.GetValue<Point?>(IbKeys.DragAndDropReleaseTarget);
+            var grabTarget = context.Get<Point?>(IbKeys.DragAndDropGrabTarget);
+            var releaseTarget = context.Get<Point?>(IbKeys.DragAndDropReleaseTarget);
 
             if (grabTarget == null || releaseTarget == null)
             {

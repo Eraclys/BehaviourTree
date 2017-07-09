@@ -6,7 +6,7 @@ namespace BehaviourTree.InputBehaviours
     {
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            var mouseTarget = context.GetValue<Point?>(IbKeys.MouseTarget);
+            var mouseTarget = context.Get<Point?>(IbKeys.MouseTarget);
 
             if (!mouseTarget.HasValue)
             {

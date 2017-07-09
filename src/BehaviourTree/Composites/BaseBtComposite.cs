@@ -38,14 +38,12 @@ namespace BehaviourTree.Composites
 
         protected override void Dispose(bool disposing)
         {
-            if (!disposing)
+            if (disposing)
             {
-                return;
-            }
-
-            foreach (var child in Children)
-            {
-                child.Dispose();
+                foreach (var child in Children)
+                {
+                    child.Dispose();
+                }
             }
         }
     }

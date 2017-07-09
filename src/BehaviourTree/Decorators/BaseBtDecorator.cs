@@ -18,12 +18,10 @@ namespace BehaviourTree.Decorators
 
         protected override void Dispose(bool disposing)
         {
-            if (!disposing)
+            if (disposing)
             {
-                return;
+                Child.Dispose();
             }
-
-            Child.Dispose();
         }
     }
 }

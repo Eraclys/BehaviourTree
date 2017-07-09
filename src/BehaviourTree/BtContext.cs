@@ -18,9 +18,16 @@ namespace BehaviourTree
 
         private readonly ConcurrentDictionary<string, object> _values = new ConcurrentDictionary<string, object>();
 
-        public T GetValue<T>(string key)
+        public T Get<T>(string key)
         {
-            return (T)_values[key];
+            object value;
+
+            if (_values.TryGetValue(key, out value))
+            {
+                return (T) value;
+            }
+
+            return default(T);
         }
 
         public void Set<T>(string key, T value)

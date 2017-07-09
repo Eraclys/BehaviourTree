@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace BehaviourTree.Behaviours
 {
@@ -15,14 +14,14 @@ namespace BehaviourTree.Behaviours
 
         }
 
+        protected override void OnFirstTick(BtContext context)
+        {
+            _lastTimestamp = context.GetTimeStamp();
+            _totalElapsedTicks = 0;
+        }
+
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            if (Status == BehaviourStatus.Ready)
-            {
-                _lastTimestamp = context.GetTimeStamp();
-                _totalElapsedTicks = 0;
-            }
-
             _totalElapsedTicks += GetElapsedTicksSinceLastRun(context);
 
             if (_totalElapsedTicks >= _waitTimeInTicks)
