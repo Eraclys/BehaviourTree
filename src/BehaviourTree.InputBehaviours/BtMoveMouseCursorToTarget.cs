@@ -2,7 +2,7 @@
 
 namespace BehaviourTree.InputBehaviours
 {
-    public sealed class MoveMouseCursorToTarget : BaseBtBehaviour
+    public sealed class BtMoveMouseCursorToTarget : BaseBtBehaviour
     {
         protected override BehaviourStatus DoTick(BtContext context)
         {

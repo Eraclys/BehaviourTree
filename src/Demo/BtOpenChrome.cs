@@ -2,9 +2,9 @@ using System;
 
 namespace Demo
 {
-    public sealed class OpenChrome : StartProcess
+    public sealed class BtOpenChrome : BtStartProcess
     {
-        public OpenChrome(string instanceName, Uri url)
+        public BtOpenChrome(string instanceName, Uri url)
             : base(instanceName, "chrome.exe", $"{url} --user-data-dir=\"%temp%/random_name\"")
         {
         }

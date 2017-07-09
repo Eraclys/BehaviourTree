@@ -2,35 +2,35 @@
 
 namespace BehaviourTree
 {
-    public abstract class BtTree : BaseBtBehaviour
+    public abstract class BtSubTree : BaseBtBehaviour, IBtDecorator
     {
-        private IBtBehaviour _child;
+        public IBtBehaviour Child { get; private set; }
 
         protected void SetBehaviour(IBtBehaviour behaviour)
         {
-            _child = behaviour;
+            Child = behaviour;
         }
 
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            if (_child == null)
+            if (Child == null)
             {
                 throw new InvalidOperationException("Tree is not defined. Use SetBehaviour.");
             }
 
-            return _child.Tick(context);
+            return Child.Tick(context);
         }
 
         protected override void DoReset()
         {
-            _child.Reset();
+            Child.Reset();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _child.Dispose();
+                Child.Dispose();
             }
         }
     }

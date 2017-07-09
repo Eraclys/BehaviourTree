@@ -37,14 +37,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GoogleSearch.cs" />
-    <Compile Include="IsProcessRunning.cs" />
-    <Compile Include="OpenBrowser.cs" />
-    <Compile Include="OpenChrome.cs" />
-    <Compile Include="OpenIE.cs" />
+    <Compile Include="BtGoogleSearch.cs" />
+    <Compile Include="BtOpenBrowser.cs" />
+    <Compile Include="BtOpenChrome.cs" />
+    <Compile Include="BtOpenIE.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartProcess.cs" />
+    <Compile Include="BtStartProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

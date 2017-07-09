@@ -2,18 +2,18 @@
 
 namespace BehaviourTree.InputBehaviours
 {
-    public sealed class SendKeys : BaseBtBehaviour
+    public sealed class BtSendKey : BaseBtBehaviour
     {
-        private readonly string _keysToSend;
+        private readonly Key _keyToSend;
 
-        public SendKeys(string keysToSend)
+        public BtSendKey(Key keyToSend)
         {
-            _keysToSend = keysToSend;
+            _keyToSend = keyToSend;
         }
 
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            Input.Keyboard.SendKeys(_keysToSend);
+            Input.Keyboard.KeyPress(_keyToSend);
 
             return BehaviourStatus.Succeeded;
         }

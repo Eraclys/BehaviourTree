@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace BehaviourTree.Composites
 {
-    public abstract class BaseBtComposite : BaseBtBehaviour
+    public abstract class BaseBtComposite : BaseBtBehaviour, IBtComposite
     {
-        protected readonly IBtBehaviour[] Children;
+        public IBtBehaviour[] Children { get; }
 
         protected BaseBtComposite(IBtBehaviour[] children)
         {

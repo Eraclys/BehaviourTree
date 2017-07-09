@@ -2,7 +2,7 @@
 
 namespace BehaviourTree.InputBehaviours
 {
-    public sealed class DragAndDrop : BaseBtBehaviour
+    public sealed class BtDragAndDrop : BaseBtBehaviour
     {
         protected override BehaviourStatus DoTick(BtContext context)
         {

@@ -2,9 +2,9 @@
 
 namespace BehaviourTree.Decorators
 {
-    public abstract class BaseBtDecorator : BaseBtBehaviour
+    public abstract class BaseBtDecorator : BaseBtBehaviour, IBtDecorator
     {
-        protected readonly IBtBehaviour Child;
+        public IBtBehaviour Child { get; }
 
         protected BaseBtDecorator(IBtBehaviour child)
         {
