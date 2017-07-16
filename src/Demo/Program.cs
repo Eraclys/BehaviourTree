@@ -1,6 +1,8 @@
 ﻿using BehaviourTree;
 using System;
 using System.Threading;
+using BehaviourTree.Behaviours;
+using BehaviourTree.Decorators;
 
 namespace Demo
 {
@@ -43,6 +45,8 @@ namespace Demo
 
         private static IBtBehaviour GetBehaviourTree()
         {
+            return new BtTimeOut(new BtWait(4000), 3000);
+
             return new BtGoogleSearch("foo");
         }
     }
