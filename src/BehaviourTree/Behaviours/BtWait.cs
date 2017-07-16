@@ -11,18 +11,20 @@ namespace BehaviourTree.Behaviours
         public BtWait(int waitTimeInMilliseconds)
         {
             _waitTimeInTicks = TimeSpan.FromMilliseconds(waitTimeInMilliseconds).Ticks;
-
-        }
-
-        protected override void OnFirstTick(BtContext context)
-        {
-            _lastTimestamp = context.GetTimeStamp();
-            _totalElapsedTicks = 0;
         }
 
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            _totalElapsedTicks += GetElapsedTicksSinceLastRun(context);
+            var currentTimeStamp = context.GetTimeStamp();
+
+            if (_lastTimestamp != 0)
+            {
+                var elapsedTicks = currentTimeStamp - _lastTimestamp;
+
+                _totalElapsedTicks += elapsedTicks;
+            }
+
+            _lastTimestamp = currentTimeStamp;
 
             if (_totalElapsedTicks >= _waitTimeInTicks)
             {
@@ -32,13 +34,10 @@ namespace BehaviourTree.Behaviours
             return BehaviourStatus.Running;
         }
 
-        private long GetElapsedTicksSinceLastRun(BtContext context)
+        protected override void DoReset()
         {
-            var currentTimeStamp = context.GetTimeStamp();
-            var elapsedTicks = currentTimeStamp - _lastTimestamp;
-            _lastTimestamp = currentTimeStamp;
-
-            return elapsedTicks;
+            _lastTimestamp = 0;
+            _totalElapsedTicks = 0;
         }
     }
 }

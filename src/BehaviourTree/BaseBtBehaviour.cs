@@ -13,7 +13,6 @@ namespace BehaviourTree
                 if (Status == BehaviourStatus.Ready)
                 {
                     Status = BehaviourStatus.Running;
-                    OnFirstTick(context);
                 }
 
                 Status = DoTick(context);
@@ -21,11 +20,6 @@ namespace BehaviourTree
 
             return Status;
         }
-
-        protected virtual void OnFirstTick(BtContext context)
-        {
-        }
-
 
         public void Reset()
         {

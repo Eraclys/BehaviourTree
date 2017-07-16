@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.InputBehaviours", "BehaviourTree.InputBehaviours\BehaviourTree.InputBehaviours.csproj", "{DB22A095-06CD-435E-A181-205932312685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputSimulator", "InputSimulator\InputSimulator.csproj", "{320E795F-030D-4ECE-AA23-08B6C1657F96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputSimulator", "InputSimulator\InputSimulator.csproj", "{320E795F-030D-4ECE-AA23-08B6C1657F96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

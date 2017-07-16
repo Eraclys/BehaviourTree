@@ -36,7 +36,7 @@ namespace Demo
 
         private static BehaviourTreeRunner CreateRunner()
         {
-            var runner = new BehaviourTreeRunner(new BtRoot(GetBehaviourTree()), 3000);
+            var runner = new BehaviourTreeRunner(new BtRoot(GetBehaviourTree()), 1000);
 
             return runner;
         }
