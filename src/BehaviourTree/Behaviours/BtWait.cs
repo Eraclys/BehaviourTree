@@ -5,8 +5,7 @@ namespace BehaviourTree.Behaviours
     public sealed class BtWait : BaseBtBehaviour
     {
         private readonly long _waitTimeInTicks;
-        private long _lastTimestamp;
-        private long _totalElapsedTicks;
+        private long _initialTimestamp;
 
         public BtWait(int waitTimeInMilliseconds)
         {
@@ -17,16 +16,14 @@ namespace BehaviourTree.Behaviours
         {
             var currentTimeStamp = context.GetTimeStamp();
 
-            if (_lastTimestamp != 0)
+            if (_initialTimestamp == 0)
             {
-                var elapsedTicks = currentTimeStamp - _lastTimestamp;
-
-                _totalElapsedTicks += elapsedTicks;
+                _initialTimestamp = currentTimeStamp;
             }
 
-            _lastTimestamp = currentTimeStamp;
+            var elapsedTicks = currentTimeStamp - _initialTimestamp;
 
-            if (_totalElapsedTicks >= _waitTimeInTicks)
+            if (elapsedTicks >= _waitTimeInTicks)
             {
                 return BehaviourStatus.Succeeded;
             }
@@ -36,8 +33,7 @@ namespace BehaviourTree.Behaviours
 
         protected override void DoReset()
         {
-            _lastTimestamp = 0;
-            _totalElapsedTicks = 0;
+            _initialTimestamp = 0;
         }
     }
 }

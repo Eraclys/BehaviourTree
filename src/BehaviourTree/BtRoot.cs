@@ -16,10 +16,10 @@ namespace BehaviourTree
 
         public BehaviourStatus Tick(BtContext context)
         {
-            Debug.WriteLine(this.ToFriendlyString());
-
             var behaviourStatus = Child.Tick(context);
             Status = behaviourStatus;
+
+            Debug.WriteLine(this.ToFriendlyString());
 
             if (behaviourStatus == BehaviourStatus.Succeeded || behaviourStatus == BehaviourStatus.Failed)
             {

@@ -1,9 +1,9 @@
-﻿using System;
-using BehaviourTree;
-using BehaviourTree.Behaviours;
+﻿using BehaviourTree;
 using BehaviourTree.Composites;
 using BehaviourTree.InputBehaviours;
 using InputSimulator;
+using System;
+using BehaviourTree.Decorators;
 
 namespace Demo
 {
@@ -14,9 +14,9 @@ namespace Demo
             var behaviour =
                 new BtSequence(
                     new BtOpenBrowser("foo", new Uri("https://www.google.com")),
-                    new BtWait(3000),
-                    new BtSendKeysToProcess("foo", search),
-                    new BtSendKey(Key.Return)
+                    new BtCooldown(new BtSequence(
+                        new BtSendKeysToProcess("foo", search),
+                        new BtSendKey(Key.Return)), 3000)
                 );
 
             SetBehaviour(behaviour);
