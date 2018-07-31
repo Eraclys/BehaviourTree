@@ -93,6 +93,7 @@ namespace BehaviourTree.Tests
                 Assert.That(_sut.Status, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(_sut.StatusChanges, Is.EquivalentTo(new[]
                 {
+                    BehaviourStatus.Running,
                     BehaviourStatus.Failed
                 }));
             }
