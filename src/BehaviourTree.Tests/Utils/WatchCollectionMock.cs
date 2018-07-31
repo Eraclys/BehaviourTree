@@ -13,7 +13,7 @@ namespace BehaviourTree.Tests.Utils
 
         public IBtBehaviour[] Behaviours => _children.Cast<IBtBehaviour>().ToArray();
 
-        public int NbOfChildrenCalled => _children.Count(x => x.Status != BehaviourStatus.Ready);
+        public int NbOfChildrenCalled => _children.Count(x => x.WasCalled);
 
         public bool AllChildrenCalled => NbOfChildrenCalled == _children.Length;
     }
