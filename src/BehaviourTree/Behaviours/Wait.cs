@@ -2,21 +2,21 @@
 
 namespace BehaviourTree.Behaviours
 {
-    public sealed class BtWait : BaseBtBehaviour
+    public sealed class Wait : BaseBehaviour
     {
         private readonly long _waitTimeInTicks;
-        private long _initialTimestamp;
+        private long? _initialTimestamp;
 
-        public BtWait(int waitTimeInMilliseconds)
+        public Wait(int waitTimeInMilliseconds)
         {
             _waitTimeInTicks = TimeSpan.FromMilliseconds(waitTimeInMilliseconds).Ticks;
         }
 
-        protected override BehaviourStatus DoTick(BtContext context)
+        protected override BehaviourStatus Update(BtContext context)
         {
             var currentTimeStamp = context.GetTimeStamp();
 
-            if (_initialTimestamp == 0)
+            if (_initialTimestamp == null)
             {
                 _initialTimestamp = currentTimeStamp;
             }
@@ -31,9 +31,9 @@ namespace BehaviourTree.Behaviours
             return BehaviourStatus.Running;
         }
 
-        protected override void DoReset()
+        protected override void OnTerminate(BehaviourStatus status)
         {
-            _initialTimestamp = 0;
+            _initialTimestamp = null;
         }
     }
 }

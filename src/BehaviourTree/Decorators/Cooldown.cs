@@ -2,20 +2,21 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class BtCooldown : BaseBtDecorator
+    public sealed class Cooldown : DecoratorBehaviour
     {
         private readonly long _cooldownTimeInTicks;
         private long _cooldownStartedTimestamp;
-        private bool _onCooldown;
 
-        public BtCooldown(IBtBehaviour child, int cooldownTimeInMilliseconds) : base(child)
+        public bool OnCooldown { get; private set; }
+
+        public Cooldown(IBehaviour child, int cooldownTimeInMilliseconds) : base(child)
         {
             _cooldownTimeInTicks = TimeSpan.FromMilliseconds(cooldownTimeInMilliseconds).Ticks;
         }
 
-        protected override BehaviourStatus DoTick(BtContext context)
+        protected override BehaviourStatus Update(BtContext context)
         {
-            return _onCooldown ? CooldownBehaviour(context) : RegularBehaviour(context);
+            return OnCooldown ? CooldownBehaviour(context) : RegularBehaviour(context);
         }
 
         private BehaviourStatus RegularBehaviour(BtContext context)
@@ -48,13 +49,13 @@ namespace BehaviourTree.Decorators
 
         private void ExitCooldown()
         {
-            _onCooldown = false;
+            OnCooldown = false;
             _cooldownStartedTimestamp = 0;
         }
 
         private void EnterCooldown(BtContext context)
         {
-            _onCooldown = true;
+            OnCooldown = true;
             _cooldownStartedTimestamp = context.GetTimeStamp();
         }
     }
