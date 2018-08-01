@@ -11,7 +11,7 @@ namespace BehaviourTree
         private readonly IBtBehaviour _behaviourTree;
         private CancellationTokenSource _tokenSource;
 
-        public BehaviourTreeRunner(BtRoot behaviourTree, int intervalInMilliseconds)
+        public BehaviourTreeRunner(IBtBehaviour behaviourTree, int intervalInMilliseconds)
             : this(behaviourTree, new BtContext(), intervalInMilliseconds)
         {
         }

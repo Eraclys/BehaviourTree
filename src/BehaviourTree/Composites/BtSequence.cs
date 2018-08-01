@@ -8,8 +8,7 @@
         {
             for (var index = 0; index < Children.Length; index++)
             {
-                var child = Children[index];
-                var childStatus = child.Tick(context);
+                var childStatus = Children[index].Tick(context);
 
                 if (childStatus != BehaviourStatus.Succeeded)
                 {

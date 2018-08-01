@@ -8,13 +8,13 @@ namespace BehaviourTree
 
         public virtual BehaviourStatus Tick(BtContext context)
         {
-            if (Status == BehaviourStatus.Ready || Status == BehaviourStatus.Running)
+            if (Status == BehaviourStatus.Ready)
             {
-                if (Status == BehaviourStatus.Ready)
-                {
-                    Status = BehaviourStatus.Running;
-                }
+                Status = BehaviourStatus.Running;
+            }
 
+            if (Status == BehaviourStatus.Running)
+            {
                 Status = DoTick(context);
             }
 

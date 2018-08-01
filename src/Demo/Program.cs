@@ -38,16 +38,24 @@ namespace Demo
 
         private static BehaviourTreeRunner CreateRunner()
         {
-            var runner = new BehaviourTreeRunner(new BtRoot(GetBehaviourTree()), 1000);
+            var runner = new BehaviourTreeRunner(GetBehaviourTree(), 1000);
 
             return runner;
         }
 
         private static IBtBehaviour GetBehaviourTree()
         {
-            return new BtTimeOut(new BtWait(4000), 3000);
-
-            return new BtGoogleSearch("foo");
+            return
+                //new BtRegulator(
+                new BtAutoReset(
+                    new BtDebugLogger(
+                        //new BtGoogleSearch("foo")
+                        new BtTimeOut(
+                            new BtWait(4000),
+                            3000)
+                    )
+                );
+                //,5000);
         }
     }
 }
