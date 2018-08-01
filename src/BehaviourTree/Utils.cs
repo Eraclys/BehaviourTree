@@ -8,7 +8,7 @@ namespace BehaviourTree
     {
         public static string ToFriendlyString(this IBtBehaviour behaviour)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             ToFriendlyString(behaviour, sb, 0);
 

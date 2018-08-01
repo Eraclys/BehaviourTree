@@ -1,21 +1,16 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class BtUntilSuccess : BaseBtDecorator
+    public sealed class UntilFailed : DecoratorBehaviour
     {
-        public BtUntilSuccess(IBtBehaviour child) : base(child)
+        public UntilFailed(IBehaviour child) : base(child)
         {
         }
 
-        protected override BehaviourStatus DoTick(BtContext context)
+        protected override BehaviourStatus Update(BtContext context)
         {
             var childStatus = Child.Tick(context);
 
             if (childStatus == BehaviourStatus.Failed)
-            {
-                Child.Reset();
-            }
-
-            if (childStatus == BehaviourStatus.Succeeded)
             {
                 return BehaviourStatus.Succeeded;
             }

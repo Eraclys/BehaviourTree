@@ -11,7 +11,7 @@
 
         protected override BehaviourStatus DoTick(BtContext context)
         {
-            int successCount = 0;
+            var successCount = 0;
 
             for (var index = 0; index < Children.Length; index++)
             {

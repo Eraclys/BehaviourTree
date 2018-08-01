@@ -1,10 +1,12 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class BtSucceeder : BaseBtDecorator
+    public sealed class Succeeder : DecoratorBehaviour
     {
-        public BtSucceeder(IBtBehaviour child) : base(child){}
+        public Succeeder(IBehaviour child) : base(child)
+        {
+        }
 
-        protected override BehaviourStatus DoTick(BtContext context)
+        protected override BehaviourStatus Update(BtContext context)
         {
             var childStatus = Child.Tick(context);
 

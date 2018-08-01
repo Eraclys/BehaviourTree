@@ -38,9 +38,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseBehaviourTests.cs" />
     <Compile Include="BaseBtBehaviourTests.cs" />
-    <Compile Include="BtNotTests.cs" />
     <Compile Include="BtPrioritySelectionTests.cs" />
+    <Compile Include="FailerTests.cs" />
+    <Compile Include="InverterTests.cs" />
+    <Compile Include="RepeatTests.cs" />
+    <Compile Include="UntilFailedTests.cs" />
+    <Compile Include="SucceederTests.cs" />
+    <Compile Include="UntilSuccessTests.cs" />
+    <Compile Include="Utils\MockBehaviour.cs" />
     <Compile Include="Utils\MockBtBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BtSequenceTests.cs" />
