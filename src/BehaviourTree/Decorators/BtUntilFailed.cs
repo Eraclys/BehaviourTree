@@ -10,6 +10,11 @@
         {
             var childStatus = Child.Tick(context);
 
+            if (childStatus == BehaviourStatus.Succeeded)
+            {
+                Child.Reset();
+            }
+
             if (childStatus == BehaviourStatus.Failed)
             {
                 return BehaviourStatus.Succeeded;
