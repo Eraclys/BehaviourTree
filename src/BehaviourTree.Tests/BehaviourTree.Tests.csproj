@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoResetTests.cs" />
     <Compile Include="BaseBehaviourTests.cs" />
     <Compile Include="BtPrioritySelectionTests.cs" />
     <Compile Include="DecoratorBehaviourTests.cs" />
