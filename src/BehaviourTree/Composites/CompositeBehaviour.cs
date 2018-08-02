@@ -5,9 +5,9 @@ namespace BehaviourTree.Composites
 {
     public abstract class CompositeBehaviour : BaseBehaviour
     {
-        protected IBtBehaviour[] Children { get; }
+        protected IBehaviour[] Children { get; }
 
-        protected CompositeBehaviour(params IBtBehaviour[] children)
+        protected CompositeBehaviour(IBehaviour[] children)
         {
             if (children == null)
             {
