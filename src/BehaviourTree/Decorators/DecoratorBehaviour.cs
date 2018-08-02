@@ -16,5 +16,10 @@
                 Child.Dispose();
             }
         }
+
+        protected override void DoReset(BehaviourStatus status)
+        {
+            Child.Reset();
+        }
     }
 }

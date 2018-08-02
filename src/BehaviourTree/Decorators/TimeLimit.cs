@@ -35,5 +35,10 @@ namespace BehaviourTree.Decorators
         {
             _initialTimestamp = null;
         }
+
+        protected override void DoReset(BehaviourStatus status)
+        {
+            _initialTimestamp = null;
+        }
     }
 }

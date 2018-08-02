@@ -38,5 +38,10 @@ namespace BehaviourTree.Decorators
         {
             Counter = 0;
         }
+
+        protected override void DoReset(BehaviourStatus status)
+        {
+            Counter = 0;
+        }
     }
 }

@@ -7,12 +7,14 @@ namespace BehaviourTree.Tests
     [TestFixture]
     internal sealed class BaseBehaviourTests
     {
-        [Test]
-        public void OnInitialize_ShouldOnlyBeCalledTheFirstTime()
+        [TestCase(BehaviourStatus.Succeeded)]
+        [TestCase(BehaviourStatus.Running)]
+        [TestCase(BehaviourStatus.Failed)]
+        public void OnInitialize_ShouldOnlyBeCalledTheFirstTime(BehaviourStatus status)
         {
             var sut = new MockBehaviour
             {
-                ReturnStatus = BehaviourStatus.Succeeded
+                ReturnStatus = status
             };
 
             Assert.That(sut.InitializeCallCount, Is.EqualTo(0));
@@ -26,12 +28,13 @@ namespace BehaviourTree.Tests
             Assert.That(sut.InitializeCallCount, Is.EqualTo(1));
         }
 
-        [Test]
-        public void OnTerminate_ShouldBeCalledOnSuccess()
+        [TestCase(BehaviourStatus.Succeeded)]
+        [TestCase(BehaviourStatus.Failed)]
+        public void OnTerminate_ShouldBeCalledOnSuccessOrFailure(BehaviourStatus status)
         {
             var sut = new MockBehaviour
             {
-                ReturnStatus = BehaviourStatus.Succeeded
+                ReturnStatus = status
             };
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(0));
@@ -39,21 +42,7 @@ namespace BehaviourTree.Tests
             sut.Tick(new BtContext());
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void OnTerminate_ShouldBeCalledOnFailure()
-        {
-            var sut = new MockBehaviour
-            {
-                ReturnStatus = BehaviourStatus.Failed
-            };
-
-            Assert.That(sut.TerminateCallCount, Is.EqualTo(0));
-
-            sut.Tick(new BtContext());
-
-            Assert.That(sut.TerminateCallCount, Is.EqualTo(1));
+            Assert.That(sut.TerminateStatus, Is.EqualTo(status));
         }
 
         [Test]
@@ -72,7 +61,7 @@ namespace BehaviourTree.Tests
         }
 
         [Test]
-        public void Ready_ShouldNotAllowedBeReturnedByTick()
+        public void ReturningReady_ShouldNotBeAllowed()
         {
             var sut = new MockBehaviour
             {
@@ -80,6 +69,43 @@ namespace BehaviourTree.Tests
             };
 
             Assert.Throws<InvalidOperationException>(() => sut.Tick(new BtContext()));
+        }
+
+        [TestCase(BehaviourStatus.Succeeded)]
+        [TestCase(BehaviourStatus.Running)]
+        [TestCase(BehaviourStatus.Failed)]
+        public void WhenNotReadyAndCallingReset_DoResetShouldBeCalled(BehaviourStatus status)
+        {
+            var sut = new MockBehaviour
+            {
+                ReturnStatus = status
+            };
+
+            Assert.That(sut.ResetCount, Is.EqualTo(0));
+
+            sut.Tick(new BtContext());
+
+            sut.Reset();
+
+            Assert.That(sut.ResetCount, Is.EqualTo(1));
+            Assert.That(sut.ResetStatus, Is.EqualTo(status));
+        }
+
+        [TestCase(BehaviourStatus.Succeeded)]
+        [TestCase(BehaviourStatus.Running)]
+        [TestCase(BehaviourStatus.Failed)]
+        public void WhenReadyAndCallingReset_DoResetShouldNotBeCalled(BehaviourStatus status)
+        {
+            var sut = new MockBehaviour
+            {
+                ReturnStatus = status
+            };
+
+            Assert.That(sut.ResetCount, Is.EqualTo(0));
+
+            sut.Reset();
+
+            Assert.That(sut.ResetCount, Is.EqualTo(0));
         }
     }
 }

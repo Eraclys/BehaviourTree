@@ -7,7 +7,6 @@ namespace BehaviourTree.Tests
     [TestFixture]
     internal sealed class TimeLimitTests
     {
-        [Test]
         [TestCase(BehaviourStatus.Succeeded)]
         [TestCase(BehaviourStatus.Failed)]
         [TestCase(BehaviourStatus.Running)]
@@ -22,7 +21,6 @@ namespace BehaviourTree.Tests
             Assert.That(child.UpdateCallCount, Is.EqualTo(1));
         }
 
-        [Test]
         [TestCase(BehaviourStatus.Succeeded)]
         [TestCase(BehaviourStatus.Failed)]
         public void WhenTimeLimitHasExpired_ReturnFailureAndResetChild(BehaviourStatus status)
@@ -46,6 +44,29 @@ namespace BehaviourTree.Tests
 
             Assert.That(behaviourStatus, Is.EqualTo(status));
             Assert.That(child.UpdateCallCount, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void WhenResettingWhileRunning_ReInitializeTimer()
+        {
+            var child = new MockBehaviour
+            {
+                ReturnStatus = BehaviourStatus.Running
+            };
+
+            var clock = new MockClock();
+
+            var sut = new TimeLimit(child, 1000);
+
+            sut.Tick(new BtContext(clock));
+
+            clock.AddMilliseconds(2000);
+
+            sut.Reset();
+
+            var behaviourStatus = sut.Tick(new BtContext(clock));
+
+            Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
         }
     }
 }

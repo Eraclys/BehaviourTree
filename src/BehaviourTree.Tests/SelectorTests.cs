@@ -25,7 +25,6 @@ namespace BehaviourTree.Tests
             Assert.That(behaviours.AllTerminated(), Is.True);
         }
 
-        [Test]
         [TestCase(BehaviourStatus.Succeeded)]
         [TestCase(BehaviourStatus.Running)]
         public void WhenAChildReturnsSuccessOrRunning_ReturnTheSameAndDoNotCallNextChildInSequence(BehaviourStatus status)

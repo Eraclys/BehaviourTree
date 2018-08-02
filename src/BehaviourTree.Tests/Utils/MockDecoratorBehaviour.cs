@@ -1,7 +1,13 @@
-﻿namespace BehaviourTree.Tests.Utils
+﻿using BehaviourTree.Decorators;
+
+namespace BehaviourTree.Tests.Utils
 {
-    internal sealed class MockBehaviour : BaseBehaviour
+    public sealed class MockDecoratorBehaviour : DecoratorBehaviour
     {
+        public MockDecoratorBehaviour(IBehaviour child) : base(child)
+        {
+        }
+
         public int InitializeCallCount { get; private set; }
         public int UpdateCallCount { get; private set; }
         public int TerminateCallCount { get; private set; }
@@ -14,23 +20,27 @@
         protected override BehaviourStatus Update(BtContext context)
         {
             UpdateCallCount++;
+            ReturnStatus = Child.Tick(context);
             return ReturnStatus;
         }
 
         protected override void OnTerminate(BehaviourStatus status)
         {
+            base.OnTerminate(status);
             TerminateCallCount++;
             TerminateStatus = status;
         }
 
         protected override void DoReset(BehaviourStatus status)
         {
+            base.DoReset(status);
             ResetStatus = status;
             ResetCount++;
         }
 
         protected override void OnInitialize()
         {
+            base.OnInitialize();
             InitializeCallCount++;
         }
     }

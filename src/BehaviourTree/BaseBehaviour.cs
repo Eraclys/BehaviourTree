@@ -28,6 +28,15 @@ namespace BehaviourTree
             return _status;
         }
 
+        public void Reset()
+        {
+            if (_status != BehaviourStatus.Ready)
+            {
+                DoReset(_status);
+                _status = BehaviourStatus.Ready;
+            }
+        }
+
         protected abstract BehaviourStatus Update(BtContext context);
 
         protected virtual void OnTerminate(BehaviourStatus status)
@@ -35,6 +44,10 @@ namespace BehaviourTree
         }
 
         protected virtual void OnInitialize()
+        {
+        }
+
+        protected virtual void DoReset(BehaviourStatus status)
         {
         }
 

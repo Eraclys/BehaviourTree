@@ -17,6 +17,10 @@ namespace BehaviourTree.Behaviours
             return _predicate(context) ? BehaviourStatus.Succeeded : BehaviourStatus.Failed;
         }
 
+        public void Reset()
+        {
+        }
+
         public void Dispose()
         {
         }

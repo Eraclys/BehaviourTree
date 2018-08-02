@@ -80,5 +80,24 @@ namespace BehaviourTree.Tests
                 Assert.That(sut.Counter, Is.EqualTo(0));
             }
         }
+
+        [Test]
+        public void WhenResettingWhileRunning_ReInitializeCounter()
+        {
+            var child = new MockBehaviour
+            {
+                ReturnStatus = BehaviourStatus.Running
+            };
+
+            var sut = new Repeat(child, 15);
+
+            sut.Tick(new BtContext());
+            sut.Tick(new BtContext());
+            sut.Tick(new BtContext());
+
+            sut.Reset();
+
+            Assert.That(sut.Counter, Is.EqualTo(0));
+        }
     }
 }
