@@ -1,4 +1,4 @@
-# BehaviourTree
+# BehaviourTree (alpha)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ad6prnywckev6s4b?svg=true)](https://ci.appveyor.com/api/projects/status/ad6prnywckev6s4b?svg=true)
 
