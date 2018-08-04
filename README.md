@@ -24,21 +24,21 @@ Install-Package BehaviourTree.FluentBuilder
 ## Usage (FluentBuilder)
 
 ``` cs    
-    var behaviourTree = FluentBuilder.Create<MyContext>()
-        .Sequence("root")
-            .Do("walk to door", WalkToDoorFunc)
-            .Selector("open door sequence")
+var behaviourTree = FluentBuilder.Create<MyContext>()
+    .Sequence("root")
+        .Do("walk to door", WalkToDoorFunc)
+        .Selector("open door sequence")
+            .Do("open door", OpenDoorFunc)
+            .Sequence("locked door sequence")
+                .Do("unlock door", UnlockDoorFunc)
                 .Do("open door", OpenDoorFunc)
-                .Sequence("locked door sequence")
-                    .Do("unlock door", UnlockDoorFunc)
-                    .Do("open door", OpenDoorFunc)
-                .End()
-                .Do("smash door", SmashDoorFunc)
             .End()
-            .Do("walk through door", WalkThroughDoorFunc)
-            .Do("close door", CloseDoorFunc)
+            .Do("smash door", SmashDoorFunc)
         .End()
-        .Build();
+        .Do("walk through door", WalkThroughDoorFunc)
+        .Do("close door", CloseDoorFunc)
+    .End()
+    .Build();
 ```
 
 ## Node Types
@@ -47,144 +47,144 @@ Install-Package BehaviourTree.FluentBuilder
 
 #### Action
 ``` cs    
-    builder.Do("my-action", context => BehaviourStatus.Succeeded)
+builder.Do("my-action", context => BehaviourStatus.Succeeded)
 ```
 
 #### Wait
 ``` cs    
-    builder.Wait("my-wait", 3000) // 3 seconds
+builder.Wait("my-wait", 3000) // 3 seconds
 ```
 
 #### Condition
 ``` cs    
-    builder.Condition("my-condition", context => true)
+builder.Condition("my-condition", context => true)
 ```
 
 ### Composites
 
 #### Sequence
 ``` cs    
-    builder.Sequence("my-sequence")
-        .Do("action1", context => BehaviourStatus.Succeeded)
-        .Do("action2", context => BehaviourStatus.Succeeded)
-        .Do("action3", context => BehaviourStatus.Succeeded)
-        ...
-    .End()
+builder.Sequence("my-sequence")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
 ```
 
 #### Selector
 ``` cs    
-    builder.Selector("my-selector")
-        .Do("action1", context => BehaviourStatus.Failed)
-        .Do("action2", context => BehaviourStatus.Succeeded)
-        .Do("action3", context => BehaviourStatus.Succeeded)
-        ...
-    .End()
+builder.Selector("my-selector")
+    .Do("action1", context => BehaviourStatus.Failed)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
 ```
 
 #### PrioritySequence
 ``` cs    
-    builder.PrioritySequence("my-priority-sequence")
-        .Do("action1", context => BehaviourStatus.Succeeded)
-        .Do("action2", context => BehaviourStatus.Succeeded)
-        .Do("action3", context => BehaviourStatus.Succeeded)
-        ...
-    .End()
+builder.PrioritySequence("my-priority-sequence")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
 ```
 
 #### PrioritySelector
 ``` cs    
-    builder.PrioritySelector("my-priority-selector")
-        .Do("action1", context => BehaviourStatus.Failed)
-        .Do("action2", context => BehaviourStatus.Succeeded)
-        .Do("action3", context => BehaviourStatus.Succeeded)
-        ...
-    .End()
+builder.PrioritySelector("my-priority-selector")
+    .Do("action1", context => BehaviourStatus.Failed)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
 ```
 
 #### SimpleParallel
 ``` cs
-    public enum SimpleParallelPolicy
-    {
-        BothMustSucceed,
-        OnlyOneMustSucceed
-    }
-    
-    var policy = SimpleParallelPolicy.BothMustSucceed;
-    
-    builder.SimpleParallel("my-parallel", policy)
-        .Do("action1", context => BehaviourStatus.Running)
-        .Do("action2", context => BehaviourStatus.Running)
-    .End()
+public enum SimpleParallelPolicy
+{
+    BothMustSucceed,
+    OnlyOneMustSucceed
+}
+
+var policy = SimpleParallelPolicy.BothMustSucceed;
+
+builder.SimpleParallel("my-parallel", policy)
+    .Do("action1", context => BehaviourStatus.Running)
+    .Do("action2", context => BehaviourStatus.Running)
+.End()
 ```
 
 ### Decorators
 
 #### Cooldown
 ``` cs    
-    builder.Cooldown("my-cooldown", 4000) // 4 seconds
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.Cooldown("my-cooldown", 4000) // 4 seconds
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### Failer
 ``` cs    
-    builder.AlwaysFail("my-failer")
-        .Do("action1", context => BehaviourStatus.Succeeded)
-    .End()
+builder.AlwaysFail("my-failer")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+.End()
 ```
 
 #### Succeeder
 ``` cs    
-    builder.AlwaysSucceed("my-succeeder")
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.AlwaysSucceed("my-succeeder")
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### Inverter
 ``` cs    
-    builder.Invert("my-inverter")
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.Invert("my-inverter")
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### RateLimiter
 ``` cs    
-    builder.LimitCallRate("my-rate-limiter", 1000) // 1 second
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.LimitCallRate("my-rate-limiter", 1000) // 1 second
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### Repeat
 ``` cs    
-    builder.Repeat("my-repeater", 5)
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.Repeat("my-repeater", 5)
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### TimeLimit
 ``` cs    
-    builder.TimeLimit("my-time-limit", 5000) // has 5 seconds to complete or will fail
-        .Do("action1", context => BehaviourStatus.Running)
-    .End()
+builder.TimeLimit("my-time-limit", 5000) // has 5 seconds to complete or will fail
+    .Do("action1", context => BehaviourStatus.Running)
+.End()
 ```
 
 #### UntilSuccess
 ``` cs    
-    builder.UntilSuccess("my-until-success")
-        .Do("action1", context => BehaviourStatus.Failed)
-    .End()
+builder.UntilSuccess("my-until-success")
+    .Do("action1", context => BehaviourStatus.Failed)
+.End()
 ```
 
 #### UntilFailed
 ``` cs    
-    builder.UntilFailed("my-until-failed")
-        .Do("action1", context => BehaviourStatus.Succeeded)
-    .End()
+builder.UntilFailed("my-until-failed")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+.End()
 ```
 
 #### SubTree
 ``` cs    
-    builder.SubTree("my-sub-tree", otherBehaviourTree)
+builder.SubTree("my-sub-tree", otherBehaviourTree)
 ```
 
