@@ -7,7 +7,11 @@ namespace BehaviourTree.Decorators
         private readonly long _timeLimitInTicks;
         private long? _initialTimestamp;
 
-        public TimeLimit(IBehaviour child, int timeLimitInMilliseconds) : base(child)
+        public TimeLimit(IBehaviour child, int timeLimitInMilliseconds) : this("TimeLimit", child, timeLimitInMilliseconds)
+        {
+        }
+
+        public TimeLimit(string name, IBehaviour child, int timeLimitInMilliseconds) : base(name, child)
         {
             _timeLimitInTicks = TimeSpan.FromMilliseconds(timeLimitInMilliseconds).Ticks;
         }

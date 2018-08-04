@@ -2,7 +2,11 @@
 {
     public sealed class Succeeder : DecoratorBehaviour
     {
-        public Succeeder(IBehaviour child) : base(child)
+        public Succeeder(IBehaviour child) : this("Succeeder", child)
+        {
+        }
+
+        public Succeeder(string name, IBehaviour child) : base(name, child)
         {
         }
 

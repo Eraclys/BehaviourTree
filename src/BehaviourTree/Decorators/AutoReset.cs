@@ -2,7 +2,11 @@
 {
     public sealed class AutoReset : DecoratorBehaviour
     {
-        public AutoReset(IBehaviour child) : base(child)
+        public AutoReset(IBehaviour child) : this("AutoReset", child)
+        {
+        }
+
+        public AutoReset(string name, IBehaviour child) : base(name, child)
         {
         }
 

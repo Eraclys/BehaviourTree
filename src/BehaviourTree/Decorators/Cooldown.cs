@@ -9,7 +9,11 @@ namespace BehaviourTree.Decorators
 
         public bool OnCooldown { get; private set; }
 
-        public Cooldown(IBehaviour child, int cooldownTimeInMilliseconds) : base(child)
+        public Cooldown(IBehaviour child, int cooldownTimeInMilliseconds) : this("Cooldown", child, cooldownTimeInMilliseconds)
+        {
+        }
+
+        public Cooldown(string name, IBehaviour child, int cooldownTimeInMilliseconds) : base(name, child)
         {
             _cooldownTimeInTicks = TimeSpan.FromMilliseconds(cooldownTimeInMilliseconds).Ticks;
         }

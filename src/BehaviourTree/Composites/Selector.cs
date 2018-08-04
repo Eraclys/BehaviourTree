@@ -4,9 +4,14 @@
     {
         private int _currentChildIndex;
 
-        public Selector(IBehaviour[] children) : base(children)
+        public Selector(IBehaviour[] children) : this("Selector", children)
         {
         }
+
+        public Selector(string name, IBehaviour[] children) : base(name, children)
+        {
+        }
+
 
         protected override BehaviourStatus Update(BtContext context)
         {

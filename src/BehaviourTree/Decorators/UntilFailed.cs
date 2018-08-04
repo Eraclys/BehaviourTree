@@ -2,7 +2,11 @@
 {
     public sealed class UntilFailed : DecoratorBehaviour
     {
-        public UntilFailed(IBehaviour child) : base(child)
+        public UntilFailed(IBehaviour child) : this("UntilFailed", child)
+        {
+        }
+
+        public UntilFailed(string name, IBehaviour child) : base(name, child)
         {
         }
 

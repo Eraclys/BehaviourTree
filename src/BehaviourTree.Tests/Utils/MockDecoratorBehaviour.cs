@@ -4,7 +4,7 @@ namespace BehaviourTree.Tests.Utils
 {
     public sealed class MockDecoratorBehaviour : DecoratorBehaviour
     {
-        public MockDecoratorBehaviour(IBehaviour child) : base(child)
+        public MockDecoratorBehaviour(IBehaviour child) : base("MockDecoratorBehaviour", child)
         {
         }
 

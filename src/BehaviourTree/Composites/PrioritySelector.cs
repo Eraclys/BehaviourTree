@@ -2,7 +2,11 @@
 {
     public sealed class PrioritySelector : CompositeBehaviour
     {
-        public PrioritySelector(IBehaviour[] children) : base(children)
+        public PrioritySelector(IBehaviour[] children) : this("PrioritySelector", children)
+        {
+        }
+
+        public PrioritySelector(string name, IBehaviour[] children) : base(name, children)
         {
         }
 

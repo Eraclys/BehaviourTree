@@ -7,7 +7,12 @@ namespace BehaviourTree.Behaviours
         private readonly long _waitTimeInTicks;
         private long? _initialTimestamp;
 
-        public Wait(int waitTimeInMilliseconds)
+        public Wait(int waitTimeInMilliseconds) : this("Wait", waitTimeInMilliseconds)
+        {
+
+        }
+
+        public Wait(string name, int waitTimeInMilliseconds) : base(name)
         {
             _waitTimeInTicks = TimeSpan.FromMilliseconds(waitTimeInMilliseconds).Ticks;
         }

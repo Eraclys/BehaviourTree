@@ -8,7 +8,11 @@ namespace BehaviourTree.Decorators
         private long? _previousTimestamp;
         private BehaviourStatus _previousChildStatus;
 
-        public RateLimiter(IBehaviour child, int intervalInMilliseconds) : base(child)
+        public RateLimiter(IBehaviour child, int intervalInMilliseconds) : this("RateLimiter", child, intervalInMilliseconds)
+        {
+        }
+
+        public RateLimiter(string name, IBehaviour child, int intervalInMilliseconds) : base(name, child)
         {
             _intervalInTicks = TimeSpan.FromMilliseconds(intervalInMilliseconds).Ticks;
         }

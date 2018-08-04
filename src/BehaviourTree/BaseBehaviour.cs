@@ -4,7 +4,13 @@ namespace BehaviourTree
 {
     public abstract class BaseBehaviour : IBehaviour
     {
+        protected string Name;
         protected BehaviourStatus Status { get; private set; } = BehaviourStatus.Ready;
+
+        protected BaseBehaviour(string name)
+        {
+            Name = name;
+        }
 
         public BehaviourStatus Tick(BtContext context)
         {

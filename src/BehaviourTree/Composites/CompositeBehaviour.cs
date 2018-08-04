@@ -7,7 +7,7 @@ namespace BehaviourTree.Composites
     {
         protected IBehaviour[] Children { get; }
 
-        protected CompositeBehaviour(IBehaviour[] children)
+        protected CompositeBehaviour(string name, IBehaviour[] children) : base(name)
         {
             if (children == null)
             {

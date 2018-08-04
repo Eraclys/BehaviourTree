@@ -4,7 +4,11 @@
     {
         private int _currentChildIndex;
 
-        public Sequence(IBehaviour[] children) : base(children)
+        public Sequence(IBehaviour[] children) : this("Sequence", children)
+        {
+        }
+
+        public Sequence(string name, IBehaviour[] children) : base(name, children)
         {
         }
 

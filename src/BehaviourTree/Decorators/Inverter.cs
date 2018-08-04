@@ -2,7 +2,11 @@
 {
     public sealed class Inverter : DecoratorBehaviour
     {
-        public Inverter(IBehaviour child) : base(child)
+        public Inverter(IBehaviour child) : this("Inverter", child)
+        {
+        }
+
+        public Inverter(string name, IBehaviour child) : base(name, child)
         {
         }
 

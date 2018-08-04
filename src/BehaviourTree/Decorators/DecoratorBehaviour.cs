@@ -2,9 +2,9 @@
 {
     public abstract class DecoratorBehaviour : BaseBehaviour
     {
-        protected IBehaviour Child { get; }
+        protected readonly IBehaviour Child;
 
-        protected DecoratorBehaviour(IBehaviour child)
+        protected DecoratorBehaviour(string name, IBehaviour child) : base(name)
         {
             Child = child;
         }

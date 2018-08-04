@@ -7,7 +7,11 @@ namespace BehaviourTree.Decorators
         private int _repeatCount;
         public int Counter { get; private set; }
 
-        public Repeat(IBehaviour child, int repeatCount) : base(child)
+        public Repeat(IBehaviour child, int repeatCount) : this("Repeat", child, repeatCount)
+        {
+        }
+
+        public Repeat(string name, IBehaviour child, int repeatCount) : base(name, child)
         {
             if (repeatCount < 1)
             {

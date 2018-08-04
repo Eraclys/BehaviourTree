@@ -16,7 +16,12 @@ namespace BehaviourTree.Composites
             OnlyOneMustSucceed
         }
 
-        public SimpleParallel(Policy policy, IBehaviour first, IBehaviour second) : base(new[]{first, second})
+        public SimpleParallel(Policy policy, IBehaviour first, IBehaviour second) : this("SimpleParallel", policy, first, second)
+        {
+
+        }
+
+        public SimpleParallel(string name, Policy policy, IBehaviour first, IBehaviour second) : base(name, new[]{first, second})
         {
             _first = first;
             _second = second;

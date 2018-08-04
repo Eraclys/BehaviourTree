@@ -4,7 +4,7 @@ namespace BehaviourTree.Tests.Utils
 {
     public sealed class MockCompositeBehaviour : CompositeBehaviour
     {
-        public MockCompositeBehaviour(IBehaviour[] children) : base(children)
+        public MockCompositeBehaviour(IBehaviour[] children) : base("MockCompositeBehaviour", children)
         {
         }
 

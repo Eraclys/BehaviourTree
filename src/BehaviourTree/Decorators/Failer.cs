@@ -2,7 +2,11 @@
 {
     public sealed class Failer : DecoratorBehaviour
     {
-        public Failer(IBehaviour child) : base(child)
+        public Failer(IBehaviour child) : this("Failer", child)
+        {
+        }
+
+        public Failer(string name, IBehaviour child) : base(name, child)
         {
         }
 

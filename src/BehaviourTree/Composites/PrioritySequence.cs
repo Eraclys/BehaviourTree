@@ -1,10 +1,12 @@
-﻿using System;
-
-namespace BehaviourTree.Composites
+﻿namespace BehaviourTree.Composites
 {
     public sealed class PrioritySequence : CompositeBehaviour
     {
-        public PrioritySequence(IBehaviour[] children) : base(children)
+        public PrioritySequence(IBehaviour[] children) : this("PrioritySequence", children)
+        {
+        }
+
+        public PrioritySequence(string name, IBehaviour[] children) : base(name, children)
         {
         }
 
