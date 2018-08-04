@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <PackageId>BehaviourTree</PackageId>
-	<PackageVersion>1.0.0</PackageVersion>
+	  <PackageVersion>1.0.0</PackageVersion>
     <PackageTags>behavior behaviour tree</PackageTags>
     <RepositoryUrl>https://github.com/Eraclys/BehaviourTree/</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Eraclys/BehaviourTree/blob/master/LICENSE</PackageLicenseUrl>

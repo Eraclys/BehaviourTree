@@ -1,7 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>BehaviourTree.FluentBuilder</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageTags>c# behavior behaviour tree fluent</PackageTags>
+    <RepositoryUrl>https://github.com/Eraclys/BehaviourTree/</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Eraclys/BehaviourTree/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Eraclys/BehaviourTree/</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
