@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BehaviourTree.Composites;
+﻿using BehaviourTree.Composites;
 using BehaviourTree.Tests.Utils;
 using NUnit.Framework;
 

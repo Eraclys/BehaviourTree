@@ -24,9 +24,10 @@
             return BehaviourStatus.Failed;
         }
 
-        protected override void OnTerminate(BehaviourStatus status)
+        protected override void DoReset(BehaviourStatus status)
         {
             _currentChildIndex = 0;
+            base.DoReset(status);
         }
     }
 }

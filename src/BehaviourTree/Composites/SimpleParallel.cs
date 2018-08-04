@@ -76,22 +76,11 @@ namespace BehaviourTree.Composites
             return _behave(context);
         }
 
-        protected override void OnTerminate(BehaviourStatus status)
-        {
-            ResetChildren();
-        }
-
         protected override void DoReset(BehaviourStatus status)
         {
-            ResetChildren();
-        }
-
-        private void ResetChildren()
-        {
-            foreach (var child in Children)
-            {
-                child.Reset();
-            }
+            _firstStatus = BehaviourStatus.Ready;
+            _secondStatus = BehaviourStatus.Ready;
+            base.DoReset(status);
         }
     }
 }

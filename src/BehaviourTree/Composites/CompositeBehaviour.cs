@@ -37,5 +37,23 @@ namespace BehaviourTree.Composites
                 }
             }
         }
+
+        protected override void OnTerminate(BehaviourStatus status)
+        {
+            DoReset(status);
+        }
+
+        protected override void DoReset(BehaviourStatus status)
+        {
+            ResetChildren();
+        }
+
+        private void ResetChildren()
+        {
+            foreach (var child in Children)
+            {
+                child.Reset();
+            }
+        }
     }
 }

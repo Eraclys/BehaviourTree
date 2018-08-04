@@ -39,6 +39,7 @@ namespace BehaviourTree.Decorators
         protected override void DoReset(BehaviourStatus status)
         {
             _initialTimestamp = null;
+            base.DoReset(status);
         }
     }
 }
