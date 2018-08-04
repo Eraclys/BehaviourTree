@@ -50,6 +50,7 @@
     <Compile Include="RepeatTests.cs" />
     <Compile Include="SelectorTests.cs" />
     <Compile Include="SequenceTests.cs" />
+    <Compile Include="SimpleParallelTests.cs" />
     <Compile Include="TimeLimitTests.cs" />
     <Compile Include="UntilFailedTests.cs" />
     <Compile Include="SucceederTests.cs" />

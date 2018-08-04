@@ -5,6 +5,6 @@ namespace BehaviourTree
         Ready = 0,
         Running = 1,
         Succeeded = 2,
-        Failed = 3,
+        Failed = 3
     }
 }

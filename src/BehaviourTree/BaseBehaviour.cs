@@ -4,36 +4,36 @@ namespace BehaviourTree
 {
     public abstract class BaseBehaviour : IBehaviour
     {
-        private BehaviourStatus _status = BehaviourStatus.Ready;
+        protected BehaviourStatus Status { get; private set; } = BehaviourStatus.Ready;
 
         public BehaviourStatus Tick(BtContext context)
         {
-            if (_status == BehaviourStatus.Ready)
+            if (Status == BehaviourStatus.Ready)
             {
                 OnInitialize();
             }
 
-            _status = Update(context);
+            Status = Update(context);
 
-            if (_status == BehaviourStatus.Ready)
+            if (Status == BehaviourStatus.Ready)
             {
                 throw new InvalidOperationException("Ready status should not be returned by Behaviour Update Method");
             }
 
-            if (_status != BehaviourStatus.Running)
+            if (Status != BehaviourStatus.Running)
             {
-                OnTerminate(_status);
+                OnTerminate(Status);
             }
 
-            return _status;
+            return Status;
         }
 
         public void Reset()
         {
-            if (_status != BehaviourStatus.Ready)
+            if (Status != BehaviourStatus.Ready)
             {
-                DoReset(_status);
-                _status = BehaviourStatus.Ready;
+                DoReset(Status);
+                Status = BehaviourStatus.Ready;
             }
         }
 
