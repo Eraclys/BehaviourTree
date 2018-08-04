@@ -1,16 +1,16 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class PrioritySequence : CompositeBehaviour
+    public sealed class PrioritySequence<TContext> : CompositeBehaviour<TContext>
     {
-        public PrioritySequence(IBehaviour[] children) : this("PrioritySequence", children)
+        public PrioritySequence(IBehaviour<TContext>[] children) : this("PrioritySequence", children)
         {
         }
 
-        public PrioritySequence(string name, IBehaviour[] children) : base(name, children)
+        public PrioritySequence(string name, IBehaviour<TContext>[] children) : base(name, children)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             for (int i = 0; i < Children.Length; i++)
             {

@@ -2,14 +2,13 @@
 
 namespace BehaviourTree.Tests.Utils
 {
-    public sealed class MockClock : IClock
+    public sealed class MockContext : IClock
     {
         private long _timestamp = 0;
 
-        public IClock AddMilliseconds(int milliseconds)
+        public void AddMilliseconds(int milliseconds)
         {
             _timestamp += TimeSpan.FromMilliseconds(milliseconds).Ticks;
-            return this;
         }
 
         public long GetTimeStamp()

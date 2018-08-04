@@ -2,22 +2,22 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class RateLimiter : DecoratorBehaviour
+    public sealed class RateLimiter<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
         private readonly long _intervalInTicks;
         private long? _previousTimestamp;
         private BehaviourStatus _previousChildStatus;
 
-        public RateLimiter(IBehaviour child, int intervalInMilliseconds) : this("RateLimiter", child, intervalInMilliseconds)
+        public RateLimiter(IBehaviour<TContext> child, int intervalInMilliseconds) : this("RateLimiter", child, intervalInMilliseconds)
         {
         }
 
-        public RateLimiter(string name, IBehaviour child, int intervalInMilliseconds) : base(name, child)
+        public RateLimiter(string name, IBehaviour<TContext> child, int intervalInMilliseconds) : base(name, child)
         {
             _intervalInTicks = TimeSpan.FromMilliseconds(intervalInMilliseconds).Ticks;
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var currentTimeStamp = context.GetTimeStamp();
 

@@ -1,15 +1,14 @@
 ﻿using System;
-using BehaviourTree;
 
 namespace BehaviourTreeBuilder.Nodes
 {
-    public sealed class ConditionNode : Node
+    public sealed class ConditionNode<TContext> : Node
     {
-        public ConditionNode(Func<BtContext, bool> predicate)
+        public ConditionNode(Func<TContext, bool> predicate)
         {
             Predicate = predicate;
         }
 
-        public Func<BtContext, bool> Predicate { get; }
+        public Func<TContext, bool> Predicate { get; }
     }
 }

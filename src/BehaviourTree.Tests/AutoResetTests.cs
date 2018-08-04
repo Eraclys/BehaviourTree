@@ -13,9 +13,9 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour { ReturnStatus = status };
 
-            var sut = new AutoReset(child);
+            var sut = new AutoReset<MockContext>(child);
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(child.ResetCount, Is.EqualTo(1));
         }
@@ -25,9 +25,9 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-            var sut = new AutoReset(child);
+            var sut = new AutoReset<MockContext>(child);
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(child.ResetCount, Is.EqualTo(0));
         }
@@ -39,9 +39,9 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour { ReturnStatus = status };
 
-            var sut = new AutoReset(child);
+            var sut = new AutoReset<MockContext>(child);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(status));
         }

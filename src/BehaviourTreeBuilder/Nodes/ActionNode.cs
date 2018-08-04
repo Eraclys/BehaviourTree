@@ -3,13 +3,13 @@ using BehaviourTree;
 
 namespace BehaviourTreeBuilder.Nodes
 {
-    public sealed class ActionNode : Node
+    public sealed class ActionNode<TContext> : Node
     {
-        public ActionNode(Func<BtContext, BehaviourStatus> action)
+        public ActionNode(Func<TContext, BehaviourStatus> action)
         {
             Action = action;
         }
 
-        public Func<BtContext, BehaviourStatus> Action { get; }
+        public Func<TContext, BehaviourStatus> Action { get; }
     }
 }

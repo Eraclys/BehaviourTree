@@ -2,7 +2,7 @@
 
 namespace BehaviourTree
 {
-    public abstract class BaseBehaviour : IBehaviour
+    public abstract class BaseBehaviour<TContext> : IBehaviour<TContext>
     {
         protected string Name;
         protected BehaviourStatus Status { get; private set; } = BehaviourStatus.Ready;
@@ -12,7 +12,7 @@ namespace BehaviourTree
             Name = name;
         }
 
-        public BehaviourStatus Tick(BtContext context)
+        public BehaviourStatus Tick(TContext context)
         {
             if (Status == BehaviourStatus.Ready)
             {
@@ -43,7 +43,7 @@ namespace BehaviourTree
             }
         }
 
-        protected abstract BehaviourStatus Update(BtContext context);
+        protected abstract BehaviourStatus Update(TContext context);
 
         protected virtual void OnTerminate(BehaviourStatus status)
         {

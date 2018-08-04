@@ -2,9 +2,9 @@
 
 namespace BehaviourTree
 {
-    public interface IBehaviour : IDisposable
+    public interface IBehaviour<TContext> : IDisposable
     {
-        BehaviourStatus Tick(BtContext context);
+        BehaviourStatus Tick(TContext context);
         void Reset();
     }
 }

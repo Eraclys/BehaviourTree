@@ -4,9 +4,9 @@ namespace BehaviourTreeBuilder.Nodes
 {
     public sealed class SimpleParallelNode : CompositeNode
     {
-        public SimpleParallel.Policy Policy { get; }
+        public SimpleParallelPolicy Policy { get; }
 
-        public SimpleParallelNode(SimpleParallel.Policy policy)
+        public SimpleParallelNode(SimpleParallelPolicy policy)
         {
             Policy = policy;
         }

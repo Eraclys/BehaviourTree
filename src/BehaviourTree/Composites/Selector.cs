@@ -1,19 +1,18 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class Selector : CompositeBehaviour
+    public sealed class Selector<TContext> : CompositeBehaviour<TContext>
     {
         private int _currentChildIndex;
 
-        public Selector(IBehaviour[] children) : this("Selector", children)
+        public Selector(IBehaviour<TContext>[] children) : this("Selector", children)
         {
         }
 
-        public Selector(string name, IBehaviour[] children) : base(name, children)
+        public Selector(string name, IBehaviour<TContext>[] children) : base(name, children)
         {
         }
 
-
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             do
             {

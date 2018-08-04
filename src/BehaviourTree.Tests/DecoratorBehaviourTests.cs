@@ -19,7 +19,7 @@ namespace BehaviourTree.Tests
 
             Assert.That(childBehaviour.ResetCount, Is.EqualTo(0));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             sut.Reset();
 

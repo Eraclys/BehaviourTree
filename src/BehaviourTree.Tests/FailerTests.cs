@@ -10,9 +10,9 @@ namespace BehaviourTree.Tests
         [Test]
         public void WhenChildReturnSuccess_ReturnFailure()
         {
-            var sut = new Failer(new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded });
+            var sut = new Failer<MockContext>(new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded });
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
         }
@@ -20,9 +20,9 @@ namespace BehaviourTree.Tests
         [Test]
         public void WhenChildReturnFailure_ReturnFailure()
         {
-            var sut = new Failer(new MockBehaviour { ReturnStatus = BehaviourStatus.Failed });
+            var sut = new Failer<MockContext>(new MockBehaviour { ReturnStatus = BehaviourStatus.Failed });
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
         }
@@ -30,9 +30,9 @@ namespace BehaviourTree.Tests
         [Test]
         public void WhenChildReturnRunning_ReturnRunning()
         {
-            var sut = new Failer(new MockBehaviour { ReturnStatus = BehaviourStatus.Running });
+            var sut = new Failer<MockContext>(new MockBehaviour { ReturnStatus = BehaviourStatus.Running });
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
         }

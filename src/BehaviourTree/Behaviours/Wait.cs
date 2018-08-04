@@ -2,7 +2,7 @@
 
 namespace BehaviourTree.Behaviours
 {
-    public sealed class Wait : BaseBehaviour
+    public sealed class Wait<TContext> : BaseBehaviour<TContext> where TContext : IClock
     {
         private readonly long _waitTimeInTicks;
         private long? _initialTimestamp;
@@ -17,7 +17,7 @@ namespace BehaviourTree.Behaviours
             _waitTimeInTicks = TimeSpan.FromMilliseconds(waitTimeInMilliseconds).Ticks;
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var currentTimeStamp = context.GetTimeStamp();
 

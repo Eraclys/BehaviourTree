@@ -1,16 +1,16 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class Inverter : DecoratorBehaviour
+    public sealed class Inverter<TContext> : DecoratorBehaviour<TContext>
     {
-        public Inverter(IBehaviour child) : this("Inverter", child)
+        public Inverter(IBehaviour<TContext> child) : this("Inverter", child)
         {
         }
 
-        public Inverter(string name, IBehaviour child) : base(name, child)
+        public Inverter(string name, IBehaviour<TContext> child) : base(name, child)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var childStatus = Child.Tick(context);
 

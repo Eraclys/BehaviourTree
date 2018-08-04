@@ -15,9 +15,9 @@ namespace BehaviourTree.Tests
                 .Select(x => new MockBehaviour { ReturnStatus = BehaviourStatus.Failed })
                 .ToArray();
 
-            var sut = new Selector(behaviours);
+            var sut = new Selector<MockContext>(behaviours);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
             Assert.That(behaviours.AllInitialized(), Is.True);
@@ -35,9 +35,9 @@ namespace BehaviourTree.Tests
 
             behaviours[4].ReturnStatus = status;
 
-            var sut = new Selector(behaviours);
+            var sut = new Selector<MockContext>(behaviours);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(status));
 
@@ -68,11 +68,11 @@ namespace BehaviourTree.Tests
 
             behaviours[4].ReturnStatus = BehaviourStatus.Running;
 
-            var sut = new Selector(behaviours);
+            var sut = new Selector<MockContext>(behaviours);
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
             behaviours[4].ReturnStatus = BehaviourStatus.Succeeded;
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
 
             for (int i = 0; i < 4; i++)

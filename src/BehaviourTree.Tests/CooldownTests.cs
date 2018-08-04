@@ -11,9 +11,9 @@ namespace BehaviourTree.Tests
         public void WhenNotOnCooldownAndChildReturnSuccess_ReturnSuccessAndGoOnCooldown()
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
-            var sut = new Cooldown(child, 1000);
+            var sut = new Cooldown<MockContext>(child, 1000);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
             Assert.That(child.TerminateCallCount, Is.EqualTo(1));
@@ -24,9 +24,9 @@ namespace BehaviourTree.Tests
         public void WhenNotOnCooldownAndChildReturnFailure_ReturnFailureAndDoNotGoOnCooldown()
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
-            var sut = new Cooldown(child, 1000);
+            var sut = new Cooldown<MockContext>(child, 1000);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
             Assert.That(child.TerminateCallCount, Is.EqualTo(1));
@@ -37,9 +37,9 @@ namespace BehaviourTree.Tests
         public void WhenNotOnCooldownAndChildReturnRunning_ReturnRunningAndDoNotGoOnCooldown()
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
-            var sut = new Cooldown(child, 1000);
+            var sut = new Cooldown<MockContext>(child, 1000);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
             Assert.That(child.TerminateCallCount, Is.EqualTo(0));
@@ -50,11 +50,11 @@ namespace BehaviourTree.Tests
         public void WhenOnCooldown_ReturnFailure()
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
-            var sut = new Cooldown(child, 1000);
+            var sut = new Cooldown<MockContext>(child, 1000);
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
             Assert.That(child.TerminateCallCount, Is.EqualTo(1));
@@ -65,14 +65,14 @@ namespace BehaviourTree.Tests
         public void WhenCooldownExpires_GoBackToRegularBehaviour()
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
-            var sut = new Cooldown(child, 1000);
-            var clock = new MockClock();
+            var sut = new Cooldown<MockContext>(child, 1000);
+            var context = new MockContext();
 
-            sut.Tick(new BtContext(clock));
+            sut.Tick(context);
 
-            clock.AddMilliseconds(2000);
+            context.AddMilliseconds(2000);
 
-            var behaviourStatus = sut.Tick(new BtContext(clock));
+            var behaviourStatus = sut.Tick(context);
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
             Assert.That(child.TerminateCallCount, Is.EqualTo(2));

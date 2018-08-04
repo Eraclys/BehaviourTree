@@ -1,16 +1,16 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class Succeeder : DecoratorBehaviour
+    public sealed class Succeeder<TContext> : DecoratorBehaviour<TContext>
     {
-        public Succeeder(IBehaviour child) : this("Succeeder", child)
+        public Succeeder(IBehaviour<TContext> child) : this("Succeeder", child)
         {
         }
 
-        public Succeeder(string name, IBehaviour child) : base(name, child)
+        public Succeeder(string name, IBehaviour<TContext> child) : base(name, child)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var childStatus = Child.Tick(context);
 

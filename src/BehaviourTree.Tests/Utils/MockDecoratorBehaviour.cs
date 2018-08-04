@@ -2,9 +2,9 @@
 
 namespace BehaviourTree.Tests.Utils
 {
-    public sealed class MockDecoratorBehaviour : DecoratorBehaviour
+    public sealed class MockDecoratorBehaviour : DecoratorBehaviour<MockContext>
     {
-        public MockDecoratorBehaviour(IBehaviour child) : base("MockDecoratorBehaviour", child)
+        public MockDecoratorBehaviour(IBehaviour<MockContext> child) : base("MockDecoratorBehaviour", child)
         {
         }
 
@@ -17,7 +17,7 @@ namespace BehaviourTree.Tests.Utils
         public BehaviourStatus ResetStatus { get; private set; }
         public BehaviourStatus ReturnStatus { get; set; }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(MockContext context)
         {
             UpdateCallCount++;
             ReturnStatus = Child.Tick(context);

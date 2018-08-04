@@ -2,11 +2,11 @@
 
 namespace BehaviourTreeBuilder.Nodes
 {
-    public sealed class SubTreeNode : Node
+    public sealed class SubTreeNode<TContext> : Node
     {
-        public IBehaviour SubBehaviour { get; }
+        public IBehaviour<TContext> SubBehaviour { get; }
 
-        public SubTreeNode(IBehaviour subBehaviour)
+        public SubTreeNode(IBehaviour<TContext> subBehaviour)
         {
             SubBehaviour = subBehaviour;
         }

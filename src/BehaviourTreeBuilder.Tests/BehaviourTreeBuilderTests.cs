@@ -9,7 +9,7 @@ namespace BehaviourTreeBuilder.Tests
         [Test]
         public void Test()
         {
-            var subTree = new FluentBuilder()
+            var subTree = FluentBuilder.Create<Clock>()
                 .LimitCallRate("LimitCallRate1", 963)
                     .AlwaysSucceed("AlwaysSucceed1")
                         .AlwaysFail("AlwaysFail1")
@@ -21,7 +21,7 @@ namespace BehaviourTreeBuilder.Tests
                 .End()
                 .Build();
 
-            var tree = new FluentBuilder()
+            var tree = FluentBuilder.Create<Clock>()
                 .Selector("Selector1")
                     .Subtree("Subtree1", subTree)
                     .Sequence("PrioritySelector1")

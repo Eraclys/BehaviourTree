@@ -7,16 +7,16 @@ namespace BehaviourTree.Tests
     [TestFixture]
     internal sealed class SimpleParallelTests
     {
-        [TestCase(SimpleParallel.Policy.OnlyOneMustSucceed)]
-        [TestCase(SimpleParallel.Policy.BothMustSucceed)]
-        public void WhenFirstTicked_ChildrenShouldAllBeStarted(SimpleParallel.Policy policy)
+        [TestCase(SimpleParallelPolicy.OnlyOneMustSucceed)]
+        [TestCase(SimpleParallelPolicy.BothMustSucceed)]
+        public void WhenFirstTicked_ChildrenShouldAllBeStarted(SimpleParallelPolicy policy)
         {
             var first = new MockBehaviour {ReturnStatus = BehaviourStatus.Running};
             var second = new MockBehaviour {ReturnStatus = BehaviourStatus.Running};
 
-            var sut = new SimpleParallel(policy, first, second);
+            var sut = new SimpleParallel<MockContext>(policy, first, second);
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(first.InitializeCallCount, Is.EqualTo(1));
             Assert.That(second.InitializeCallCount, Is.EqualTo(1));
@@ -24,33 +24,33 @@ namespace BehaviourTree.Tests
             Assert.That(second.UpdateCallCount, Is.EqualTo(1));
         }
 
-        [TestCase(SimpleParallel.Policy.OnlyOneMustSucceed)]
-        [TestCase(SimpleParallel.Policy.BothMustSucceed)]
-        public void WhenTicked_RunningChildrenShouldAllBeTicked(SimpleParallel.Policy policy)
+        [TestCase(SimpleParallelPolicy.OnlyOneMustSucceed)]
+        [TestCase(SimpleParallelPolicy.BothMustSucceed)]
+        public void WhenTicked_RunningChildrenShouldAllBeTicked(SimpleParallelPolicy policy)
         {
             var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
             var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-            var sut = new SimpleParallel(policy, first, second);
+            var sut = new SimpleParallel<MockContext>(policy, first, second);
 
-            sut.Tick(new BtContext());
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
+            sut.Tick(new MockContext());
 
             Assert.That(first.UpdateCallCount, Is.EqualTo(2));
             Assert.That(second.UpdateCallCount, Is.EqualTo(2));
         }
 
-        [TestCase(SimpleParallel.Policy.OnlyOneMustSucceed)]
-        [TestCase(SimpleParallel.Policy.BothMustSucceed)]
-        public void WhenTickedAndInACompletedStatus_ChildrenShouldAllBeTicked(SimpleParallel.Policy policy)
+        [TestCase(SimpleParallelPolicy.OnlyOneMustSucceed)]
+        [TestCase(SimpleParallelPolicy.BothMustSucceed)]
+        public void WhenTickedAndInACompletedStatus_ChildrenShouldAllBeTicked(SimpleParallelPolicy policy)
         {
             var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
             var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
 
-            var sut = new SimpleParallel(policy, first, second);
+            var sut = new SimpleParallel<MockContext>(policy, first, second);
 
-            sut.Tick(new BtContext());
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
+            sut.Tick(new MockContext());
 
             Assert.That(first.UpdateCallCount, Is.EqualTo(2));
             Assert.That(second.UpdateCallCount, Is.EqualTo(2));
@@ -65,9 +65,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.OnlyOneMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.OnlyOneMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
             }
@@ -78,9 +78,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.OnlyOneMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.OnlyOneMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
                 Assert.That(first.ResetCount, Is.EqualTo(1));
@@ -93,9 +93,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.OnlyOneMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.OnlyOneMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
             }
@@ -110,10 +110,10 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.BothMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.BothMustSucceed, first, second);
 
-                sut.Tick(new BtContext());
-                sut.Tick(new BtContext());
+                sut.Tick(new MockContext());
+                sut.Tick(new MockContext());
 
                 Assert.That(first.UpdateCallCount, Is.EqualTo(1));
                 Assert.That(second.UpdateCallCount, Is.EqualTo(2));
@@ -125,9 +125,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.BothMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.BothMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
             }
@@ -138,9 +138,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.BothMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.BothMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
                 Assert.That(first.ResetCount, Is.EqualTo(1));
@@ -153,9 +153,9 @@ namespace BehaviourTree.Tests
                 var first = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
                 var second = new MockBehaviour { ReturnStatus = BehaviourStatus.Succeeded };
 
-                var sut = new SimpleParallel(SimpleParallel.Policy.BothMustSucceed, first, second);
+                var sut = new SimpleParallel<MockContext>(SimpleParallelPolicy.BothMustSucceed, first, second);
 
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
             }

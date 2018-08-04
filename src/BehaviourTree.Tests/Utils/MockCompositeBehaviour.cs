@@ -2,9 +2,9 @@
 
 namespace BehaviourTree.Tests.Utils
 {
-    public sealed class MockCompositeBehaviour : CompositeBehaviour
+    public sealed class MockCompositeBehaviour : CompositeBehaviour<MockContext>
     {
-        public MockCompositeBehaviour(IBehaviour[] children) : base("MockCompositeBehaviour", children)
+        public MockCompositeBehaviour(IBehaviour<MockContext>[] children) : base("MockCompositeBehaviour", children)
         {
         }
 
@@ -16,7 +16,7 @@ namespace BehaviourTree.Tests.Utils
         public BehaviourStatus TerminateStatus { get; private set; }
         public BehaviourStatus ResetStatus { get; private set; }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(MockContext context)
         {
             BehaviourStatus lastStatus = BehaviourStatus.Ready;
 

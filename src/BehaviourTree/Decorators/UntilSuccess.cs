@@ -1,16 +1,16 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class UntilSuccess : DecoratorBehaviour
+    public sealed class UntilSuccess<TContext> : DecoratorBehaviour<TContext>
     {
-        public UntilSuccess(IBehaviour child) : this("UntilSuccess", child)
+        public UntilSuccess(IBehaviour<TContext> child) : this("UntilSuccess", child)
         {
         }
 
-        public UntilSuccess(string name, IBehaviour child) : base(name, child)
+        public UntilSuccess(string name, IBehaviour<TContext> child) : base(name, child)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var childStatus = Child.Tick(context);
 

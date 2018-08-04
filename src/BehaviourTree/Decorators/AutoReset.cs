@@ -1,16 +1,16 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public sealed class AutoReset : DecoratorBehaviour
+    public sealed class AutoReset<TContext> : DecoratorBehaviour<TContext>
     {
-        public AutoReset(IBehaviour child) : this("AutoReset", child)
+        public AutoReset(IBehaviour<TContext> child) : this("AutoReset", child)
         {
         }
 
-        public AutoReset(string name, IBehaviour child) : base(name, child)
+        public AutoReset(string name, IBehaviour<TContext> child) : base(name, child)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             return Child.Tick(context);
         }

@@ -2,33 +2,27 @@
 
 namespace BehaviourTree.Composites
 {
-    public sealed class SimpleParallel : CompositeBehaviour
+    public sealed class SimpleParallel<TContext> : CompositeBehaviour<TContext>
     {
-        private readonly IBehaviour _first;
-        private readonly IBehaviour _second;
+        private readonly IBehaviour<TContext> _first;
+        private readonly IBehaviour<TContext> _second;
         private BehaviourStatus _firstStatus;
         private BehaviourStatus _secondStatus;
-        private readonly Func<BtContext, BehaviourStatus> _behave;
+        private readonly Func<TContext, BehaviourStatus> _behave;
 
-        public enum Policy
-        {
-            BothMustSucceed,
-            OnlyOneMustSucceed
-        }
-
-        public SimpleParallel(Policy policy, IBehaviour first, IBehaviour second) : this("SimpleParallel", policy, first, second)
+        public SimpleParallel(SimpleParallelPolicy policy, IBehaviour<TContext> first, IBehaviour<TContext> second) : this("SimpleParallel", policy, first, second)
         {
 
         }
 
-        public SimpleParallel(string name, Policy policy, IBehaviour first, IBehaviour second) : base(name, new[]{first, second})
+        public SimpleParallel(string name, SimpleParallelPolicy policy, IBehaviour<TContext> first, IBehaviour<TContext> second) : base(name, new[]{first, second})
         {
             _first = first;
             _second = second;
-            _behave = policy == Policy.BothMustSucceed ? (Func<BtContext, BehaviourStatus>)BothMustSucceedBehaviour : OnlyOneMustSucceedBehaviour;
+            _behave = policy == SimpleParallelPolicy.BothMustSucceed ? (Func<TContext, BehaviourStatus>)BothMustSucceedBehaviour : OnlyOneMustSucceedBehaviour;
         }
 
-        private BehaviourStatus OnlyOneMustSucceedBehaviour(BtContext context)
+        private BehaviourStatus OnlyOneMustSucceedBehaviour(TContext context)
         {
             if (_firstStatus == BehaviourStatus.Succeeded || _secondStatus == BehaviourStatus.Succeeded)
             {
@@ -43,7 +37,7 @@ namespace BehaviourTree.Composites
             return BehaviourStatus.Running;
         }
 
-        private BehaviourStatus BothMustSucceedBehaviour(BtContext context)
+        private BehaviourStatus BothMustSucceedBehaviour(TContext context)
         {
             if (_firstStatus == BehaviourStatus.Succeeded && _secondStatus == BehaviourStatus.Succeeded)
             {
@@ -58,7 +52,7 @@ namespace BehaviourTree.Composites
             return BehaviourStatus.Running;
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             if (Status != BehaviourStatus.Running)
             {

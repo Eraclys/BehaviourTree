@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree.Tests.Utils
 {
-    internal sealed class MockBehaviour : BaseBehaviour
+    internal sealed class MockBehaviour : BaseBehaviour<MockContext>
     {
         public MockBehaviour() : base("MockBehaviour")
         {
@@ -15,7 +15,7 @@
         public BehaviourStatus ResetStatus { get; private set; }
         public BehaviourStatus ReturnStatus { get; set; }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(MockContext context)
         {
             UpdateCallCount++;
             return ReturnStatus;

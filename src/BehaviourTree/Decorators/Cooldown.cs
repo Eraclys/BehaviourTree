@@ -2,28 +2,28 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class Cooldown : DecoratorBehaviour
+    public sealed class Cooldown<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
         private readonly long _cooldownTimeInTicks;
         private long _cooldownStartedTimestamp;
 
         public bool OnCooldown { get; private set; }
 
-        public Cooldown(IBehaviour child, int cooldownTimeInMilliseconds) : this("Cooldown", child, cooldownTimeInMilliseconds)
+        public Cooldown(IBehaviour<TContext> child, int cooldownTimeInMilliseconds) : this("Cooldown", child, cooldownTimeInMilliseconds)
         {
         }
 
-        public Cooldown(string name, IBehaviour child, int cooldownTimeInMilliseconds) : base(name, child)
+        public Cooldown(string name, IBehaviour<TContext> child, int cooldownTimeInMilliseconds) : base(name, child)
         {
             _cooldownTimeInTicks = TimeSpan.FromMilliseconds(cooldownTimeInMilliseconds).Ticks;
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             return OnCooldown ? CooldownBehaviour(context) : RegularBehaviour(context);
         }
 
-        private BehaviourStatus RegularBehaviour(BtContext context)
+        private BehaviourStatus RegularBehaviour(TContext context)
         {
             var childStatus = Child.Tick(context);
 
@@ -35,7 +35,7 @@ namespace BehaviourTree.Decorators
             return childStatus;
         }
 
-        private BehaviourStatus CooldownBehaviour(BtContext context)
+        private BehaviourStatus CooldownBehaviour(TContext context)
         {
             var currentTimeStamp = context.GetTimeStamp();
 
@@ -57,7 +57,7 @@ namespace BehaviourTree.Decorators
             _cooldownStartedTimestamp = 0;
         }
 
-        private void EnterCooldown(BtContext context)
+        private void EnterCooldown(TContext context)
         {
             OnCooldown = true;
             _cooldownStartedTimestamp = context.GetTimeStamp();

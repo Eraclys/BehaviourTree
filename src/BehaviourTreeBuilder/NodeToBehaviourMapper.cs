@@ -9,14 +9,14 @@ using BehaviourTreeBuilder.Nodes;
 
 namespace BehaviourTreeBuilder
 {
-    public class NodeToBehaviourMapper : INodeToBehaviourMapper
+    public class NodeToBehaviourMapper<TContext> : INodeToBehaviourMapper<TContext> where TContext : IClock
     {
-        public IBehaviour Map(Node node)
+        public IBehaviour<TContext> Map(Node node)
         {
             switch (node)
             {
-                case ActionNode n: return MapActionNode(n);
-                case ConditionNode n: return MapConditionNode(n);
+                case ActionNode<TContext> n: return MapActionNode(n);
+                case ConditionNode<TContext> n: return MapConditionNode(n);
                 case WaitNode n: return MapWaitNode(n);
                 case PrioritySelectorNode n: return MapPrioritySelectorNode(n);
                 case PrioritySequenceNode n: return MapPrioritySequenceNode(n);
@@ -29,7 +29,7 @@ namespace BehaviourTreeBuilder
                 case InverterNode n: return MapInverterNode(n);
                 case RateLimiterNode n: return MapRateLimiterNode(n);
                 case RepeatNode n: return MapRepeatNode(n);
-                case SubTreeNode n: return MapSubTreeNode(n);
+                case SubTreeNode<TContext> n: return MapSubTreeNode(n);
                 case SucceederNode n: return MapSucceederNode(n);
                 case TimeLimitNode n: return MapTimeLimitNode(n);
                 case UntilFailedNode n: return MapUntilFailedNode(n);
@@ -38,107 +38,107 @@ namespace BehaviourTreeBuilder
             }
         }
 
-        private SubTree MapSubTreeNode(SubTreeNode node)
+        private SubTree<TContext> MapSubTreeNode(SubTreeNode<TContext> node)
         {
-            return new SubTree(node.Name, node.SubBehaviour);
+            return new SubTree<TContext>(node.Name, node.SubBehaviour);
         }
 
-        private UntilFailed MapUntilFailedNode(UntilFailedNode node)
+        private UntilFailed<TContext> MapUntilFailedNode(UntilFailedNode node)
         {
-            return new UntilFailed(node.Name, Map(node.Child));
+            return new UntilFailed<TContext>(node.Name, Map(node.Child));
         }
 
-        private UntilSuccess MapUntilSuccessNode(UntilSuccessNode node)
+        private UntilSuccess<TContext> MapUntilSuccessNode(UntilSuccessNode node)
         {
-            return new UntilSuccess(node.Name, Map(node.Child));
+            return new UntilSuccess<TContext>(node.Name, Map(node.Child));
         }
 
-        private TimeLimit MapTimeLimitNode(TimeLimitNode node)
+        private TimeLimit<TContext> MapTimeLimitNode(TimeLimitNode node)
         {
-            return new TimeLimit(node.Name, Map(node.Child), node.TimeLimitInMilliseconds);
+            return new TimeLimit<TContext>(node.Name, Map(node.Child), node.TimeLimitInMilliseconds);
         }
 
-        private Repeat MapRepeatNode(RepeatNode node)
+        private Repeat<TContext> MapRepeatNode(RepeatNode node)
         {
-            return new Repeat(node.Name, Map(node.Child), node.RepeatCount);
+            return new Repeat<TContext>(node.Name, Map(node.Child), node.RepeatCount);
         }
 
-        private RateLimiter MapRateLimiterNode(RateLimiterNode node)
+        private RateLimiter<TContext> MapRateLimiterNode(RateLimiterNode node)
         {
-            return new RateLimiter(node.Name, Map(node.Child), node.IntervalInMilliseconds);
+            return new RateLimiter<TContext>(node.Name, Map(node.Child), node.IntervalInMilliseconds);
         }
 
-        private Inverter MapInverterNode(InverterNode node)
+        private Inverter<TContext> MapInverterNode(InverterNode node)
         {
-            return new Inverter(node.Name, Map(node.Child));
+            return new Inverter<TContext>(node.Name, Map(node.Child));
         }
 
-        private Succeeder MapSucceederNode(SucceederNode node)
+        private Succeeder<TContext> MapSucceederNode(SucceederNode node)
         {
-            return new Succeeder(node.Name, Map(node.Child));
+            return new Succeeder<TContext>(node.Name, Map(node.Child));
         }
 
-        private Failer MapFailerNode(FailerNode node)
+        private Failer<TContext> MapFailerNode(FailerNode node)
         {
-            return new Failer(node.Name, Map(node.Child));
+            return new Failer<TContext>(node.Name, Map(node.Child));
         }
 
-        private Cooldown MapCooldownNode(CooldownNode node)
+        private Cooldown<TContext> MapCooldownNode(CooldownNode node)
         {
-            return new Cooldown(node.Name, Map(node.Child), node.CooldownTimeInMilliseconds);
+            return new Cooldown<TContext>(node.Name, Map(node.Child), node.CooldownTimeInMilliseconds);
         }
 
-        private AutoReset MapAutoResetNode(AutoResetNode node)
+        private AutoReset<TContext> MapAutoResetNode(AutoResetNode node)
         {
-            return new AutoReset(node.Name, Map(node.Child));
+            return new AutoReset<TContext>(node.Name, Map(node.Child));
         }
 
-        private SimpleParallel MapSimpleParallelNode(SimpleParallelNode node)
+        private SimpleParallel<TContext> MapSimpleParallelNode(SimpleParallelNode node)
         {
             if (node.Children.Count != 2)
             {
                 throw new ArgumentException("Simple parallel should have exactly two children nodes");
             }
 
-            return new SimpleParallel(node.Name, node.Policy, Map(node.Children[0]), Map(node.Children[1]));
+            return new SimpleParallel<TContext>(node.Name, node.Policy, Map(node.Children[0]), Map(node.Children[1]));
         }
 
-        private Sequence MapSequenceNode(SequenceNode node)
+        private Sequence<TContext> MapSequenceNode(SequenceNode node)
         {
-            return new Sequence(node.Name, node.Children.Select(Map).ToArray());
+            return new Sequence<TContext>(node.Name, node.Children.Select(Map).ToArray());
         }
 
-        private Selector MapSelectorNode(SelectorNode node)
+        private Selector<TContext> MapSelectorNode(SelectorNode node)
         {
-            return new Selector(node.Name, node.Children.Select(Map).ToArray());
+            return new Selector<TContext>(node.Name, node.Children.Select(Map).ToArray());
         }
 
-        private PrioritySelector MapPrioritySelectorNode(PrioritySelectorNode node)
+        private PrioritySelector<TContext> MapPrioritySelectorNode(PrioritySelectorNode node)
         {
-            return new PrioritySelector(node.Name, node.Children.Select(Map).ToArray());
+            return new PrioritySelector<TContext>(node.Name, node.Children.Select(Map).ToArray());
         }
 
-        private PrioritySequence MapPrioritySequenceNode(PrioritySequenceNode node)
+        private PrioritySequence<TContext> MapPrioritySequenceNode(PrioritySequenceNode node)
         {
-            return new PrioritySequence(node.Name, node.Children.Select(Map).ToArray());
+            return new PrioritySequence<TContext>(node.Name, node.Children.Select(Map).ToArray());
         }
 
-        private static Wait MapWaitNode(WaitNode node)
+        private static Wait<TContext> MapWaitNode(WaitNode node)
         {
-            return new Wait(node.WaitTimeInMilliseconds);
+            return new Wait<TContext>(node.WaitTimeInMilliseconds);
         }
 
-        private static ActionBehaviour MapActionNode(ActionNode node)
+        private static ActionBehaviour<TContext> MapActionNode(ActionNode<TContext> node)
         {
-            return new ActionBehaviour(node.Name, node.Action);
+            return new ActionBehaviour<TContext>(node.Name, node.Action);
         }
 
-        private static Condition MapConditionNode(ConditionNode node)
+        private static Condition<TContext> MapConditionNode(ConditionNode<TContext> node)
         {
-            return new Condition(node.Name, node.Predicate);
+            return new Condition<TContext>(node.Name, node.Predicate);
         }
 
-        protected virtual IBehaviour MapUnknownNode(Node node)
+        protected virtual IBehaviour<TContext> MapUnknownNode(Node node)
         {
             throw new Exception($"Unkown node '{node.GetType().Name}' encountered. Extend NodeToBehaviourMapper to add your custom nodes");
         }

@@ -5,29 +5,32 @@ using BehaviourTreeBuilder.Nodes;
 
 namespace BehaviourTreeBuilder
 {
-    public sealed class FluentBuilder
+    public static class FluentBuilder
     {
-        private readonly INodeToBehaviourMapper _nodeToBehaviourMapper;
+        public static FluentBuilder<T> Create<T>() where T : IClock
+        {
+            return new FluentBuilder<T>(new NodeToBehaviourMapper<T>());
+        }
+    }
+
+    public sealed class FluentBuilder<TContext>
+    {
+        private readonly INodeToBehaviourMapper<TContext> _nodeToBehaviourMapper;
         private readonly Stack<Node> _parentNodeStack = new Stack<Node>();
         private Node _currentNode;
 
-        public FluentBuilder() : this(new NodeToBehaviourMapper())
-        {
-
-        }
-
-        public FluentBuilder(INodeToBehaviourMapper nodeToBehaviourMapper)
+        public FluentBuilder(INodeToBehaviourMapper<TContext> nodeToBehaviourMapper)
         {
             _nodeToBehaviourMapper = nodeToBehaviourMapper;
         }
 
-        public FluentBuilder End()
+        public FluentBuilder<TContext> End()
         {
             _currentNode = _parentNodeStack.Pop();
             return this;
         }
 
-        public FluentBuilder Push(Node node)
+        public FluentBuilder<TContext> Push(Node node)
         {
             if (node is ICanAddChild)
             {
@@ -48,7 +51,7 @@ namespace BehaviourTreeBuilder
             return this;
         }
 
-        public IBehaviour Build()
+        public IBehaviour<TContext> Build()
         {
             if (_currentNode == null)
             {

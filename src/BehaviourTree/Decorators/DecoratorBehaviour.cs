@@ -1,10 +1,10 @@
 ﻿namespace BehaviourTree.Decorators
 {
-    public abstract class DecoratorBehaviour : BaseBehaviour
+    public abstract class DecoratorBehaviour<TContext> : BaseBehaviour<TContext>
     {
-        protected readonly IBehaviour Child;
+        protected readonly IBehaviour<TContext> Child;
 
-        protected DecoratorBehaviour(string name, IBehaviour child) : base(name)
+        protected DecoratorBehaviour(string name, IBehaviour<TContext> child) : base(name)
         {
             Child = child;
         }

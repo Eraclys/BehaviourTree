@@ -19,11 +19,11 @@ namespace BehaviourTree.Tests
 
             Assert.That(sut.InitializeCallCount, Is.EqualTo(0));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(sut.InitializeCallCount, Is.EqualTo(1));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(sut.InitializeCallCount, Is.EqualTo(1));
         }
@@ -39,7 +39,7 @@ namespace BehaviourTree.Tests
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(0));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(1));
             Assert.That(sut.TerminateStatus, Is.EqualTo(status));
@@ -55,7 +55,7 @@ namespace BehaviourTree.Tests
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(0));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             Assert.That(sut.TerminateCallCount, Is.EqualTo(0));
         }
@@ -68,7 +68,7 @@ namespace BehaviourTree.Tests
                 ReturnStatus = BehaviourStatus.Ready
             };
 
-            Assert.Throws<InvalidOperationException>(() => sut.Tick(new BtContext()));
+            Assert.Throws<InvalidOperationException>(() => sut.Tick(new MockContext()));
         }
 
         [TestCase(BehaviourStatus.Succeeded)]
@@ -83,7 +83,7 @@ namespace BehaviourTree.Tests
 
             Assert.That(sut.ResetCount, Is.EqualTo(0));
 
-            sut.Tick(new BtContext());
+            sut.Tick(new MockContext());
 
             sut.Reset();
 

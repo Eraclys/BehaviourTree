@@ -3,8 +3,8 @@ using BehaviourTreeBuilder.Nodes;
 
 namespace BehaviourTreeBuilder
 {
-    public interface INodeToBehaviourMapper
+    public interface INodeToBehaviourMapper<TContext>
     {
-        IBehaviour Map(Node node);
+        IBehaviour<TContext> Map(Node node);
     }
 }

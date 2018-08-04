@@ -3,23 +3,23 @@
 namespace BehaviourTree.Behaviours
 {
     // ReSharper disable once ClassCanBeSealed.Global
-    public class Condition : IBehaviour
+    public class Condition<TContext> : IBehaviour<TContext>
     {
         private readonly string _name;
-        private readonly Func<BtContext, bool> _predicate;
+        private readonly Func<TContext, bool> _predicate;
 
-        public Condition(Func<BtContext, bool> predicate) : this(null, predicate)
+        public Condition(Func<TContext, bool> predicate) : this(null, predicate)
         {
 
         }
 
-        public Condition(string name, Func<BtContext, bool> predicate)
+        public Condition(string name, Func<TContext, bool> predicate)
         {
             _name = name ?? "Condition";
             _predicate = predicate;
         }
 
-        public BehaviourStatus Tick(BtContext context)
+        public BehaviourStatus Tick(TContext context)
         {
             return _predicate(context) ? BehaviourStatus.Succeeded : BehaviourStatus.Failed;
         }

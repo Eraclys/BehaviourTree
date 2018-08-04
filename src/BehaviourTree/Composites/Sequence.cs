@@ -1,18 +1,18 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class Sequence : CompositeBehaviour
+    public sealed class Sequence<TContext> : CompositeBehaviour<TContext>
     {
         private int _currentChildIndex;
 
-        public Sequence(IBehaviour[] children) : this("Sequence", children)
+        public Sequence(IBehaviour<TContext>[] children) : this("Sequence", children)
         {
         }
 
-        public Sequence(string name, IBehaviour[] children) : base(name, children)
+        public Sequence(string name, IBehaviour<TContext>[] children) : base(name, children)
         {
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             do
             {

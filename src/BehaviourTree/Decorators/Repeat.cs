@@ -2,16 +2,16 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class Repeat : DecoratorBehaviour
+    public sealed class Repeat<TContext> : DecoratorBehaviour<TContext>
     {
         private int _repeatCount;
         public int Counter { get; private set; }
 
-        public Repeat(IBehaviour child, int repeatCount) : this("Repeat", child, repeatCount)
+        public Repeat(IBehaviour<TContext> child, int repeatCount) : this("Repeat", child, repeatCount)
         {
         }
 
-        public Repeat(string name, IBehaviour child, int repeatCount) : base(name, child)
+        public Repeat(string name, IBehaviour<TContext> child, int repeatCount) : base(name, child)
         {
             if (repeatCount < 1)
             {
@@ -21,7 +21,7 @@ namespace BehaviourTree.Decorators
             _repeatCount = repeatCount;
         }
 
-        protected override BehaviourStatus Update(BtContext context)
+        protected override BehaviourStatus Update(TContext context)
         {
             var childStatus = Child.Tick(context);
 

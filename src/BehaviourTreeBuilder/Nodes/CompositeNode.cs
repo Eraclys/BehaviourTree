@@ -14,9 +14,4 @@ namespace BehaviourTreeBuilder.Nodes
 
         public ReadOnlyCollection<Node> Children => new ReadOnlyCollection<Node>(_children);
     }
-
-    public interface ICanAddChild
-    {
-        void AddChild(Node node);
-    }
 }

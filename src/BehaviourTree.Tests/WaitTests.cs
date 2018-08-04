@@ -10,9 +10,9 @@ namespace BehaviourTree.Tests
         [Test]
         public void WhenStarted_ReturnRunning()
         {
-            var sut = new Wait(1000);
+            var sut = new Wait<MockContext>(1000);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
         }
@@ -20,18 +20,18 @@ namespace BehaviourTree.Tests
         [Test]
         public void WhenWaitTimeExpires_ReturnSuccessAndResetTimer()
         {
-            var sut = new Wait(1000);
-            var clock = new MockClock();
+            var sut = new Wait<MockContext>(1000);
+            var context = new MockContext();
 
-            sut.Tick(new BtContext(clock));
+            sut.Tick(context);
 
-            clock.AddMilliseconds(2000);
+            context.AddMilliseconds(2000);
 
-            var behaviourStatus = sut.Tick(new BtContext(clock));
+            var behaviourStatus = sut.Tick(context);
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
 
-            behaviourStatus = sut.Tick(new BtContext(clock));
+            behaviourStatus = sut.Tick(context);
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
         }

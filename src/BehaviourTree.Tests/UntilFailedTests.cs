@@ -12,12 +12,12 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour {ReturnStatus = BehaviourStatus.Succeeded};
 
-            var sut = new UntilFailed(child);
+            var sut = new UntilFailed<MockContext>(child);
 
 
             for (var i = 0; i < 10; i++)
             {
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
                 Assert.That(child.TerminateCallCount, Is.EqualTo(i+1));
@@ -29,9 +29,9 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Failed };
 
-            var sut = new UntilFailed(child);
+            var sut = new UntilFailed<MockContext>(child);
 
-            var behaviourStatus = sut.Tick(new BtContext());
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Succeeded));
         }
@@ -41,11 +41,11 @@ namespace BehaviourTree.Tests
         {
             var child = new MockBehaviour { ReturnStatus = BehaviourStatus.Running };
 
-            var sut = new UntilFailed(child);
+            var sut = new UntilFailed<MockContext>(child);
 
             for (var i = 0; i < 10; i++)
             {
-                var behaviourStatus = sut.Tick(new BtContext());
+                var behaviourStatus = sut.Tick(new MockContext());
 
                 Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
                 Assert.That(child.TerminateCallCount, Is.EqualTo(0));
