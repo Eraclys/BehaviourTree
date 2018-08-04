@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourTree", "BehaviourT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.Tests", "BehaviourTree.Tests\BehaviourTree.Tests.csproj", "{642AD8E2-054B-4789-9741-2CFF08BC2A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTreeBuilder", "BehaviourTreeBuilder\BehaviourTreeBuilder.csproj", "{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.FluentBuilder", "BehaviourTree.FluentBuilder\BehaviourTree.FluentBuilder.csproj", "{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTreeBuilder.Tests", "BehaviourTreeBuilder.Tests\BehaviourTreeBuilder.Tests.csproj", "{8044E4A1-66B4-4203-B3EB-B88B494568CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.FluentBuilder.Tests", "BehaviourTree.FluentBuilder.Tests\BehaviourTree.FluentBuilder.Tests.csproj", "{8044E4A1-66B4-4203-B3EB-B88B494568CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
