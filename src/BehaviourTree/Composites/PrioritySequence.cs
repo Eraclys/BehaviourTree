@@ -24,5 +24,16 @@
 
             return BehaviourStatus.Succeeded;
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<PrioritySequence<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }

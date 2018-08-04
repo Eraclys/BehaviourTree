@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace BehaviourTree.Decorators
+﻿namespace BehaviourTree.Decorators
 {
     public sealed class Cooldown<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
-        private readonly long _cooldownTimeInTicks;
+        public readonly long CooldownTimeInMilliseconds;
         private long _cooldownStartedTimestamp;
 
         public bool OnCooldown { get; private set; }
@@ -15,7 +13,7 @@ namespace BehaviourTree.Decorators
 
         public Cooldown(string name, IBehaviour<TContext> child, int cooldownTimeInMilliseconds) : base(name, child)
         {
-            _cooldownTimeInTicks = TimeSpan.FromMilliseconds(cooldownTimeInMilliseconds).Ticks;
+            CooldownTimeInMilliseconds = cooldownTimeInMilliseconds;
         }
 
         protected override BehaviourStatus Update(TContext context)
@@ -37,11 +35,11 @@ namespace BehaviourTree.Decorators
 
         private BehaviourStatus CooldownBehaviour(TContext context)
         {
-            var currentTimeStamp = context.GetTimeStamp();
+            var currentTimeStamp = context.GetTimeStampInMilliseconds();
 
-            var elapsedTicks = currentTimeStamp - _cooldownStartedTimestamp;
+            var elapsedMilliseconds = currentTimeStamp - _cooldownStartedTimestamp;
 
-            if (elapsedTicks >= _cooldownTimeInTicks)
+            if (elapsedMilliseconds >= CooldownTimeInMilliseconds)
             {
                 ExitCooldown();
 
@@ -60,7 +58,18 @@ namespace BehaviourTree.Decorators
         private void EnterCooldown(TContext context)
         {
             OnCooldown = true;
-            _cooldownStartedTimestamp = context.GetTimeStamp();
+            _cooldownStartedTimestamp = context.GetTimeStampInMilliseconds();
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<Cooldown<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

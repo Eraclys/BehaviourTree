@@ -21,5 +21,16 @@
 
             return BehaviourStatus.Running;
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<UntilFailed<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }

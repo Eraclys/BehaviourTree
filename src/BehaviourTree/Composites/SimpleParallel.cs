@@ -9,6 +9,7 @@ namespace BehaviourTree.Composites
         private BehaviourStatus _firstStatus;
         private BehaviourStatus _secondStatus;
         private readonly Func<TContext, BehaviourStatus> _behave;
+        public readonly SimpleParallelPolicy Policy;
 
         public SimpleParallel(SimpleParallelPolicy policy, IBehaviour<TContext> first, IBehaviour<TContext> second) : this("SimpleParallel", policy, first, second)
         {
@@ -17,6 +18,7 @@ namespace BehaviourTree.Composites
 
         public SimpleParallel(string name, SimpleParallelPolicy policy, IBehaviour<TContext> first, IBehaviour<TContext> second) : base(name, new[]{first, second})
         {
+            Policy = policy;
             _first = first;
             _second = second;
             _behave = policy == SimpleParallelPolicy.BothMustSucceed ? (Func<TContext, BehaviourStatus>)BothMustSucceedBehaviour : OnlyOneMustSucceedBehaviour;
@@ -80,6 +82,17 @@ namespace BehaviourTree.Composites
             _firstStatus = BehaviourStatus.Ready;
             _secondStatus = BehaviourStatus.Ready;
             base.DoReset(status);
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<SimpleParallel<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

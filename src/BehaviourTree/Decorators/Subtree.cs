@@ -10,5 +10,16 @@
         {
             return Child.Tick(context);
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<SubTree<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }

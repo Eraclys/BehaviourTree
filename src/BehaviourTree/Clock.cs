@@ -4,9 +4,9 @@ namespace BehaviourTree
 {
     public sealed class Clock : IClock
     {
-        public long GetTimeStamp()
+        public long GetTimeStampInMilliseconds()
         {
-            return DateTime.UtcNow.Ticks;
+            return TimeSpan.FromTicks(DateTime.UtcNow.Ticks).Milliseconds;
         }
     }
 }

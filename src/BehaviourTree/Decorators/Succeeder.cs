@@ -21,5 +21,16 @@
 
             return childStatus;
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<Succeeder<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }

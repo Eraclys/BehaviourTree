@@ -4,7 +4,7 @@ namespace BehaviourTree.Decorators
 {
     public sealed class Repeat<TContext> : DecoratorBehaviour<TContext>
     {
-        private int _repeatCount;
+        public readonly int RepeatCount;
         public int Counter { get; private set; }
 
         public Repeat(IBehaviour<TContext> child, int repeatCount) : this("Repeat", child, repeatCount)
@@ -18,7 +18,7 @@ namespace BehaviourTree.Decorators
                 throw new ArgumentException("repeatCount must be at least one", nameof(repeatCount));
             }
 
-            _repeatCount = repeatCount;
+            RepeatCount = repeatCount;
         }
 
         protected override BehaviourStatus Update(TContext context)
@@ -29,7 +29,7 @@ namespace BehaviourTree.Decorators
             {
                 Counter++;
 
-                if (Counter < _repeatCount)
+                if (Counter < RepeatCount)
                 {
                     return BehaviourStatus.Running;
                 }
@@ -47,6 +47,17 @@ namespace BehaviourTree.Decorators
         {
             Counter = 0;
             base.DoReset(status);
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<Repeat<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

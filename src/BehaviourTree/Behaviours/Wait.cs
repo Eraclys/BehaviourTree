@@ -4,7 +4,7 @@ namespace BehaviourTree.Behaviours
 {
     public sealed class Wait<TContext> : BaseBehaviour<TContext> where TContext : IClock
     {
-        private readonly long _waitTimeInTicks;
+        public readonly long WaitTimeInMilliseconds;
         private long? _initialTimestamp;
 
         public Wait(int waitTimeInMilliseconds) : this("Wait", waitTimeInMilliseconds)
@@ -14,21 +14,21 @@ namespace BehaviourTree.Behaviours
 
         public Wait(string name, int waitTimeInMilliseconds) : base(name)
         {
-            _waitTimeInTicks = TimeSpan.FromMilliseconds(waitTimeInMilliseconds).Ticks;
+            WaitTimeInMilliseconds = waitTimeInMilliseconds;
         }
 
         protected override BehaviourStatus Update(TContext context)
         {
-            var currentTimeStamp = context.GetTimeStamp();
+            var currentTimeStamp = context.GetTimeStampInMilliseconds();
 
             if (_initialTimestamp == null)
             {
                 _initialTimestamp = currentTimeStamp;
             }
 
-            var elapsedTicks = currentTimeStamp - _initialTimestamp;
+            var elapsedMilliseconds = currentTimeStamp - _initialTimestamp;
 
-            if (elapsedTicks >= _waitTimeInTicks)
+            if (elapsedMilliseconds >= WaitTimeInMilliseconds)
             {
                 return BehaviourStatus.Succeeded;
             }
@@ -39,6 +39,17 @@ namespace BehaviourTree.Behaviours
         protected override void OnTerminate(BehaviourStatus status)
         {
             _initialTimestamp = null;
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<Wait<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

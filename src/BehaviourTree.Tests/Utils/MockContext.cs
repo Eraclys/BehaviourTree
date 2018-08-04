@@ -11,7 +11,7 @@ namespace BehaviourTree.Tests.Utils
             _timestamp += TimeSpan.FromMilliseconds(milliseconds).Ticks;
         }
 
-        public long GetTimeStamp()
+        public long GetTimeStampInMilliseconds()
         {
             return _timestamp;
         }

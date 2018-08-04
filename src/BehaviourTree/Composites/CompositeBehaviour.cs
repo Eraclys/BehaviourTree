@@ -5,7 +5,7 @@ namespace BehaviourTree.Composites
 {
     public abstract class CompositeBehaviour<TContext> : BaseBehaviour<TContext>
     {
-        protected IBehaviour<TContext>[] Children { get; }
+        public IBehaviour<TContext>[] Children { get; }
 
         protected CompositeBehaviour(string name, IBehaviour<TContext>[] children) : base(name)
         {
@@ -54,6 +54,17 @@ namespace BehaviourTree.Composites
             {
                 child.Reset();
             }
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<CompositeBehaviour<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

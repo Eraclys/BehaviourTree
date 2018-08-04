@@ -4,8 +4,8 @@ namespace BehaviourTree
 {
     public abstract class BaseBehaviour<TContext> : IBehaviour<TContext>
     {
-        protected string Name;
-        protected BehaviourStatus Status { get; private set; } = BehaviourStatus.Ready;
+        public string Name { get; }
+        public BehaviourStatus Status { get; private set; } = BehaviourStatus.Ready;
 
         protected BaseBehaviour(string name)
         {
@@ -55,6 +55,14 @@ namespace BehaviourTree
 
         protected virtual void DoReset(BehaviourStatus status)
         {
+        }
+
+        public virtual void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<BaseBehaviour<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+            }
         }
 
         protected virtual void Dispose(bool disposing)

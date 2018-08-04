@@ -2,6 +2,6 @@
 {
     public interface IClock
     {
-        long GetTimeStamp();
+        long GetTimeStampInMilliseconds();
     }
 }

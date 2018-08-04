@@ -4,8 +4,8 @@ namespace BehaviourTree.Decorators
 {
     public sealed class TimeLimit<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
-        private readonly long _timeLimitInTicks;
         private long? _initialTimestamp;
+        public readonly long TimeLimitInMilliseconds;
 
         public TimeLimit(IBehaviour<TContext> child, int timeLimitInMilliseconds) : this("TimeLimit", child, timeLimitInMilliseconds)
         {
@@ -13,21 +13,21 @@ namespace BehaviourTree.Decorators
 
         public TimeLimit(string name, IBehaviour<TContext> child, int timeLimitInMilliseconds) : base(name, child)
         {
-            _timeLimitInTicks = TimeSpan.FromMilliseconds(timeLimitInMilliseconds).Ticks;
+            TimeLimitInMilliseconds = timeLimitInMilliseconds;
         }
 
         protected override BehaviourStatus Update(TContext context)
         {
-            var currentTimeStamp = context.GetTimeStamp();
+            var currentTimeStamp = context.GetTimeStampInMilliseconds();
 
             if (_initialTimestamp == null)
             {
                 _initialTimestamp = currentTimeStamp;
             }
 
-            var elapsedTicks = currentTimeStamp - _initialTimestamp;
+            var elapsedMilliseconds = currentTimeStamp - _initialTimestamp;
 
-            if (elapsedTicks >= _timeLimitInTicks)
+            if (elapsedMilliseconds >= TimeLimitInMilliseconds)
             {
                 return BehaviourStatus.Failed;
             }
@@ -44,6 +44,17 @@ namespace BehaviourTree.Decorators
         {
             _initialTimestamp = null;
             base.DoReset(status);
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<TimeLimit<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

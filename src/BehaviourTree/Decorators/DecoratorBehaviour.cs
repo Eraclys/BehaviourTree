@@ -2,7 +2,7 @@
 {
     public abstract class DecoratorBehaviour<TContext> : BaseBehaviour<TContext>
     {
-        protected readonly IBehaviour<TContext> Child;
+        public readonly IBehaviour<TContext> Child;
 
         protected DecoratorBehaviour(string name, IBehaviour<TContext> child) : base(name)
         {
@@ -20,6 +20,17 @@
         protected override void DoReset(BehaviourStatus status)
         {
             Child.Reset();
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<DecoratorBehaviour<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
         }
     }
 }

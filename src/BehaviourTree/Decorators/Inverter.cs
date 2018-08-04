@@ -26,5 +26,16 @@
 
             return childStatus;
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<Inverter<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }

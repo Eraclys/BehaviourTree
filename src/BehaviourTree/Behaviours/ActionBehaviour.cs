@@ -15,5 +15,16 @@ namespace BehaviourTree.Behaviours
         {
             return _action(context);
         }
+
+        public override void Accept(IVisitor visitor)
+        {
+            if (visitor is IVisitor<ActionBehaviour<TContext>> typedVisitor)
+            {
+                typedVisitor.Visit(this);
+                return;
+            }
+
+            base.Accept(visitor);
+        }
     }
 }
