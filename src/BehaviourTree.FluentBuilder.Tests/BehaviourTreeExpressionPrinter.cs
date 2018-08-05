@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using BehaviourTree;
 using BehaviourTree.Behaviours;
 using BehaviourTree.Composites;
 using BehaviourTree.Decorators;
 
-namespace BehaviourTree
+namespace BehaviourTreeBuilder.Tests
 {
     public sealed class BehaviourTreeExpressionPrinter<TContext> :
         IVisitor<ActionBehaviour<TContext>>,
