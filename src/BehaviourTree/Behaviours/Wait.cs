@@ -38,6 +38,11 @@ namespace BehaviourTree.Behaviours
 
         protected override void OnTerminate(BehaviourStatus status)
         {
+            DoReset(status);
+        }
+
+        protected override void DoReset(BehaviourStatus status)
+        {
             _initialTimestamp = null;
         }
 

@@ -35,5 +35,25 @@ namespace BehaviourTree.Tests
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
         }
+
+        [Test]
+        public void WhenResetIsCalled_ReturnResetTimer()
+        {
+            var sut = new Wait<MockContext>(1000);
+            var context = new MockContext();
+
+            context.AddMilliseconds(500);
+
+            var behaviourStatus = sut.Tick(context);
+
+            Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
+
+            sut.Reset();
+            context.AddMilliseconds(600);
+
+            behaviourStatus = sut.Tick(context);
+
+            Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Running));
+        }
     }
 }
