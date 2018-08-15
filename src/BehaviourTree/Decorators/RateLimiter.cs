@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BehaviourTree.Decorators
+﻿namespace BehaviourTree.Decorators
 {
     public sealed class RateLimiter<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
@@ -34,17 +32,6 @@ namespace BehaviourTree.Decorators
             }
 
             return _previousChildStatus;
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<RateLimiter<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
         }
     }
 }

@@ -48,16 +48,5 @@ namespace BehaviourTree.Decorators
             Counter = 0;
             base.DoReset(status);
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<Repeat<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

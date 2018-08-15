@@ -29,18 +29,13 @@ namespace BehaviourTree.FluentBuilder
                 case InverterNode n: return MapInverterNode(n);
                 case RateLimiterNode n: return MapRateLimiterNode(n);
                 case RepeatNode n: return MapRepeatNode(n);
-                case SubTreeNode<TContext> n: return MapSubTreeNode(n);
+                case SubTreeNode<TContext> n: return n.SubBehaviour;
                 case SucceederNode n: return MapSucceederNode(n);
                 case TimeLimitNode n: return MapTimeLimitNode(n);
                 case UntilFailedNode n: return MapUntilFailedNode(n);
                 case UntilSuccessNode n: return MapUntilSuccessNode(n);
                 default: return MapUnknownNode(node);
             }
-        }
-
-        private SubTree<TContext> MapSubTreeNode(SubTreeNode<TContext> node)
-        {
-            return new SubTree<TContext>(node.Name, node.SubBehaviour);
         }
 
         private UntilFailed<TContext> MapUntilFailedNode(UntilFailedNode node)

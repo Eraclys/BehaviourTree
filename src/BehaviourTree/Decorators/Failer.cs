@@ -21,16 +21,5 @@
 
             return childStatus;
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<Failer<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

@@ -12,28 +12,22 @@
 
         protected override BehaviourStatus Update(TContext context)
         {
-            for (int i = 0; i < Children.Length; i++)
+            for (var i = 0; i < Children.Length; i++)
             {
                 var childStatus = Children[i].Tick(context);
 
                 if (childStatus != BehaviourStatus.Succeeded)
                 {
+                    for (var j = i + 1; j < Children.Length; j++)
+                    {
+                        Children[j].Reset();
+                    }
+
                     return childStatus;
                 }
             }
 
             return BehaviourStatus.Succeeded;
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<PrioritySequence<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
         }
     }
 }

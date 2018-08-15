@@ -21,16 +21,5 @@
         {
             Child.Reset();
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<DecoratorBehaviour<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

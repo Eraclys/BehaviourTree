@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BehaviourTree.Decorators
+﻿namespace BehaviourTree.Decorators
 {
     public sealed class TimeLimit<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
@@ -44,17 +42,6 @@ namespace BehaviourTree.Decorators
         {
             _initialTimestamp = null;
             base.DoReset(status);
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<TimeLimit<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace BehaviourTreeBuilder.Tests
 
             var tree = FluentBuilder.Create<Clock>()
                 .Selector("Selector1")
-                    .Subtree("Subtree1", subTree)
+                    .Subtree(subTree)
                     .Sequence("PrioritySelector1")
                         .PrioritySelector("PrioritySelector1")
                             .Do("action1", _ => BehaviourStatus.Succeeded)
@@ -55,10 +55,7 @@ namespace BehaviourTreeBuilder.Tests
                 .End()
                 .Build();
 
-            var printer = new BehaviourTreeExpressionPrinter<Clock>();
-            printer.Visit(tree);
-
-            var result = printer.ToString();
+            var result = BehaviourTreeExpressionPrinter<Clock>.GetExpression(tree);
 
             // TODO: string comparison is flaky on build server
         }

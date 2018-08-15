@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BehaviourTree.Behaviours
+﻿namespace BehaviourTree.Behaviours
 {
     public sealed class Wait<TContext> : BaseBehaviour<TContext> where TContext : IClock
     {
@@ -44,17 +42,6 @@ namespace BehaviourTree.Behaviours
         protected override void DoReset(BehaviourStatus status)
         {
             _initialTimestamp = null;
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<Wait<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
         }
     }
 }

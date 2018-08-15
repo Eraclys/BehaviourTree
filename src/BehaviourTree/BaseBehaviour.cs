@@ -36,11 +36,13 @@ namespace BehaviourTree
 
         public void Reset()
         {
-            if (Status != BehaviourStatus.Ready)
+            if (Status == BehaviourStatus.Ready)
             {
-                DoReset(Status);
-                Status = BehaviourStatus.Ready;
+                return;
             }
+
+            DoReset(Status);
+            Status = BehaviourStatus.Ready;
         }
 
         protected abstract BehaviourStatus Update(TContext context);
@@ -55,14 +57,6 @@ namespace BehaviourTree
 
         protected virtual void DoReset(BehaviourStatus status)
         {
-        }
-
-        public virtual void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<BaseBehaviour<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-            }
         }
 
         protected virtual void Dispose(bool disposing)

@@ -7,10 +7,9 @@ namespace BehaviourTree.FluentBuilder
     {
         public static FluentBuilder<TContext> Subtree<TContext>(
             this FluentBuilder<TContext> builder,
-            string name,
             IBehaviour<TContext> subBehaviour)
         {
-            return builder.Push(new SubTreeNode<TContext>(subBehaviour) { Name = name });
+            return builder.Push(new SubTreeNode<TContext>(subBehaviour));
         }
 
         public static FluentBuilder<TContext> Condition<TContext>(
@@ -68,7 +67,7 @@ namespace BehaviourTree.FluentBuilder
         public static FluentBuilder<TContext> SimpleParallel<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            BehaviourTree.Composites.SimpleParallelPolicy policy = BehaviourTree.Composites.SimpleParallelPolicy.BothMustSucceed)
+            Composites.SimpleParallelPolicy policy = Composites.SimpleParallelPolicy.BothMustSucceed)
         {
             return builder.Push(new SimpleParallelNode(policy) {Name = name});
         }

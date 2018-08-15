@@ -60,16 +60,5 @@
             OnCooldown = true;
             _cooldownStartedTimestamp = context.GetTimeStampInMilliseconds();
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<Cooldown<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

@@ -8,6 +8,5 @@ namespace BehaviourTree
         BehaviourStatus Status { get; }
         BehaviourStatus Tick(TContext context);
         void Reset();
-        void Accept(IVisitor visitor);
     }
 }

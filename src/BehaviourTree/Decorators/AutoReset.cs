@@ -19,16 +19,5 @@
         {
             Child.Reset();
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<AutoReset<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

@@ -33,16 +33,5 @@
             _currentChildIndex = 0;
             base.DoReset(status);
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<Selector<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

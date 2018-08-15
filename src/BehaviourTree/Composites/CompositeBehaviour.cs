@@ -29,12 +29,14 @@ namespace BehaviourTree.Composites
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!disposing)
             {
-                foreach (var child in Children)
-                {
-                    child.Dispose();
-                }
+                return;
+            }
+
+            foreach (var child in Children)
+            {
+                child.Dispose();
             }
         }
 
@@ -54,17 +56,6 @@ namespace BehaviourTree.Composites
             {
                 child.Reset();
             }
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<CompositeBehaviour<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
         }
     }
 }

@@ -1,72 +1,48 @@
 ﻿using System;
 using System.Linq;
-using BehaviourTree.Behaviours;
 using BehaviourTree.Composites;
 using BehaviourTree.Decorators;
 
 namespace BehaviourTree
 {
-    public sealed class BehaviourTreeConsoleLogger<TContext> :
-      IVisitor<Condition<TContext>>,
-      IVisitor<BaseBehaviour<TContext>>,
-      IVisitor<CompositeBehaviour<TContext>>,
-      IVisitor<DecoratorBehaviour<TContext>>,
-      IVisitor<IBehaviour<TContext>>
-      where TContext : IClock
+    public sealed class BehaviourTreeConsoleLogger<TContext>
     {
-        private int _depth;
-
-        public void Visit(IBehaviour<TContext> obj)
+        public static void LogToConsole(IBehaviour<TContext> obj)
         {
-            Visit((dynamic)obj);
+            LogToConsole(obj, 0);
         }
 
-        public void Visit(Condition<TContext> obj)
+        private static void LogToConsole(IBehaviour<TContext> obj, int depth)
         {
-            PrintNode(obj);
+            LogToConsole((dynamic)obj, depth);
         }
 
-        public void Visit(BaseBehaviour<TContext> obj)
+        private static void LogToConsole(CompositeBehaviour<TContext> obj, int depth)
         {
-            PrintNode(obj);
-        }
+            InternalPrint(obj, depth);
 
-        public void Visit(CompositeBehaviour<TContext> obj)
-        {
-            PrintNode(obj);
-            VisitChildren(obj);
-        }
-
-        public void Visit(DecoratorBehaviour<TContext> obj)
-        {
-            PrintNode(obj);
-            VisitChild(obj);
-        }
-
-        private void VisitChildren(CompositeBehaviour<TContext> obj)
-        {
-            _depth++;
+            var childDepth = depth + 1;
 
             foreach (var child in obj.Children)
             {
-                child.Accept(this);
+                LogToConsole(child, childDepth);
             }
-
-            _depth--;
         }
 
-        private void VisitChild(DecoratorBehaviour<TContext> obj)
+        private static void LogToConsole(DecoratorBehaviour<TContext> obj, int depth)
         {
-            _depth++;
-
-            obj.Child.Accept(this);
-
-            _depth--;
+            InternalPrint(obj, depth);
+            LogToConsole(obj.Child, ++depth);
         }
 
-        private void PrintNode(IBehaviour<TContext> obj)
+        private static void LogToConsole(BaseBehaviour<TContext> obj, int depth)
         {
-            var indentation = GetIndentation();
+            InternalPrint(obj, depth);
+        }
+
+        private static void InternalPrint(IBehaviour<TContext> obj, int depth)
+        {
+            var indentation = GetIndentation(depth);
             var name = GetName(obj);
             var color = GetColor(obj.Status);
 
@@ -83,17 +59,17 @@ namespace BehaviourTree
         {
             switch (status)
             {
-                case BehaviourStatus.Ready: return ConsoleColor.Blue;
-                case BehaviourStatus.Running: return ConsoleColor.Gray;
+                case BehaviourStatus.Ready: return ConsoleColor.DarkGray;
+                case BehaviourStatus.Running: return ConsoleColor.Yellow;
                 case BehaviourStatus.Succeeded: return ConsoleColor.Green;
                 case BehaviourStatus.Failed: return ConsoleColor.Red;
                 default: throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
         }
 
-        private string GetIndentation()
+        private static string GetIndentation(int depth)
         {
-            return string.Join(string.Empty, Enumerable.Repeat("   ", _depth));
+            return string.Join(string.Empty, Enumerable.Repeat("   ", depth));
         }
 
         private static string GetName(IBehaviour<TContext> obj)

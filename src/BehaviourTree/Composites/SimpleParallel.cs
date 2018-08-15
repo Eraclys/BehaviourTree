@@ -83,16 +83,5 @@ namespace BehaviourTree.Composites
             _secondStatus = BehaviourStatus.Ready;
             base.DoReset(status);
         }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<SimpleParallel<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
-        }
     }
 }

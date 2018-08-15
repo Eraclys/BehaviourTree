@@ -14,23 +14,7 @@
         {
             var childStatus = Child.Tick(context);
 
-            if (childStatus == BehaviourStatus.Failed)
-            {
-                return BehaviourStatus.Succeeded;
-            }
-
-            return BehaviourStatus.Running;
-        }
-
-        public override void Accept(IVisitor visitor)
-        {
-            if (visitor is IVisitor<UntilFailed<TContext>> typedVisitor)
-            {
-                typedVisitor.Visit(this);
-                return;
-            }
-
-            base.Accept(visitor);
+            return childStatus == BehaviourStatus.Failed ? BehaviourStatus.Succeeded : BehaviourStatus.Running;
         }
     }
 }
