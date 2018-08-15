@@ -4,7 +4,8 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <PackageId>BehaviourTree</PackageId>
 	  <PackageVersion>1.0.0</PackageVersion>
-    <PackageTags>behavior behaviour tree</PackageTags>
+    <PackageTags>c# behavior behaviour tree behaviourtree behaviortree ai bot</PackageTags>
+    <Description>A simple c# behaviour tree library. This is an alpha, please let me know if something can be improved or isn't working as expected.</Description>
     <RepositoryUrl>https://github.com/Eraclys/BehaviourTree/</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Eraclys/BehaviourTree/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Eraclys/BehaviourTree/</PackageProjectUrl>

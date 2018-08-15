@@ -4,7 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>BehaviourTree.FluentBuilder</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
-    <PackageTags>c# behavior behaviour tree fluent</PackageTags>
+    <PackageTags>fluent c# behavior behaviour tree behaviourtree behaviortree ai bot</PackageTags>
+    <Description>This an extension to the behaviour tree library. It helps you build a tree using a fluent api. This is an alpha, please let me know if something can be improved or isn't working as expected</Description>
     <RepositoryUrl>https://github.com/Eraclys/BehaviourTree/</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Eraclys/BehaviourTree/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Eraclys/BehaviourTree/</PackageProjectUrl>
