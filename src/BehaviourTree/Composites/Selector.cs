@@ -1,6 +1,6 @@
 ﻿namespace BehaviourTree.Composites
 {
-    public sealed class Selector<TContext> : CompositeBehaviour<TContext>
+    public class Selector<TContext> : CompositeBehaviour<TContext>
     {
         private int _currentChildIndex;
 
@@ -12,11 +12,16 @@
         {
         }
 
+        protected virtual IBehaviour<TContext> GetChild(int index)
+        {
+            return Children[index];
+        }
+
         protected override BehaviourStatus Update(TContext context)
         {
             do
             {
-                var childStatus = Children[_currentChildIndex].Tick(context);
+                var childStatus = GetChild(_currentChildIndex).Tick(context);
 
                 if (childStatus != BehaviourStatus.Failed)
                 {

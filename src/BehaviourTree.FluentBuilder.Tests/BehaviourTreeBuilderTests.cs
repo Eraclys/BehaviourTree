@@ -55,6 +55,14 @@ namespace BehaviourTreeBuilder.Tests
                             .End()
                         .End()
                     .End()
+                    .RandomSelector("RandomSelector1")
+                        .Do("action10", _ => BehaviourStatus.Succeeded)
+                        .Do("action11", _ => BehaviourStatus.Succeeded)
+                    .End()
+                    .RandomSequence("RandomSequence1")
+                        .Do("action12", _ => BehaviourStatus.Succeeded)
+                        .Do("action13", _ => BehaviourStatus.Succeeded)
+                    .End()
                 .End()
                 .Build();
 
@@ -65,14 +73,9 @@ namespace BehaviourTreeBuilder.Tests
             // TODO: string comparison is flaky on build server
         }
 
-        public class MockContext : IClock, IRandomProvider
+        public class MockContext : IClock
         {
             public long GetTimeStampInMilliseconds()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public double NextRandomDouble()
             {
                 throw new System.NotImplementedException();
             }

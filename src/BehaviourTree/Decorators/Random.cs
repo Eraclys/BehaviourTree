@@ -2,13 +2,16 @@
 
 namespace BehaviourTree.Decorators
 {
-    public sealed class Random<TContext> : DecoratorBehaviour<TContext> where TContext : IRandomProvider
+    public sealed class Random<TContext> : DecoratorBehaviour<TContext>
     {
-        public Random(IBehaviour<TContext> child, double threshold) : this("Random", child, threshold)
+        private readonly IRandomProvider _randomProvider;
+
+        public Random(IBehaviour<TContext> child, double threshold, IRandomProvider randomProvider = null)
+            : this("Random", child, threshold, randomProvider)
         {
         }
 
-        public Random(string name, IBehaviour<TContext> child, double threshold) : base(name, child)
+        public Random(string name, IBehaviour<TContext> child, double threshold, IRandomProvider randomProvider = null) : base(name, child)
         {
             if (threshold <= 0 || threshold > 1)
             {
@@ -17,6 +20,8 @@ namespace BehaviourTree.Decorators
                     nameof(threshold));
             }
 
+            _randomProvider = randomProvider ?? RandomProvider.Default;
+
             Threshold = threshold;
         }
 
@@ -24,7 +29,7 @@ namespace BehaviourTree.Decorators
 
         protected override BehaviourStatus Update(TContext context)
         {
-            var randomValue = context.NextRandomDouble();
+            var randomValue = _randomProvider.NextRandomDouble();
 
             if (randomValue >= Threshold)
             {

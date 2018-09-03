@@ -2,10 +2,9 @@
 
 namespace BehaviourTree.Tests.Utils
 {
-    public sealed class MockContext : IClock, IRandomProvider
+    public sealed class MockContext : IClock
     {
         private long _timestamp;
-        private double _randomValue;
 
         public void AddMilliseconds(int milliseconds)
         {
@@ -15,16 +14,6 @@ namespace BehaviourTree.Tests.Utils
         public long GetTimeStampInMilliseconds()
         {
             return _timestamp;
-        }
-
-        public double NextRandomDouble()
-        {
-            return _randomValue;
-        }
-
-        public void SetNextRandomDouble(double value)
-        {
-            _randomValue = value;
         }
     }
 }

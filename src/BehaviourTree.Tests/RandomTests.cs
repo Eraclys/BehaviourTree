@@ -30,12 +30,12 @@ namespace BehaviourTree.Tests
         public void WhenRandomValueIsAboveThreshold_CallChildAndReturnChildStatus(BehaviourStatus childStatus)
         {
             var child = new MockBehaviour {ReturnStatus = childStatus };
-            var sut = new Random<MockContext>(child, 0.5);
-            var context = new MockContext();
+            var randomProvider = new MockRandomProvider();
+            var sut = new Random<MockContext>(child, 0.5, randomProvider);
 
-            context.SetNextRandomDouble(0.6);
+            randomProvider.SetNextRandomDouble(0.6);
 
-            var behaviourStatus = sut.Tick(context);
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(childStatus));
             Assert.That(child.TerminateCallCount, Is.EqualTo(1));
@@ -46,12 +46,12 @@ namespace BehaviourTree.Tests
         public void WhenRandomValueIsEqualToThreshold_CallChildAndReturnChildStatus(BehaviourStatus childStatus)
         {
             var child = new MockBehaviour { ReturnStatus = childStatus };
-            var sut = new Random<MockContext>(child, 0.4);
-            var context = new MockContext();
+            var randomProvider = new MockRandomProvider();
+            var sut = new Random<MockContext>(child, 0.4, randomProvider);
 
-            context.SetNextRandomDouble(0.4);
+            randomProvider.SetNextRandomDouble(0.4);
 
-            var behaviourStatus = sut.Tick(context);
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(childStatus));
             Assert.That(child.TerminateCallCount, Is.EqualTo(1));
@@ -61,10 +61,10 @@ namespace BehaviourTree.Tests
         public void WhenRandomValueIsBelowThreshold_DoNotCallChildAndReturnFailure()
         {
             var child = new MockBehaviour {ReturnStatus = BehaviourStatus.Succeeded};
-            var sut = new Random<MockContext>(child, 0.5);
-            var context = new MockContext();
+            var randomProvider = new MockRandomProvider();
+            var sut = new Random<MockContext>(child, 0.5, randomProvider);
 
-            var behaviourStatus = sut.Tick(context);
+            var behaviourStatus = sut.Tick(new MockContext());
 
             Assert.That(behaviourStatus, Is.EqualTo(BehaviourStatus.Failed));
             Assert.That(child.TerminateCallCount, Is.EqualTo(0));

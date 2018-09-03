@@ -10,5 +10,12 @@ namespace BehaviourTree
         {
             return Random.NextDouble();
         }
+
+        public int NextRandomInteger(int maxValue)
+        {
+            return Random.Next(maxValue);
+        }
+
+        public static readonly IRandomProvider Default = new RandomProvider();
     }
 }

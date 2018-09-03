@@ -64,6 +64,22 @@ namespace BehaviourTree.FluentBuilder
             return builder.Push(new SequenceNode { Name = name});
         }
 
+        public static FluentBuilder<TContext> RandomSequence<TContext>(
+            this FluentBuilder<TContext> builder,
+            string name,
+            IRandomProvider randomProvider = null)
+        {
+            return builder.Push(new RandomSequenceNode(randomProvider) { Name = name });
+        }
+
+        public static FluentBuilder<TContext> RandomSelector<TContext>(
+            this FluentBuilder<TContext> builder,
+            string name,
+            IRandomProvider randomProvider = null)
+        {
+            return builder.Push(new RandomSelectorNode(randomProvider) { Name = name });
+        }
+
         public static FluentBuilder<TContext> SimpleParallel<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
@@ -149,9 +165,10 @@ namespace BehaviourTree.FluentBuilder
         public static FluentBuilder<TContext> Random<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            double threshold)
+            double threshold,
+            IRandomProvider randomProvider = null)
         {
-            return builder.Push(new RandomNode(threshold) { Name = name });
+            return builder.Push(new RandomNode(threshold, randomProvider) { Name = name });
         }
     }
 }

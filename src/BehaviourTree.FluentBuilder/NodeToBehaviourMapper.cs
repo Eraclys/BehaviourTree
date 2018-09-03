@@ -10,7 +10,7 @@ using BehaviourTree.FluentBuilder.Nodes;
 namespace BehaviourTree.FluentBuilder
 {
     public class NodeToBehaviourMapper<TContext> : INodeToBehaviourMapper<TContext> 
-        where TContext : IClock, IRandomProvider
+        where TContext : IClock
     {
         public IBehaviour<TContext> Map(Node node)
         {
@@ -23,6 +23,8 @@ namespace BehaviourTree.FluentBuilder
                 case PrioritySequenceNode n: return MapPrioritySequenceNode(n);
                 case SelectorNode n: return MapSelectorNode(n);
                 case SequenceNode n: return MapSequenceNode(n);
+                case RandomSelectorNode n: return MapRandomSelectorNode(n);
+                case RandomSequenceNode n: return MapRandomSequenceNode(n);
                 case SimpleParallelNode n: return MapSimpleParallelNode(n);
                 case AutoResetNode n: return MapAutoResetNode(n);
                 case CooldownNode n: return MapCooldownNode(n);
@@ -42,7 +44,7 @@ namespace BehaviourTree.FluentBuilder
 
         private Random<TContext> MapRandomNode(RandomNode node)
         {
-            return new Random<TContext>(node.Name, Map(node.Child), node.Threshold);
+            return new Random<TContext>(node.Name, Map(node.Child), node.Threshold, node.RandomProvider);
         }
 
         private UntilFailed<TContext> MapUntilFailedNode(UntilFailedNode node)
@@ -113,6 +115,16 @@ namespace BehaviourTree.FluentBuilder
         private Selector<TContext> MapSelectorNode(SelectorNode node)
         {
             return new Selector<TContext>(node.Name, node.Children.Select(Map).ToArray());
+        }
+
+        private RandomSelector<TContext> MapRandomSelectorNode(RandomSelectorNode node)
+        {
+            return new RandomSelector<TContext>(node.Name, node.Children.Select(Map).ToArray(), node.RandomProvider);
+        }
+
+        private RandomSequence<TContext> MapRandomSequenceNode(RandomSequenceNode node)
+        {
+            return new RandomSequence<TContext>(node.Name, node.Children.Select(Map).ToArray(), node.RandomProvider);
         }
 
         private PrioritySelector<TContext> MapPrioritySelectorNode(PrioritySelectorNode node)
