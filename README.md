@@ -82,6 +82,26 @@ builder.Selector("my-selector")
 .End()
 ```
 
+#### RandomSequence
+``` cs    
+builder.RandomSequence("my-random-sequence")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
+```
+
+#### RandomSelector
+``` cs    
+builder.RandomSelector("my-random-selector")
+    .Do("action1", context => BehaviourStatus.Failed)
+    .Do("action2", context => BehaviourStatus.Succeeded)
+    .Do("action3", context => BehaviourStatus.Succeeded)
+    ...
+.End()
+```
+
 #### PrioritySequence
 ``` cs    
 builder.PrioritySequence("my-priority-sequence")
@@ -179,6 +199,13 @@ builder.UntilSuccess("my-until-success")
 #### UntilFailed
 ``` cs    
 builder.UntilFailed("my-until-failed")
+    .Do("action1", context => BehaviourStatus.Succeeded)
+.End()
+```
+
+#### Random
+``` cs    
+builder.Random("my-random", 0.6) // will call child 60% of the time
     .Do("action1", context => BehaviourStatus.Succeeded)
 .End()
 ```
