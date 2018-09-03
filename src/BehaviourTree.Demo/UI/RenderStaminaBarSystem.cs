@@ -27,7 +27,7 @@ namespace BehaviourTree.Demo.UI
         {
             foreach (var node in _renderableNodes)
             {
-                var position = node.PositionComponent.Position;
+                var position = node.PositionComponent.GetInterpolatedPosition(interpolation);
                 var spriteSize = node.RenderComponent.View.Size;
                 var maxStamina = node.StaminaComponent.MaxStamina;
                 var stamina = node.StaminaComponent.Stamina;
@@ -37,8 +37,8 @@ namespace BehaviourTree.Demo.UI
                 var maxStaminaSize = spriteSize.Width * 2;
                 var staminaSize = (int)(maxStaminaSize * (stamina / maxStamina));
 
-                _graphics.DrawRectangle(_edgePen, new Rectangle(new Point(drawXPosition, drawYPosition), new Size(maxStaminaSize, Thickness)));
-                _graphics.FillRectangle(_fillBrush, new Rectangle(new Point(drawXPosition + Offset, drawYPosition + Offset), new Size(staminaSize - EdgeSize, Thickness - EdgeSize)));
+                _graphics.DrawRectangle(_edgePen, drawXPosition, drawYPosition, maxStaminaSize, Thickness);
+                _graphics.FillRectangle(_fillBrush, drawXPosition + Offset, drawYPosition + Offset, staminaSize - EdgeSize, Thickness - EdgeSize);
             }
         }
     }

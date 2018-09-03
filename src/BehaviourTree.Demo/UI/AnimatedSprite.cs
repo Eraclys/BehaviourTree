@@ -20,8 +20,10 @@ namespace BehaviourTree.Demo.UI
         {
             var currentFrame = GetNextFrame(ellapsedMilliseconds);
             Size = currentFrame.Size;
-            var newCoordinates = new Point((int)position.X - currentFrame.Width / 2, (int)position.Y - currentFrame.Height / 2);
-            graphics.DrawImage(currentFrame, newCoordinates);
+            var xPos = position.X - currentFrame.Width / 2f;
+            var yPos = position.Y - currentFrame.Height / 2f;
+
+            graphics.DrawImage(currentFrame, xPos, yPos);
         }
 
         private Image GetNextFrame(long ellapsedMilliseconds)

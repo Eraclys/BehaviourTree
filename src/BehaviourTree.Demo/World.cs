@@ -51,10 +51,7 @@ namespace BehaviourTree.Demo
                 .AddComponent(new RenderComponent(new StaticImage(asset)))
                 .AddComponent(new ItemComponent(ItemTypes.Pickaxe))
                 .AddComponent(new LootableComponent())
-                .AddComponent(new PositionComponent
-                {
-                    Position = GetRandomMapPosition(asset.Size)
-                });
+                .AddComponent(new PositionComponent(GetRandomMapPosition(asset.Size)));
         }
 
         private void CreateAxe()
@@ -65,10 +62,7 @@ namespace BehaviourTree.Demo
                 .AddComponent(new RenderComponent(new StaticImage(asset)))
                 .AddComponent(new ItemComponent(ItemTypes.Axe))
                 .AddComponent(new LootableComponent())
-                .AddComponent(new PositionComponent
-                {
-                    Position = GetRandomMapPosition(asset.Size)
-                });
+                .AddComponent(new PositionComponent(GetRandomMapPosition(asset.Size)));
         }
 
         private void GenerateGrass()
@@ -92,7 +86,7 @@ namespace BehaviourTree.Demo
             }
 
             _engine.NewEntity()
-                .AddComponent(new PositionComponent {Position = new Vector2(backgroundImage.Width/2,backgroundImage.Height/2)})
+                .AddComponent(new PositionComponent(new Vector2(backgroundImage.Width/2,backgroundImage.Height/2)))
                 .AddComponent(new RenderComponent(new StaticImage(backgroundImage)));
         }
 
@@ -115,7 +109,7 @@ namespace BehaviourTree.Demo
             var renderable = new BotView(entity);
 
             entity
-                .AddComponent(new PositionComponent {Position = GetRandomMapPosition(renderable.Size)})
+                .AddComponent(new PositionComponent(GetRandomMapPosition(renderable.Size)))
                 .AddComponent(new RenderComponent(renderable));
 
             if (logger)
@@ -127,7 +121,7 @@ namespace BehaviourTree.Demo
         private void CreateBehaviourLogger(IBehaviour<BtContext> behaviour)
         {
             _engine.NewEntity()
-                .AddComponent(new PositionComponent())
+                .AddComponent(new PositionComponent(Vector2.Zero))
                 .AddComponent(new RenderComponent(new BehaviourTreeView(behaviour, _font, _mapSize)));
         }
 
@@ -142,10 +136,7 @@ namespace BehaviourTree.Demo
                     .AddComponent(new RenderComponent(new StaticImage(asset)))
                     .AddComponent(new ItemComponent(ItemTypes.Stone))
                     .AddComponent(new LootableComponent())
-                    .AddComponent(new PositionComponent
-                    {
-                        Position = GetRandomMapPosition(asset.Size)
-                    });
+                    .AddComponent(new PositionComponent(GetRandomMapPosition(asset.Size)));
             }
         }
 
@@ -160,10 +151,7 @@ namespace BehaviourTree.Demo
                     .AddComponent(new RenderComponent(new StaticImage(asset)))
                     .AddComponent(new ItemComponent(ItemTypes.Wood))
                     .AddComponent(new LootableComponent())
-                    .AddComponent(new PositionComponent
-                    {
-                        Position = GetRandomMapPosition(asset.Size)
-                    });
+                    .AddComponent(new PositionComponent(GetRandomMapPosition(asset.Size)));
             }
         }
 
@@ -178,10 +166,7 @@ namespace BehaviourTree.Demo
                     .AddComponent(new RenderComponent(new StaticImage(asset)))
                     .AddComponent(new ItemComponent(ItemTypes.Food))
                     .AddComponent(new LootableComponent())
-                    .AddComponent(new PositionComponent
-                    {
-                        Position = GetRandomMapPosition(asset.Size)
-                    });
+                    .AddComponent(new PositionComponent(GetRandomMapPosition(asset.Size)));
             }
         }
 

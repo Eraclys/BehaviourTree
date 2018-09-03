@@ -46,14 +46,13 @@ namespace BehaviourTree.Demo.Ai.BT
 
             context.Engine.NewEntity()
                 .AddComponent(new RenderComponent(new StaticImage(Assets.House)))
-                .AddComponent(new PositionComponent { Position = position })
+                .AddComponent(new PositionComponent(position))
                 .AddComponent(new ItemComponent(ItemTypes.House));
 
             inventoryComponent.Remove(ItemTypes.Stone, requiredStones);
             inventoryComponent.Remove(ItemTypes.Wood, requiredWood);
 
             return BehaviourStatus.Succeeded;
-
         }
 
         public static bool HasItem(BtContext context, ItemTypes itemType, int quantity)

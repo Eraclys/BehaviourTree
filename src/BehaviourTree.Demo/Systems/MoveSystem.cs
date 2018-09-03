@@ -18,6 +18,8 @@ namespace BehaviourTree.Demo.Systems
             var positionComponent = node.PositionComponent;
             var movementComponent = node.MovementComponent;
 
+            positionComponent.PreviousPosition = positionComponent.Position;
+
             positionComponent.Position.X += movementComponent.Velocity.X;
             positionComponent.Position.Y += movementComponent.Velocity.Y;
 

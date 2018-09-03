@@ -34,7 +34,7 @@ namespace BehaviourTree.Demo.GameEngine
                 }
 
                 var elapsedMilliseconds = _timer.GetElapsedMilliseconds();
-                var interpolation = (elapsedMilliseconds + skipTicks - nextGameTick) / (float) skipTicks;
+                var interpolation = (elapsedMilliseconds - nextGameTick + skipTicks) / (float) skipTicks;
 
                 _engine.Render(elapsedMilliseconds, interpolation);
             }

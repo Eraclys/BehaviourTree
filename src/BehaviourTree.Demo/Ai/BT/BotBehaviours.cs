@@ -77,7 +77,7 @@ namespace BehaviourTree.Demo.Ai.BT
             const int requiredWood = 4;
 
             var gatherRequiredResources = FluentBuilder.FluentBuilder.Create<BtContext>()
-                .RandomSequence("Gather resources (random sequence)")
+                .Sequence("Gather resources")
                     .Selector("Gather wood")
                         .Condition("Has enough wood?", c => BotBehaviourFunctions.HasItem(c, ItemTypes.Wood, requiredWood))
                         .Subtree(ChopWoodBehaviour())

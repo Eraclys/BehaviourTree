@@ -19,7 +19,7 @@ namespace BehaviourTree.Demo.EventListeners
             var positionComponent = entity.GetComponent<PositionComponent>();
 
             engine.NewEntity()
-                .AddComponent(new PositionComponent {Position = positionComponent.Position})
+                .AddComponent(new PositionComponent(positionComponent.Position))
                 .AddComponent(new RenderComponent( new StaticImage(Assets.Tombstone)));
         }
     }

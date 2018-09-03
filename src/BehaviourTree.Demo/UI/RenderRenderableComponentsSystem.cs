@@ -22,7 +22,7 @@ namespace BehaviourTree.Demo.UI
             {
                 node.RenderComponent.View.Render(
                     _graphics,
-                    node.PositionComponent.Position,
+                    node.PositionComponent.GetInterpolatedPosition(interpolation),
                     ellapsedMilliseconds,
                     interpolation);
             }

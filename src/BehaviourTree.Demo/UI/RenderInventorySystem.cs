@@ -25,18 +25,18 @@ namespace BehaviourTree.Demo.UI
         {
             foreach (var node in _renderableNodes)
             {
-                RenderInventory(node);
+                RenderInventory(node, interpolation);
             }
         }
 
-        private void RenderInventory(InventoryNode node)
+        private void RenderInventory(InventoryNode node, float interpolation)
         {
-            var position = node.PositionComponent.Position;
+            var position = node.PositionComponent.GetInterpolatedPosition(interpolation);
             var spriteSize = node.RenderComponent.View.Size;
             var inventory = node.InventoryComponent;
 
-            var drawXPosition = (int)(position.X + spriteSize.Width + 5);
-            var drawYPosition = (int)(position.Y - spriteSize.Height);
+            var drawXPosition = position.X + spriteSize.Width + 5;
+            var drawYPosition = position.Y - spriteSize.Height;
 
             RenderInventoryIcon(
                 drawXPosition,
@@ -69,9 +69,9 @@ namespace BehaviourTree.Demo.UI
                 inventory.Count(ItemTypes.Food));
         }
 
-        private void RenderInventoryIcon(int x, int y, Image icon, int count)
+        private void RenderInventoryIcon(float x, float y, Image icon, int count)
         {
-            _graphics.DrawImage(icon, new Point(x, y));
+            _graphics.DrawImage(icon, x, y);
             _graphics.DrawString($"x{count}", _font, _textBrush, x + _textOffset, y);
         }
     }

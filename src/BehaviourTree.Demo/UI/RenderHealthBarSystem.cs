@@ -27,7 +27,7 @@ namespace BehaviourTree.Demo.UI
         {
             foreach (var node in _renderableNodes)
             {
-                var position = node.PositionComponent.Position;
+                var position = node.PositionComponent.GetInterpolatedPosition(interpolation);
                 var spriteSize = node.RenderComponent.View.Size;
                 var maxHealth = node.HealthComponent.MaxHealth;
                 var health = node.HealthComponent.Health;
@@ -37,8 +37,8 @@ namespace BehaviourTree.Demo.UI
                 var maxHealthSize = spriteSize.Width * 2;
                 var healthSize = (int)(maxHealthSize * (health / maxHealth));
 
-                _graphics.DrawRectangle(_edgePen, new Rectangle(new Point(drawXPosition, drawYPosition), new Size(maxHealthSize, Thickness)));
-                _graphics.FillRectangle(_fillBrush, new Rectangle(new Point(drawXPosition + Offset, drawYPosition + Offset), new Size(healthSize - EdgeSize, Thickness - EdgeSize)));
+                _graphics.DrawRectangle(_edgePen, drawXPosition, drawYPosition, maxHealthSize, Thickness);
+                _graphics.FillRectangle(_fillBrush, drawXPosition + Offset, drawYPosition + Offset, healthSize - EdgeSize, Thickness - EdgeSize);
             }
         }
     }

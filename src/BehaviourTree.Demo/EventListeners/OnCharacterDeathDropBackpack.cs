@@ -28,7 +28,7 @@ namespace BehaviourTree.Demo.EventListeners
                     .AddComponent(new ItemComponent(item.Key))
                     .AddComponent(new LootableComponent(item.Value))
                     .AddComponent(new RenderComponent(new StaticImage(Assets.Loot)))
-                    .AddComponent(new PositionComponent {Position = positionComponent.Position});
+                    .AddComponent(new PositionComponent(positionComponent.Position));
             }
         }
     }
