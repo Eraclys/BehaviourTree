@@ -6,7 +6,7 @@ namespace BehaviourTree.FluentBuilder
 {
     public static class FluentBuilder
     {
-        public static FluentBuilder<T> Create<T>() where T : IClock
+        public static FluentBuilder<T> Create<T>() where T : IClock, IRandomProvider
         {
             return new FluentBuilder<T>(new NodeToBehaviourMapper<T>());
         }

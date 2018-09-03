@@ -1,4 +1,5 @@
-﻿using BehaviourTree;
+﻿using System;
+using BehaviourTree;
 using BehaviourTree.FluentBuilder;
 using NUnit.Framework;
 
@@ -10,7 +11,7 @@ namespace BehaviourTreeBuilder.Tests
         [Test]
         public void Test()
         {
-            var subTree = FluentBuilder.Create<Clock>()
+            var subTree = FluentBuilder.Create<MockContext>()
                 .LimitCallRate("LimitCallRate1", 963)
                     .AlwaysSucceed("AlwaysSucceed1")
                         .AlwaysFail("AlwaysFail1")
@@ -22,7 +23,7 @@ namespace BehaviourTreeBuilder.Tests
                 .End()
                 .Build();
 
-            var tree = FluentBuilder.Create<Clock>()
+            var tree = FluentBuilder.Create<MockContext>()
                 .Selector("Selector1")
                     .Subtree(subTree)
                     .Sequence("PrioritySelector1")
@@ -30,7 +31,9 @@ namespace BehaviourTreeBuilder.Tests
                             .Do("action1", _ => BehaviourStatus.Succeeded)
                             .Do("action2", _ => BehaviourStatus.Succeeded)
                         .End()
-                        .Do("action3", _ => BehaviourStatus.Succeeded)
+                        .Random("Random1", 0.6)
+                            .Do("action3", _ => BehaviourStatus.Succeeded)
+                        .End()
                     .End()
                     .PrioritySequence("PrioritySequence1")
                         .Condition("Condition1", _ => true)
@@ -55,9 +58,24 @@ namespace BehaviourTreeBuilder.Tests
                 .End()
                 .Build();
 
-            var result = BehaviourTreeExpressionPrinter<Clock>.GetExpression(tree);
+            var result = BehaviourTreeExpressionPrinter<MockContext>.GetExpression(tree);
+
+            Console.Write(result);
 
             // TODO: string comparison is flaky on build server
+        }
+
+        public class MockContext : IClock, IRandomProvider
+        {
+            public long GetTimeStampInMilliseconds()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public double NextRandomDouble()
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

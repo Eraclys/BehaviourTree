@@ -2,8 +2,9 @@
 
 namespace BehaviourTree.Demo.GameEngine
 {
-    public sealed class Engine : IEntityManager, IEventManager
+    public sealed class Engine : IEntityManager, IEventManager, IRandomProvider
     {
+        private readonly IRandomProvider _randomProvider;
         private readonly EntityManager _entityManager;
         private readonly FamilyManager _familyManager;
         private readonly EventManager _eventManager;
@@ -12,6 +13,7 @@ namespace BehaviourTree.Demo.GameEngine
 
         public Engine()
         {
+            _randomProvider = new RandomProvider();
             _entityManager = new EntityManager();
             _familyManager = new FamilyManager(_entityManager);
             _eventManager = new EventManager(this);
@@ -98,6 +100,11 @@ namespace BehaviourTree.Demo.GameEngine
         private void EntityManager_EntityAdded(object sender, Entity e)
         {
             _eventManager.PublishEvent(new EntityAdded(e.Id));
+        }
+
+        public double NextRandomDouble()
+        {
+            return _randomProvider.NextRandomDouble();
         }
     }
 }

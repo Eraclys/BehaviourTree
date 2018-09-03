@@ -47,6 +47,7 @@
     <Compile Include="DecoratorBehaviourTests.cs" />
     <Compile Include="PrioritySelectorTests.cs" />
     <Compile Include="PrioritySequenceTests.cs" />
+    <Compile Include="RandomTests.cs" />
     <Compile Include="RateLimiterTests.cs" />
     <Compile Include="ConditionTests.cs" />
     <Compile Include="CooldownTests.cs" />

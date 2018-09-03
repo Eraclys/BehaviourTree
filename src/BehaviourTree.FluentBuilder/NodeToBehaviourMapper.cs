@@ -9,7 +9,8 @@ using BehaviourTree.FluentBuilder.Nodes;
 
 namespace BehaviourTree.FluentBuilder
 {
-    public class NodeToBehaviourMapper<TContext> : INodeToBehaviourMapper<TContext> where TContext : IClock
+    public class NodeToBehaviourMapper<TContext> : INodeToBehaviourMapper<TContext> 
+        where TContext : IClock, IRandomProvider
     {
         public IBehaviour<TContext> Map(Node node)
         {
@@ -27,6 +28,7 @@ namespace BehaviourTree.FluentBuilder
                 case CooldownNode n: return MapCooldownNode(n);
                 case FailerNode n: return MapFailerNode(n);
                 case InverterNode n: return MapInverterNode(n);
+                case RandomNode n: return MapRandomNode(n);
                 case RateLimiterNode n: return MapRateLimiterNode(n);
                 case RepeatNode n: return MapRepeatNode(n);
                 case SubTreeNode<TContext> n: return n.SubBehaviour;
@@ -36,6 +38,11 @@ namespace BehaviourTree.FluentBuilder
                 case UntilSuccessNode n: return MapUntilSuccessNode(n);
                 default: return MapUnknownNode(node);
             }
+        }
+
+        private Random<TContext> MapRandomNode(RandomNode node)
+        {
+            return new Random<TContext>(node.Name, Map(node.Child), node.Threshold);
         }
 
         private UntilFailed<TContext> MapUntilFailedNode(UntilFailedNode node)

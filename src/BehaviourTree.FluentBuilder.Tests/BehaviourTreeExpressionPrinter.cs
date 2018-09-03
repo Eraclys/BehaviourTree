@@ -8,7 +8,7 @@ using BehaviourTree.Decorators;
 namespace BehaviourTreeBuilder.Tests
 {
     public sealed class BehaviourTreeExpressionPrinter<TContext>
-        where TContext : IClock
+        where TContext : IClock, IRandomProvider
     {
         public static string GetExpression(IBehaviour<TContext> obj)
         {
@@ -69,6 +69,13 @@ namespace BehaviourTreeBuilder.Tests
         {
             return
                 InternalGetExpression(obj, depth, obj.RepeatCount) +
+                GetExpression(obj.Child, ++depth);
+        }
+
+        private static string GetExpression(Random<TContext> obj, int depth)
+        {
+            return
+                InternalGetExpression(obj, depth, obj.Threshold) +
                 GetExpression(obj.Child, ++depth);
         }
 

@@ -2,7 +2,7 @@
 
 namespace BehaviourTree.Demo.Ai.BT
 {
-    public sealed class BtContext : IClock
+    public sealed class BtContext : IClock, IRandomProvider
     {
         private readonly long _timeStampInMilliseconds;
 
@@ -20,6 +20,11 @@ namespace BehaviourTree.Demo.Ai.BT
         public long GetTimeStampInMilliseconds()
         {
             return _timeStampInMilliseconds;
+        }
+
+        public double NextRandomDouble()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

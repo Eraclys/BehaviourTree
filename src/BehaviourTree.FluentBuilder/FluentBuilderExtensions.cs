@@ -145,5 +145,13 @@ namespace BehaviourTree.FluentBuilder
         {
             return builder.Push(new UntilFailedNode { Name = name });
         }
+
+        public static FluentBuilder<TContext> Random<TContext>(
+            this FluentBuilder<TContext> builder,
+            string name,
+            double threshold)
+        {
+            return builder.Push(new RandomNode(threshold) { Name = name });
+        }
     }
 }
