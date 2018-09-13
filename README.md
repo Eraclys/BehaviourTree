@@ -173,7 +173,7 @@ builder.Invert("my-inverter")
 .End()
 ```
 
-#### RateLimiter
+#### RateLimiter (Cache)
 ``` cs    
 builder.LimitCallRate("my-rate-limiter", 1000) // 1 second
     .Do("action1", context => BehaviourStatus.Failed)
