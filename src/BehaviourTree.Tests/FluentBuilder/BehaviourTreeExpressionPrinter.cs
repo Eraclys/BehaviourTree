@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using BehaviourTree;
 using BehaviourTree.Behaviours;
 using BehaviourTree.Composites;
 using BehaviourTree.Decorators;
 
-namespace BehaviourTreeBuilder.Tests
+namespace BehaviourTree.Tests.FluentBuilder
 {
     public sealed class BehaviourTreeExpressionPrinter<TContext>
         where TContext : IClock

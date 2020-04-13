@@ -1,5 +1,7 @@
 ﻿using System;
-using BehaviourTree.FluentBuilder.Nodes;
+using BehaviourTree.Behaviours;
+using BehaviourTree.Composites;
+using BehaviourTree.Decorators;
 
 namespace BehaviourTree.FluentBuilder
 {
@@ -9,7 +11,7 @@ namespace BehaviourTree.FluentBuilder
             this FluentBuilder<TContext> builder,
             IBehaviour<TContext> subBehaviour)
         {
-            return builder.Push(new SubTreeNode<TContext>(subBehaviour));
+            return builder.PushLeaf(() => subBehaviour);
         }
 
         public static FluentBuilder<TContext> Condition<TContext>(
@@ -17,7 +19,7 @@ namespace BehaviourTree.FluentBuilder
             string name,
             Func<TContext, bool> condition)
         {
-            return builder.Push(new ConditionNode<TContext>(condition) {Name = name});
+            return builder.PushLeaf(()=> new Condition<TContext>(name, condition));
         }
 
         public static FluentBuilder<TContext> Do<TContext>(
@@ -25,43 +27,43 @@ namespace BehaviourTree.FluentBuilder
             string name,
             Func<TContext, BehaviourStatus> action)
         {
-            return builder.Push(new ActionNode<TContext>(action) {Name = name});
+            return builder.PushLeaf(() => new ActionBehaviour<TContext>(name, action));
         }
 
         public static FluentBuilder<TContext> Wait<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int waitTimeInMilliseconds)
+            int waitTimeInMilliseconds) where TContext : IClock
         {
-            return builder.Push(new WaitNode(waitTimeInMilliseconds){Name = name});
+            return builder.PushLeaf(() => new Wait<TContext>(name, waitTimeInMilliseconds));
         }
 
         public static FluentBuilder<TContext> PrioritySelector<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new PrioritySelectorNode { Name = name});
+            return builder.PushComposite(children => new PrioritySelector<TContext>(name, children));
         }
 
         public static FluentBuilder<TContext> PrioritySequence<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new PrioritySequenceNode { Name = name});
+            return builder.PushComposite(children => new PrioritySequence<TContext>(name, children));
         }
 
         public static FluentBuilder<TContext> Selector<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new SelectorNode { Name = name});
+            return builder.PushComposite(children => new Selector<TContext>(name, children));
         }
 
         public static FluentBuilder<TContext> Sequence<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new SequenceNode { Name = name});
+            return builder.PushComposite(children => new Sequence<TContext>(name, children));
         }
 
         public static FluentBuilder<TContext> RandomSequence<TContext>(
@@ -69,7 +71,7 @@ namespace BehaviourTree.FluentBuilder
             string name,
             IRandomProvider randomProvider = null)
         {
-            return builder.Push(new RandomSequenceNode(randomProvider) { Name = name });
+            return builder.PushComposite(children => new RandomSequence<TContext>(name, children, randomProvider));
         }
 
         public static FluentBuilder<TContext> RandomSelector<TContext>(
@@ -77,59 +79,59 @@ namespace BehaviourTree.FluentBuilder
             string name,
             IRandomProvider randomProvider = null)
         {
-            return builder.Push(new RandomSelectorNode(randomProvider) { Name = name });
+            return builder.PushComposite(children => new RandomSelector<TContext>(name, children, randomProvider));
         }
 
         public static FluentBuilder<TContext> SimpleParallel<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            Composites.SimpleParallelPolicy policy = Composites.SimpleParallelPolicy.BothMustSucceed)
+            SimpleParallelPolicy policy = SimpleParallelPolicy.BothMustSucceed)
         {
-            return builder.Push(new SimpleParallelNode(policy) {Name = name});
+            return builder.PushComposite(children => new SimpleParallel<TContext>(name, policy, children[0], children[1]));
         }
 
         public static FluentBuilder<TContext> AutoReset<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new AutoResetNode { Name = name});
+            return builder.PushComposite(children => new AutoReset<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> Cooldown<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int cooldownTimeInMilliseconds)
+            int cooldownTimeInMilliseconds) where TContext : IClock
         {
-            return builder.Push(new CooldownNode(cooldownTimeInMilliseconds) { Name = name });
+            return builder.PushComposite(children => new Cooldown<TContext>(name, children[0], cooldownTimeInMilliseconds));
         }
 
         public static FluentBuilder<TContext> AlwaysFail<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new FailerNode { Name = name });
+            return builder.PushComposite(children => new Failer<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> AlwaysSucceed<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new SucceederNode { Name = name });
+            return builder.PushComposite(children => new Succeeder<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> Invert<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new InverterNode { Name = name });
+            return builder.PushComposite(children => new Inverter<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> LimitCallRate<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int intervalInMilliseconds)
+            int intervalInMilliseconds) where TContext : IClock
         {
-            return builder.Push(new RateLimiterNode(intervalInMilliseconds) { Name = name });
+            return builder.PushComposite(children => new RateLimiter<TContext>(name, children[0], intervalInMilliseconds));
         }
 
         public static FluentBuilder<TContext> Repeat<TContext>(
@@ -137,29 +139,29 @@ namespace BehaviourTree.FluentBuilder
             string name,
             int repeatCount)
         {
-            return builder.Push(new RepeatNode(repeatCount) { Name = name });
+            return builder.PushComposite(children => new Repeat<TContext>(name, children[0], repeatCount));
         }
 
         public static FluentBuilder<TContext> TimeLimit<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int timeLimitInMilliseconds)
+            int timeLimitInMilliseconds) where TContext : IClock
         {
-            return builder.Push(new TimeLimitNode(timeLimitInMilliseconds) { Name = name });
+            return builder.PushComposite(children => new TimeLimit<TContext>(name, children[0], timeLimitInMilliseconds));
         }
 
         public static FluentBuilder<TContext> UntilSuccess<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new UntilSuccessNode { Name = name });
+            return builder.PushComposite(children => new UntilSuccess<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> UntilFailed<TContext>(
             this FluentBuilder<TContext> builder,
             string name)
         {
-            return builder.Push(new UntilFailedNode { Name = name });
+            return builder.PushComposite(children => new UntilFailed<TContext>(name, children[0]));
         }
 
         public static FluentBuilder<TContext> Random<TContext>(
@@ -168,7 +170,7 @@ namespace BehaviourTree.FluentBuilder
             double threshold,
             IRandomProvider randomProvider = null)
         {
-            return builder.Push(new RandomNode(threshold, randomProvider) { Name = name });
+            return builder.PushComposite(children => new Random<TContext>(name, children[0], threshold, randomProvider));
         }
     }
 }

@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourTree", "BehaviourTree\BehaviourTree.csproj", "{7112076B-363D-4886-9186-617283349034}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.Tests", "BehaviourTree.Tests\BehaviourTree.Tests.csproj", "{642AD8E2-054B-4789-9741-2CFF08BC2A44}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourTree.FluentBuilder", "BehaviourTree.FluentBuilder\BehaviourTree.FluentBuilder.csproj", "{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.FluentBuilder.Tests", "BehaviourTree.FluentBuilder.Tests\BehaviourTree.FluentBuilder.Tests.csproj", "{8044E4A1-66B4-4203-B3EB-B88B494568CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourTree.Demo", "BehaviourTree.Demo\BehaviourTree.Demo.csproj", "{0E73126D-3B25-4DD8-9D41-A72C1AC1BD44}"
 EndProject
@@ -27,14 +23,6 @@ Global
 		{642AD8E2-054B-4789-9741-2CFF08BC2A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{642AD8E2-054B-4789-9741-2CFF08BC2A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{642AD8E2-054B-4789-9741-2CFF08BC2A44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4197BD9A-F276-450C-B2B1-DC8951B7A1C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8044E4A1-66B4-4203-B3EB-B88B494568CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8044E4A1-66B4-4203-B3EB-B88B494568CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8044E4A1-66B4-4203-B3EB-B88B494568CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8044E4A1-66B4-4203-B3EB-B88B494568CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E73126D-3B25-4DD8-9D41-A72C1AC1BD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E73126D-3B25-4DD8-9D41-A72C1AC1BD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E73126D-3B25-4DD8-9D41-A72C1AC1BD44}.Release|Any CPU.ActiveCfg = Release|Any CPU

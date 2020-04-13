@@ -1,9 +1,8 @@
 ﻿using System;
-using BehaviourTree;
 using BehaviourTree.FluentBuilder;
 using NUnit.Framework;
 
-namespace BehaviourTreeBuilder.Tests
+namespace BehaviourTree.Tests.FluentBuilder
 {
     [TestFixture]
     internal sealed class BehaviourTreeBuilderTests
@@ -11,7 +10,7 @@ namespace BehaviourTreeBuilder.Tests
         [Test]
         public void Test()
         {
-            var subTree = FluentBuilder.Create<MockContext>()
+            var subTree = BehaviourTree.FluentBuilder.FluentBuilder.Create<MockContext>()
                 .LimitCallRate("LimitCallRate1", 963)
                     .AlwaysSucceed("AlwaysSucceed1")
                         .AlwaysFail("AlwaysFail1")
@@ -23,7 +22,7 @@ namespace BehaviourTreeBuilder.Tests
                 .End()
                 .Build();
 
-            var tree = FluentBuilder.Create<MockContext>()
+            var tree = BehaviourTree.FluentBuilder.FluentBuilder.Create<MockContext>()
                 .Selector("Selector1")
                     .Subtree(subTree)
                     .Sequence("PrioritySelector1")

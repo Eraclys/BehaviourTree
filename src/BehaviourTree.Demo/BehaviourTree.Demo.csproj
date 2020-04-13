@@ -168,10 +168,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BehaviourTree.FluentBuilder\BehaviourTree.FluentBuilder.csproj">
-      <Project>{4197bd9a-f276-450c-b2b1-dc8951b7a1c6}</Project>
-      <Name>BehaviourTree.FluentBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BehaviourTree\BehaviourTree.csproj">
       <Project>{7112076b-363d-4886-9186-617283349034}</Project>
       <Name>BehaviourTree</Name>
