@@ -6,11 +6,7 @@
 ## Installation
  
 ```
-// Main package
 Install-Package BehaviourTree
-
-// If you want the fluent builder capabilities
-Install-Package BehaviourTree.FluentBuilder
 ```
 
 ## Demo
